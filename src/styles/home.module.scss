@@ -1,0 +1,184 @@
+@import 'mixins.module';
+
+.container {
+  width: 100%;
+  height: 70vh;
+  max-height: 70vh;
+  border-radius: 30px;
+  @include bl-flex-center(flex-start, center, column, 0);
+  border-top: 2px solid;
+  border-image-source: linear-gradient(90deg, #010101 0%, #71893F 51%, #010101 100%);
+  border-image-slice: 1;
+  background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
+  radial-gradient(23.75% 58.62% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+
+  &_bl {
+    width: 100%;
+    @include bl-flex-center(space-between, center, column, 10px);
+    flex-grow: 1;
+
+    &_make_bet {
+      font-size: 14px;
+      border-radius: 60px;
+      @include bl-flex-center(center, center, row, 5px);
+      width: 170px;
+      height: 38px;
+      color: white;
+      cursor: pointer;
+      background: rgba(1, 1, 1, 1);
+      border: solid 1px #39712A;
+      box-shadow: 0 -10px 55px rgba(163, 185, 64, 0.4),
+      0 10px 55px rgba(57, 113, 42, 0.4);
+    }
+
+    &_list {
+      width: 80%;
+      height: 38px;
+      border-radius: 30em;
+      @include bl-flex-center(space-between, center, row, 0);
+      background: radial-gradient(64.71% 553.41% at 3.53% 14.86%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+
+      &_hero {
+        @include bl-flex-center(space-around, center, row, 0);
+        width: 45%;
+
+        div {
+          width: 28px;
+          height: 29px;
+          border-radius: 30em;
+          background: rgba(1, 1, 1, 1);
+
+          img {
+            transform: translateY(-3px);
+            width: 100%;
+          }
+        }
+      }
+
+      &_all {
+        height: 38px;
+        position: absolute;
+        width: 40%;
+
+        button {
+          @include bl-flex-center(center, center, row, 5%);
+          position: relative;
+          left: 75%;
+          border-radius: 10em;
+          width: 117%;
+          height: 38px;
+          background: rgba(1, 1, 1, 1);
+          color: white;
+          cursor: pointer;
+          border: solid 1px greenyellow;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+
+  &_header {
+    @include bl-flex-center(center, center, row, 0);
+    width: 100%;
+    color: white;
+
+    &_name {
+      width: 29%;
+      text-align: center;
+      font-size: 16px;
+      font-family: 'digital';
+    }
+
+    img {
+      cursor: pointer;
+    }
+  }
+
+  &_turtles {
+    background: linear-gradient(180.21deg, #71893F 2.04%, #39712A 50%, #000000 99.82%);
+    @include bl-flex-center(flex-start, center, row, 0);
+    width: 100%;
+    height: 40vh;
+    overflow-x: auto;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    flex-grow: 1;
+
+    div {
+      @include bl-flex-center(center, center, row, 0);
+      min-width: 190px;
+
+      img {
+        width: 200px;
+      }
+
+      img:nth-child(2) {
+        width: 500px;
+      }
+    }
+
+    img {
+      width: 200px;
+    }
+
+    //div {
+    //  img {
+    //    min-width: 50%;
+    //    max-width: 100%;
+    //  }
+    //  img:nth-child(2) {
+    //    transform: scale(3.5);
+    //  }
+    //}
+
+
+    //img:nth-child(1) {
+    //  position: absolute;
+    //  scale: 1.2;
+    //}
+
+    //flex-grow: 1;
+    //
+    //&_bet {
+    //  margin: 5% 5%;
+    //  @include bl-flex-center(center, center, column, 5px);
+    //  width: 116px;
+    //  height: 52px;
+    //  border-radius: 30em;
+    //  background: rgba(1, 1, 1, 1);
+    //
+    //  & > p {
+    //    margin: 0;
+    //    color: white;
+    //    text-align: center;
+    //  }
+    //
+    //  p:nth-child(1) {
+    //    color: rgba(112, 112, 112, 1);
+    //    font-size: 12px;
+    //  }
+    //
+    //  p:nth-child(2) {
+    //    color: rgba(254, 253, 255, 1);
+    //    font-size: 16px;
+    //  }
+    //}
+
+    //&_hero {
+    //  @include bl-flex-center(flex-start, center, row, 10px);
+    //  overflow-x: auto;
+    //  scroll-behavior: smooth;
+    //  width: 100%;
+    //
+    //  div {
+    //    min-width: calc(413px - 65%);
+    //
+    //    img {
+    //      width: 100%;
+    //      height: 25vh;
+    //    }
+    //  }
+    //}
+  }
+}

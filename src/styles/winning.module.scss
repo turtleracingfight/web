@@ -1,0 +1,84 @@
+@import './mixins.module';
+
+.container {
+  position: fixed;
+  width: 100%;
+  height: 99.6vh;
+  @include bl-flex-center(space-between, center, column, 0);
+  color: white;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-image-source: linear-gradient(90deg, #010101 0%, #3F4B25 51%, #010101 100%);
+  border-image-slice: 1;
+  box-shadow: 0 30px 5px #3F4B25, 0 30px 5px #3F4B25;
+  background: radial-gradient(20.03% 50% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%), linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%);
+
+
+  & > img {
+    margin-top: 10%;
+    transform: translateY(15%);
+  }
+
+
+  &_content {
+    width: 100%;
+    height: 50vh;
+    @include bl-flex-center(center, center, column, 35px);
+
+    &_header {
+      @include bl-flex-center(center, center, column, 5px);
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        width: 191px;
+        text-align: center;
+      }
+    }
+
+    &_winning {
+      width: 85%;
+      height: 80px;
+      border-radius: 60px;
+      text-align: center;
+      border: 2px solid;
+      border-image-source: linear-gradient(90deg, #010101 0%, #71893F 20%, #010101 100%);
+      border-image-slice: 1;
+      background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
+      radial-gradient(23.75% 58.62% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+      @include bl-flex-center(center, center, column, 0);
+
+      p {
+        font-size: 50px;
+      }
+    }
+
+    &_button {
+      @include bl-flex-center(center, center, row, 0);
+      width: 100%;
+
+      &_elipse {
+        position: absolute;
+        width: 65%;
+        height: 5vh;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #A3B940 0%, #39712A 100%);
+        filter: blur(40px);
+      }
+
+      & > button {
+        z-index: 1;
+      }
+    }
+  }
+
+
+  & > p {
+    width: 339px;
+    text-align: center;
+    color: rgba(112, 112, 112, 1);
+    font-size: 14px;
+    margin-bottom: 10%;
+  }
+
+}

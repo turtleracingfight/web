@@ -1,0 +1,20 @@
+@import './mixins.module';
+
+.container {
+  @include bl-flex-center(center, center, row, 0);
+  width: 100%;
+
+  select {
+    background: rgba(1, 1, 1, 1);
+    width: 80%;
+    height: 38px;
+    border-radius: 60px;
+    color: white;
+    border: solid 1px #39712A;
+    padding-left: 15px;
+  }
+
+  select:after {
+    transform: translateY(-50%) rotate(-90deg);
+  }
+}

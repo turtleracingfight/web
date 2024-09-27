@@ -1,0 +1,26 @@
+@import 'mixins.module';
+
+.container {
+  @include bl-flex-center(center, center, row, 0);
+  width: 100%;
+
+  p {
+    width: 90px;
+    color: white;
+    font-size: 60px;
+    margin: 0;
+    text-align: center;
+  }
+
+  p:nth-child(even) {
+    width: 15px;
+  }
+}
+
+@media(max-height: 670px) {
+  .container {
+    p {
+      font-size: 45px;
+    }
+  }
+}

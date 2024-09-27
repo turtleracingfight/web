@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'cygre-semibold';
+    src: url('./fonts/cygre-semibold.ttf') format('woff2'),
+    url('./fonts/cygre-semibold.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'digital';
+    src: url('./fonts/digitalicg.ttf') format('woff2'),
+    url('./fonts/digitalicg.ttf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: #010101;
+}
+
+p {
+    font-family: 'cygre-semibold';
+}
+
