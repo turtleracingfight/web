@@ -1,20 +1,60 @@
 @import './mixins.module';
+@import './variables.module';
 
 .container {
-  @include bl-flex-center(center, center, row, 0);
-  width: 100%;
+  @include bl-flex-center(flex-start, flex-start, row, 0);
+  @include wh-ht(100%, $height-page);
 
-  select {
-    background: rgba(1, 1, 1, 1);
-    width: 80%;
-    height: 38px;
-    border-radius: 60px;
-    color: white;
-    border: solid 1px #39712A;
-    padding-left: 15px;
-  }
+  &_lang {
+    @include bl-flex-center(flex-start, center, column, 0);
+    margin-top: 15%;
+    transition: 400ms;
+    width: 100%;
+    overflow: hidden;
+    background: $back-linear-gradient-black;
 
-  select:after {
-    transform: translateY(-50%) rotate(-90deg);
+    &_button {
+      @include bl-flex-center(center, center, column, 0);
+      width: 100%;
+      margin: 0.5% 0.5%;
+      z-index: 5;
+
+      & > button {
+        width: 99.4%;
+      }
+    }
+
+    &_choose {
+      @include bl-flex-center(center, center, column, 0);
+      padding-top: 1%;
+      color: white;
+      width: 100%;
+
+      & > p {
+        @include bl-flex-center(flex-start, center, row, 5%);
+        @include wh-ht(100%, 32px);
+        margin: 5px;
+        padding-left: 20%;
+        text-align: center;
+        font-size: 14px;
+
+        &:hover {
+          background: $back-linear-gradient-left;;
+        }
+      }
+    }
   }
 }
+
+@media(max-height: 800px) {
+  .container {
+    &_lang {
+      &_button {
+        & > button {
+          width: 99.5%;
+        }
+      }
+    }
+  }
+}
+

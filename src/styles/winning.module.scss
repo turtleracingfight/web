@@ -1,29 +1,28 @@
 @import './mixins.module';
+@import './variables.module';
+@import './common.module';
 
 .container {
-  position: fixed;
-  width: 100%;
-  height: 99.6vh;
-  @include bl-flex-center(space-between, center, column, 0);
+  @include bl-flex-center(center, center, column, 0);
+  @include wh-ht(100%, 99.4vh);
+  position: absolute;
   color: white;
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  border-image-source: linear-gradient(90deg, #010101 0%, #3F4B25 51%, #010101 100%);
+  border-top: 0.4vh solid;
+  border-bottom: 0.4vh solid;
+  border-image-source: $back-linear-gradient-top-bottom;
   border-image-slice: 1;
-  box-shadow: 0 30px 5px #3F4B25, 0 30px 5px #3F4B25;
-  background: radial-gradient(20.03% 50% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%), linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%);
-
+  background: radial-gradient(23.75% 30% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%),
+  linear-gradient(179.93deg, #0C0C0C -1.98%, #000000 99.94%);
+  z-index: 1;
 
   & > img {
     margin-top: 10%;
-    transform: translateY(15%);
   }
 
 
   &_content {
-    width: 100%;
-    height: 50vh;
-    @include bl-flex-center(center, center, column, 35px);
+    @include bl-flex-center(center, center, column, 15px);
+    @include wh-ht(100%, 40vh);
 
     &_header {
       @include bl-flex-center(center, center, column, 5px);
@@ -37,18 +36,41 @@
     }
 
     &_winning {
-      width: 85%;
-      height: 80px;
-      border-radius: 60px;
+      @include bl-flex-center(center, center, row, 2px);
+      @include wh-ht-r(85%, 80px, 60px);
       text-align: center;
-      border: 2px solid;
-      border-image-source: linear-gradient(90deg, #010101 0%, #71893F 20%, #010101 100%);
-      border-image-slice: 1;
+      position: relative;
       background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
       radial-gradient(23.75% 58.62% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
-      @include bl-flex-center(center, center, column, 0);
+      color: $grey-light;
+
+      & > input {
+        font-size: 50px;
+        text-align: right;
+        min-width: 10px;
+        max-width: 160px;
+        height: 55px;
+        background: darkgray;
+        background: none;
+        border: none;
+        color: white;
+      }
+
+      &:before {
+        @include wh-ht-r(100%, 80px, 60px);
+        content: "";
+        background: $back-gradient-value-ton;
+        border-radius: 60px;
+        left: -2px;
+        top: -2px;
+        padding: 2px;
+        position: absolute;
+        z-index: -1;
+      }
 
       p {
+        padding-top: 4px;
+        text-align: center;
         font-size: 50px;
       }
     }
@@ -56,29 +78,48 @@
     &_button {
       @include bl-flex-center(center, center, row, 0);
       width: 100%;
+      z-index: 1;
+      margin-top: 10%;
 
       &_elipse {
-        position: absolute;
-        width: 65%;
-        height: 5vh;
-        border-radius: 50%;
-        background: linear-gradient(180deg, #A3B940 0%, #39712A 100%);
-        filter: blur(40px);
+        @extend .ellipse;
+        @include wh-ht(50%, 4vh);
+        filter: blur(35px);
       }
 
-      & > button {
-        z-index: 1;
-      }
     }
   }
-
 
   & > p {
     width: 339px;
     text-align: center;
-    color: rgba(112, 112, 112, 1);
+    color: $grey-light;
     font-size: 14px;
-    margin-bottom: 10%;
+    margin-top: 20vh;
   }
 
+}
+
+@media(max-height: 900px) {
+  .container {
+    height: 99.3vh;
+  }
+}
+
+@media(min-height: 1024px) {
+  .container {
+    height: 99.25vh;
+
+    &_content {
+
+      &_button {
+
+        &_elipse {
+          @extend .ellipse;
+          @include wh-ht(30%, 3vh);
+          filter: blur(35px);
+        }
+      }
+    }
+  }
 }

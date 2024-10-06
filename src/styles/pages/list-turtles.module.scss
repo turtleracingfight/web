@@ -1,0 +1,84 @@
+@import '../mixins.module';
+@import '../variables.module';
+@import '../common.module';
+
+.container {
+  @include bl-flex-center(flex-start, center, column, 0);
+  width: 100%;
+
+  &_bl {
+    @include bl-flex-center(flex-start, center, column, 0);
+    margin-top: 8%;
+    width: 100%;
+
+    &_border {
+      @include wh-ht(100%, 1px);
+      margin-top: 8%;
+      background: $yellow-ellipse;
+    }
+
+    &_turtle {
+      @include bl-flex-center(space-between, flex-start, row, 0px);
+      width: 100%;
+
+
+      &_content {
+        color: white;
+
+        &_elipse {
+          @extend .ellipse;
+          @include wh-ht(90%, 5vh);
+          transform: translate(-12%);
+          filter: blur(35px);
+          background: $lime-background;
+          box-shadow: $yellow-shadow;
+        }
+
+        @include bl-flex-center(center, center, row, 0);
+        @include wh-ht(50%, 12vh);
+
+        & > img {
+          z-index: 2;
+          height: 13vh;
+        }
+
+        & > p {
+          width: 100px;
+          font-family: DigitalICG;
+        }
+      }
+
+      &_bet {
+        @include bl-flex-center(space-around, center, column, 0);
+        @include wh-ht(50%, 12vh);
+
+        & > p {
+          @include bl-flex-center(center, center, row, 0);
+          @include wh-ht-r(172px, 34px, 30px);
+          color: white;
+          margin: 0;
+          background: $back-linear-gradient;
+        }
+      }
+    }
+  }
+}
+
+@media(min-height: 1024px) {
+  .container {
+    &_bl {
+      &_turtle {
+        &_content {
+          &_elipse {
+            @extend .ellipse;
+            @include wh-ht(70%, 6vh);
+            transform: translate(-10%);
+            filter: blur(40px);
+            background: $lime-background;
+            box-shadow: $yellow-shadow;
+          }
+        }
+      }
+    }
+  }
+}

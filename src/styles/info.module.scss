@@ -1,115 +1,103 @@
 @import './mixins.module';
 
+.elem {
+  @include bl-flex-center(center, center, column, 3px);
+  border-radius: 30px;
+  padding: 1px;
+  position: absolute;
+
+  &:before {
+    background: $black;
+    content: "";
+    border-radius: 30px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &:nth-child(1):before {
+    @include wh-ht(116px, 52px);
+  }
+
+  &:nth-child(2):before {
+    @include wh-ht(100%, 100%);
+  }
+
+  &:nth-child(3):before {
+    @include wh-ht(100%, 100%);
+  }
+
+  p {
+    @include size-color(12px, $grey-light);
+    margin: 0;
+  }
+
+
+  &:nth-child(1) {
+    @include wh-ht(116px, 52px);
+    background: $ellipse-background-gradient;
+    transform: translate(-95%, 3vh);
+
+    & > p {
+      &:nth-child(2) {
+        font-size: 16px;
+        color: white;
+      }
+    }
+  }
+
+  &:nth-child(2) {
+    border: solid 1px $grey-light;
+    @include wh-ht(65px, 29px);
+    transform: translate(-165%, 20vh) rotate(-10deg);
+
+    & > p {
+      font-size: 7px;
+
+      &:nth-child(2) {
+        font-size: 9px;
+      }
+    }
+  }
+
+  &:nth-child(3) {
+    border: solid 1px $grey-light;
+    @include wh-ht(87px, 39px);
+    transform: translate(150%, 15vh) rotate(15deg);
+
+    & > p {
+      font-size: 9px;
+
+      &:nth-child(2) {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
 .container {
-  width: 100%;
-  height: 90vh;
   @include bl-flex-center(center, center, column, 12%);
+  @include wh-ht($width-page, $height-page);
 
   &_content {
+    color: white;
     width: 100%;
     @include bl-flex-center(space-between, center, column, 15px);
 
     &_elipse {
-      position: absolute;
-      width: 75%;
-      height: 15vh;
-      border-radius: 50%;
-      transform: translateY(2vh);
-      background: linear-gradient(180deg, #A3B940 0%, #39712A 100%);
-      filter: blur(45px);
+      @include wh-ht(80%, 20vh);
+      @include ellipse(45px, 8vh);
+      z-index: -2;
     }
 
-    &_additional {
-      border: 0.56px solid rgba(112, 112, 112, 1);
-      border-radius: 30px;
-      width: 116px;
-      height: 52px;
-      position: absolute;
-      color: white;
-      @include bl-flex-center(center, center, column, 3px);
-      background: rgba(1, 1, 1, 1);
-      z-index: 2;
-
-
-      p {
-        font-size: 12px;
-        color: rgba(112, 112, 112, 1);
-        margin: 0;
-      }
-
-      &:nth-child(1) {
-        box-shadow: inset 0 1px 2px #A3B940, 0 1px 3px #39712A;
-        border: none;
-        transform: translate(-95%, -9vh);
-
-        & > p {
-          &:nth-child(2) {
-            font-size: 16px;
-            color: white;
-          }
-        }
-      }
-
-      &:nth-child(2) {
-        width: 65px;
-        height: 29px;
-        transform: translate(-175%, 7vh) rotate(-25deg);
-
-        & > p {
-          font-size: 7px;
-
-          &:nth-child(2) {
-            font-size: 9px;
-          }
-        }
-      }
-
-      &:nth-child(2) {
-        width: 65px;
-        height: 29px;
-        transform: translate(-175%, 7vh) rotate(-25deg);
-
-        & > p {
-          font-size: 7px;
-
-          &:nth-child(2) {
-            font-size: 9px;
-          }
-        }
-      }
-
-      &:nth-child(3) {
-        width: 87px;
-        height: 39px;
-        transform: translate(165%, 2vh) rotate(15deg);
-
-        & > p {
-          font-size: 9px;
-
-          &:nth-child(2) {
-            font-size: 12px;
-          }
-        }
-      }
-    }
-
-    & > div {
-      width: 100%;
-      height: 35vh;
-      @include bl-flex-center(center, center, column, 0);
-
-      & > img {
-        //height: 30vh;
-        z-index: 10;
-      }
-
+    & > img {
+      height: 29vh;
+      z-index: 10;
     }
 
 
     & > p {
       height: 5vh;
       text-align: center;
-      color: white;
       font-size: 18px;
     }
   }
@@ -120,13 +108,9 @@
     @include bl-flex-center(center, center, row, 5%);
 
     & > button {
-      cursor: pointer;
-      width: 26px;
-      height: 26px;
-      border-radius: 30px;
+      @include wh-ht-r(26px, 26px, 30px);
       background: none;
-      border: 1px solid rgba(254, 253, 255, 1);
-      color: white;
+      border: solid 1px white;
     }
 
     & > div {
@@ -134,116 +118,41 @@
       @include bl-flex-center(space-around, center, row, 0);
 
       & > div {
-        width: 10px;
-        height: 10px;
-        border-radius: 30px;
+        @include wh-ht-r(10px, 10px, 30px);
       }
     }
   }
 }
 
 @media (min-height: 1025px) {
-  .container {
-    &_content {
-      //&_elipse {
-      //  position: absolute;
-      //  width: 15%;
-      //  height: 10vh;
-      //  border-radius: 50%;
-      //  transform: translateY(0vh);
-      //  background: linear-gradient(180deg, #A3B940 0%, #39712A 100%);
-      //  filter: blur(105px);
-      //}
-      &_additional {
+  .elem {
+    &:nth-child(1) {
+      transform: translate(-120%, 5vh);
+    }
 
-        &:nth-child(1) {
-          transform: translate(-100%, -6vh);
+    &:nth-child(2) {
+      transform: translate(-205%, 20vh) rotate(-20deg);
+    }
 
-          & > p {
-            &:nth-child(2) {
-              font-size: 16px;
-              color: white;
-            }
-          }
-        }
-
-        &:nth-child(2) {
-          width: 65px;
-          height: 29px;
-          transform: translate(-170%, 5vh) rotate(-25deg);
-
-          & > p {
-            font-size: 7px;
-
-            &:nth-child(2) {
-              font-size: 9px;
-            }
-          }
-        }
-
-        &:nth-child(3) {
-          width: 87px;
-          height: 39px;
-          transform: translate(155%, 1.5vh) rotate(15deg);
-
-          & > p {
-            font-size: 9px;
-
-            &:nth-child(2) {
-              font-size: 12px;
-            }
-          }
-        }
-
-      }
+    &:nth-child(3) {
+      transform: translate(175%, 15vh) rotate(10deg);
     }
   }
+
 }
 
 @media (max-height: 800px) {
-  .container {
-    &_content {
-      &_additional {
-        &:nth-child(1) {
-          transform: translate(-100%, -11vh);
+  .elem {
+    &:nth-child(1) {
+      transform: translate(-80%, 1vh);
+    }
 
-          & > p {
-            &:nth-child(2) {
-              font-size: 16px;
-              color: white;
-            }
-          }
-        }
+    &:nth-child(2) {
+      transform: translate(-130%, 19vh) rotate(-20deg);
+    }
 
-        &:nth-child(2) {
-          width: 65px;
-          height: 29px;
-          transform: translate(-160%, 8vh) rotate(-25deg);
-
-          & > p {
-            font-size: 7px;
-
-            &:nth-child(2) {
-              font-size: 9px;
-            }
-          }
-        }
-
-        &:nth-child(3) {
-          width: 87px;
-          height: 39px;
-          transform: translate(145%, 2vh) rotate(15deg);
-
-          & > p {
-            font-size: 9px;
-
-            &:nth-child(2) {
-              font-size: 12px;
-            }
-          }
-        }
-
-      }
+    &:nth-child(3) {
+      transform: translate(120%, 15vh) rotate(10deg);
     }
   }
 }

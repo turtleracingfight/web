@@ -20,7 +20,9 @@
 
   &_connected {
     flex-grow: 1;
-    @include bl-flex-center(center, center, column, 7%);
+    z-index: 1;
+    @include bl-flex-center(center, center, column, 5%);
+
 
     p {
       margin: 0;
@@ -35,6 +37,9 @@
       width: 333px;
       font-size: 60px;
       color: white;
+    }
+    & > button {
+      margin-top: 6%;
     }
   }
 

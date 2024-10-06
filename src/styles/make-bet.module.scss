@@ -1,8 +1,8 @@
 @import './mixins.module';
 
 .container {
-  height: 100vh;
   @include bl-flex-center(center, center, column, 0);
+  height: 100vh;
   border-top: 2px solid;
   border-image-source: linear-gradient(90deg, #010101 0%, #3F4B25 51%, #010101 100%);
   border-image-slice: 1;

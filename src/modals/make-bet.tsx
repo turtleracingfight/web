@@ -3,7 +3,7 @@ import styles from '../styles/make-bet.module.scss'
 import {useState} from "react";
 
 export const MakeBet = () => {
-    const [value, setValue] = useState(null)
+    const [value, setValue] = useState('')
     const handlerChangeValue = (e) => {
         setValue(e.target.value)
     }
@@ -17,7 +17,7 @@ export const MakeBet = () => {
         <div className={styles.container_button}>
             {value && <div
                 className={styles.container_button_elipse}></div>}
-            <BtnCommon text={'Подтвердить'} width={'50%'}/>
+            <BtnCommon text={'Подтвердить'} width={'154px'} height={'38px'}/>
         </div>
     </div>
 }

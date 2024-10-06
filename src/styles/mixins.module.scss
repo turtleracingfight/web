@@ -1,7 +1,41 @@
+@import './variables.module';
+//block
 @mixin bl-flex-center($justify, $align, $direction, $gap) {
   display: flex;
   justify-content: $justify;
   align-items: $align;
   flex-direction: $direction;
   gap: $gap;
+}
+
+@mixin wh-ht($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+@mixin wh-ht-r($width, $height,$radius) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+}
+
+@mixin back-bor($back,$border) {
+  background: $back;
+  border: $border;
+}
+
+
+//style-block
+@mixin ellipse($blur, $translateY) {
+  position: absolute;
+  transform: translateY($translateY);
+  background: $ellipse-background-gradient;
+  filter: blur($blur);
+  border-radius: 100%;
+}
+
+//style-other
+@mixin size-color($size,$color) {
+  font-size: $size;
+  color: $color;
 }

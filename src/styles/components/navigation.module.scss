@@ -1,0 +1,75 @@
+@import '../mixins.module';
+@import "../variables.module";
+@import "../common.module";
+
+.container {
+  position: absolute;
+  top: 90vh;
+  width: 90%;
+  z-index: 10;
+  overflow: hidden;
+
+  &_content {
+    @include bl-flex-center(center, center, row, 0);
+    width: 100%;
+    padding: 2px;
+    border-radius: 30px;
+
+    &_links {
+      @include bl-flex-center(space-around, center, row, 5%);
+      @include wh-ht-r(100%, 50px, 30px);
+      padding: 2px;
+
+      &_ellipse {
+        @extend .ellipse;
+        width: 8%;
+        height: 1vh;
+        transform: translateY(-3.5vh);
+        filter: blur(8px);
+        background: $yellow-ellipse;
+        z-index: 1;
+      }
+
+      & > button {
+        @include bl-flex-center(center, center, row, 0);
+        @include wh-ht-r(100%, auto, 100px);
+        @include back-bor(none, none);
+        margin: 3.5% 0;
+        flex-grow: 1;
+      }
+    }
+  }
+}
+
+@media(max-height: 800px) {
+  .container {
+    top: 88vh;
+
+    &_content {
+      &_links {
+        &_ellipse {
+          width: 8%;
+          filter: blur(8px);
+          transform: translateY(-5vh);
+        }
+      }
+    }
+  }
+}
+
+@media(min-height: 1024px) {
+  .container {
+    top: 90vh;
+
+    &_content {
+      &_links {
+        &_ellipse {
+          width: 5%;
+          filter: blur(8px);
+          transform: translateY(-3.2vh);
+        }
+      }
+    }
+  }
+}
+

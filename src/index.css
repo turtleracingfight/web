@@ -7,7 +7,7 @@
 }
 
 @font-face {
-    font-family: 'digital';
+    font-family: 'DigitalICG';
     src: url('./fonts/digitalicg.ttf') format('woff2'),
     url('./fonts/digitalicg.ttf') format('woff');
     font-weight: normal;
@@ -24,4 +24,40 @@ body {
 p {
     font-family: 'cygre-semibold';
 }
+
+button {
+    cursor: pointer;
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-wrapper {
+    margin-top: 18vh;
+    height: auto;
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    transition: 300ms;
+}
+
+/*@media(min-height: 1024px) {*/
+/*    .swiper-wrapper {*/
+/*        margin-top: 12vh;*/
+/*        height: auto;*/
+/*    }*/
+/*}*/
 
