@@ -1,29 +1,45 @@
-import {ListTurtles} from "../pages/list-turtles.tsx";
-import {Navigate} from "react-router-dom";
-import {Home} from "../pages/home.tsx";
-import {Stats} from "../pages/stats.tsx";
-import {Info} from "../pages/info.tsx";
-import {ConnectCrypto} from "../pages/connect-crypto.tsx";
-import {Settings} from "../pages/settings.tsx";
+import { ListTurtles } from "../pages/list-turtles.tsx";
+import { Navigate } from "react-router-dom";
+import { Statistics } from "../pages/statistics.tsx";
+import { Preview } from "../pages/preview.tsx";
+import { Settings } from "../pages/settings.tsx";
+import ac_statistics from "/components/navigation/ac-statistics.svg";
+import statistics from "/components/navigation/statistics.svg";
+import ac_main from "/components/navigation/ac-home.svg";
+import main from "/components/navigation/home.svg";
+import ac_faq from "/components/navigation/ac-faq.svg";
+import faq from "/components/navigation/faq.svg";
+import { BetWon } from "../pages/bet-won.tsx";
 
-export const LIST_ROUTES = {
-    listTurtles: '/list-turtles',
-    home: '/home',
-    stats: '/stats',
-    info: '/info',
-    connect: '/connect',
-    settings: '/settings',
-    another: '/*',
-    main: '/'
-}
+export const ROUTES = {
+  listTurtles: "/list-turtles",
+  home: "/home",
+  statistics: "/stats",
+  preview: "/preview",
+  connect: "/connect",
+  settings: "/settings",
+  makeBet: "/make-bet",
+  another: "*",
+  main: "/"
+};
 
-export const ROUTES = [
-    {path: LIST_ROUTES.main, component: <Navigate to={LIST_ROUTES.home}/>},
-    {path: LIST_ROUTES.listTurtles, component: <ListTurtles/>},
-    {path: LIST_ROUTES.home, component: <Home/>},
-    {path: LIST_ROUTES.stats, component: <Stats/>},
-    {path: LIST_ROUTES.info, component: <Info/>},
-    {path: LIST_ROUTES.connect, component: <ConnectCrypto/>},
-    {path: LIST_ROUTES.settings, component: <Settings/>},
-    {path: LIST_ROUTES.another, component: <Navigate to={LIST_ROUTES.home}/>},
-]
+export const LIST_ROUTES = [
+  { path: ROUTES.main, component: <Navigate to={ROUTES.home} /> },
+  { path: ROUTES.listTurtles, component: <ListTurtles /> },
+  { path: ROUTES.statistics, component: <Statistics /> },
+  { path: ROUTES.preview, component: <Preview /> },
+  { path: ROUTES.settings, component: <Settings /> },
+  { path: ROUTES.makeBet, component: <BetWon /> },
+  { path: ROUTES.another, component: <Navigate to={ROUTES.home} /> }
+];
+
+export const NAVIGATION_LINKS = [
+  {
+    id: 1,
+    visible: ac_statistics,
+    hidden: statistics,
+    path: ROUTES.statistics
+  },
+  { id: 2, visible: ac_main, hidden: main, path: ROUTES.home },
+  { id: 3, visible: ac_faq, hidden: faq, path: ROUTES.preview }
+];

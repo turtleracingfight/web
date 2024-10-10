@@ -1,4 +1,4 @@
-@import 'mixins.module';
+@import '../mixins.module';
 
 .container {
   @include bl-flex-center(center, center, row, 0);

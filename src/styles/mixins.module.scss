@@ -19,9 +19,10 @@
   border-radius: $radius;
 }
 
-@mixin back-bor($back,$border) {
-  background: $back;
-  border: $border;
+@mixin back-bor-none() {
+  background: none;
+  border: none;
+  outline: none;
 }
 
 
@@ -34,8 +35,38 @@
   border-radius: 100%;
 }
 
-//style-other
+@mixin bl-position-ab($top) {
+  position: absolute;
+  top: $top;
+}
+
+@mixin bl-position-fx($top) {
+  position: fixed;
+  top: $top;
+}
+
+@mixin border-im-sce($bis, $border) {
+  border-image-slice: 1;
+  border-image-source: $bis;
+  border: $border;
+}
+
+//style-text
 @mixin size-color($size,$color) {
   font-size: $size;
   color: $color;
+}
+
+@mixin width-sz-al-cl($width,$sz:14px,$al,$cl) {
+  width: $width;
+  font-size: $sz;
+  text-align: $al;
+  color: $cl;
+}
+
+//style-other
+@mixin ellipse-default($trY,$blur, $background) {
+  transform: translateY($trY);
+  filter: blur($blur);
+  background: $background;
 }

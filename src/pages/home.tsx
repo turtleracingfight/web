@@ -1,83 +1,120 @@
-import {useState} from "react";
-import {NAMES_TURTLES} from "../constants/turtles.ts";
-import {useNavigate} from "react-router-dom";
-import {LIST_ROUTES} from "../constants/route.tsx";
-import {Swiper, SwiperSlide} from "swiper/react";
-import arrowright from '../assets/arrowright.svg'
-import arrowleft from '../assets/arrowleft.svg'
-import 'swiper/css';
-import 'swiper/css/pagination';
-import '../index.css'
-import styles from '../styles/home.module.scss'
-import {LIST_TURTLES, TURTLES} from "../constants/links.ts";
-import {BtnCommon, BtnConnectTg} from "../components/buttons.tsx";
-import {Timer} from "../components/timer.tsx";
+import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
+import { Timer } from "../components/timer.tsx";
+import { ROUTES } from "../constants/route.tsx";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { LIST_TURTLES, TURTLES } from "../constants/links.ts";
+import { IAddressWallet, TSwiper } from "../types/ts-common.ts";
+import arrowright from "/components/other/arrow-right.svg";
+import arrowleft from "/components/other/arrow-left.svg";
+import styles from "../styles/pages/home.module.scss";
+import "swiper/css";
+import "swiper/css/pagination";
+import "../index.css";
 
-let swiperInstance = null;
-export const Home = () => {
-    const navigate = useNavigate();
-    const [turtle, setTurtle] = useState(0)
-    const [isConnect, setIsConnect] = useState(true)
+let swiperInstance: TSwiper = null;
+export const Home: FC<IAddressWallet> = ({ address }) => {
+  const navigate = useNavigate();
+  const [turtle, setTurtle] = useState<number>(0);
+  const [isBlock, setIsBlock] = useState<boolean>(false);
 
-    const handlerPlusTurtle = () => {
-        if (!NAMES_TURTLES[turtle + 1]) setTurtle(0)
-        else setTurtle(state => state + 1)
-        swiperInstance.slideNext();
-    }
-    const handlerMinusTurtle = () => {
-        if (!turtle) setTurtle(() => NAMES_TURTLES.length)
-        setTurtle(state => state - 1)
-        swiperInstance.slidePrev()
-    }
-    const handlerNavigateToAllTurtles = () => navigate(LIST_ROUTES.listTurtles)
+  const handlerNextTurtle = () => {
+    if (isBlock) return;
+    if (!TURTLES[turtle + 1]) setTurtle(0);
+    else setTurtle(state => state + 1);
+    swiperInstance?.slideNext();
+    handlerIsBlock();
+  };
+  const handlerPrevTurtle = () => {
+    if (isBlock) return;
+    if (!turtle) setTurtle(() => TURTLES.length);
+    setTurtle(state => state - 1);
+    swiperInstance?.slidePrev();
+    handlerIsBlock();
+  };
+  const handlerNavigateToAllTurtles = () => navigate(ROUTES.listTurtles);
+  const handlerMakeBet = () => navigate(ROUTES.makeBet);
+  const handlerIsBlock = () => {
+    setIsBlock(true);
+    setTimeout(() => setIsBlock(false), 350);
+  };
 
-    return <div className={styles.container}>
-        <div className={styles.container_turtles}>
-            <Swiper
-                onSwiper={(swiper) => swiperInstance = swiper}
-                slidesPerView="auto"
-                loop={true}
-                centeredSlides={true}
-                spaceBetween={30}
+  return (
+    <div className={styles.container}>
+      <div className={styles.container_turtles}>
+        <Swiper
+          onSwiper={swiper => (swiperInstance = swiper)}
+          slidesPerView="auto"
+          loop={true}
+          centeredSlides={true}
+          spaceBetween={30}
+        >
+          {TURTLES.map(el => (
+            <SwiperSlide
+              key={el.id}
+              className={styles.container_turtles_slider}
             >
-                {TURTLES.map(el => <SwiperSlide key={el.id}
-                                                className={styles.container_turtles_slider}>
-                    {el.id === turtle ?
-                        <img className={styles.container_turtles_slider_active} src={el.img} alt="turtle"/> : <img
-                            style={{width: '90%'}}
-                            src={el.img}
-                            alt=""/>}
-                </SwiperSlide>)}
-                <div className={styles.container_turtles_additional}></div>
-                <div className={styles.container_turtles_header}>
-                    <div className={styles.container_turtles_header_ellipse}></div>
-                    <div className={styles.container_turtles_header_ellipse}></div>
-                    <img src={arrowleft} alt="arrow-left" onClick={handlerMinusTurtle}/>
-                    <p className={styles.container_turtles_header_name}>{NAMES_TURTLES[turtle]}</p>
-                    <img src={arrowright} alt="arrow-right" onClick={handlerPlusTurtle}/>
-                </div>
-                <div className={styles.container_turtles_ton}>
-                    <p>Поставили:</p>
-                    <p>0.4 TON</p>
-                </div>
-            </Swiper>
+              {el.id === turtle ? (
+                <img
+                  className={styles.container_turtles_slider_active}
+                  src={el.svg}
+                  alt="turtle"
+                />
+              ) : (
+                <img style={{ width: "90%" }} src={el.svg} alt="turtle" />
+              )}
+            </SwiperSlide>
+          ))}
+          <div className={styles.container_turtles_additional}></div>
+          <div className={styles.container_turtles_header}>
+            <div className={styles.container_turtles_header_ellipse}></div>
+            <div className={styles.container_turtles_header_ellipse}></div>
+            <img src={arrowleft} alt="arrow-left" onClick={handlerPrevTurtle} />
+            <p className={styles.container_turtles_header_name}>
+              {TURTLES[turtle].name}
+            </p>
+            <img
+              src={arrowright}
+              alt="arrow-right"
+              onClick={handlerNextTurtle}
+            />
+          </div>
+          <div className={styles.container_turtles_ton}>
+            <p>Поставили:</p>
+            <p>0.4 TON</p>
+          </div>
+        </Swiper>
+      </div>
+      <div className={styles.container_bl}>
+        <div className={styles.container_bl_list}>
+          <div className={styles.container_bl_list_hero}>
+            {LIST_TURTLES.map(el => (
+              <div key={el.id}>
+                <img src={el.img} alt="turtle" />
+              </div>
+            ))}
+          </div>
+          <BtnCommon
+            handlerClick={handlerNavigateToAllTurtles}
+            text={"Список черепах"}
+          />
         </div>
-        <div className={styles.container_bl}>
-            <div className={styles.container_bl_list}>
-                <div className={styles.container_bl_list_hero}>{LIST_TURTLES.map(el => <div key={el.id}><img
-                    src={el.img}
-                    alt="turtle"/>
-                </div>)}</div>
-                <BtnCommon handlerClick={handlerNavigateToAllTurtles}
-                           text={'Список черепах'}/>
-            </div>
-            <div className={styles.container_bl_footer}>
-                <Timer/>
-                <div className={styles.container_bl_footer_button}>
-                    <div className={styles.container_bl_footer_button_ellipse}></div>
-                    {isConnect ? <BtnConnectTg/> : <BtnCommon height={'38px'} text={'Сделать ставку'} width={'170px'}/>}
-                </div>
-            </div>
+        <div className={styles.container_bl_footer}>
+          <Timer />
+          <div className={styles.container_bl_footer_button}>
+            <div className={styles.container_bl_footer_button_ellipse}></div>
+            {address ? (
+              <BtnCommon
+                handlerClick={handlerMakeBet}
+                text={"Сделать ставку"}
+              />
+            ) : (
+              <BtnConnectTg />
+            )}
+          </div>
         </div>
+      </div>
     </div>
-}
+  );
+};

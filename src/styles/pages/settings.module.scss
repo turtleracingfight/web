@@ -1,5 +1,5 @@
-@import './mixins.module';
-@import './variables.module';
+@import '../mixins.module';
+@import '../variables.module';
 
 .container {
   @include bl-flex-center(flex-start, flex-start, row, 0);
@@ -32,11 +32,10 @@
 
       & > p {
         @include bl-flex-center(flex-start, center, row, 5%);
+        @include width-sz-al-cl(auto, 14px, center, auto);
         @include wh-ht(100%, 32px);
         margin: 5px;
         padding-left: 20%;
-        text-align: center;
-        font-size: 14px;
 
         &:hover {
           background: $back-linear-gradient-left;;

@@ -20,9 +20,10 @@
 }
 
 .bt_default {
-  @include bl-flex-center(space-around, center, row, 0);
+  @include bl-flex-center(center, center, row, 0);
+  @include wh-ht-r(auto, 4.5vh, 60px);
+  text-wrap: nowrap;
   font-size: 14px;
-  border-radius: 60px;
   color: white;
   cursor: pointer;
   background: rgba(1, 1, 1, 1);

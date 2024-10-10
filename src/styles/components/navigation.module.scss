@@ -3,39 +3,32 @@
 @import "../common.module";
 
 .container {
-  position: absolute;
-  top: 90vh;
+  @include bl-position-fx(90vh);
+  position: fixed;
   width: 90%;
   z-index: 10;
   overflow: hidden;
 
   &_content {
     @include bl-flex-center(center, center, row, 0);
-    width: 100%;
+    @include wh-ht-r(100%, auto, 30px);
     padding: 2px;
-    border-radius: 30px;
 
     &_links {
       @include bl-flex-center(space-around, center, row, 5%);
-      @include wh-ht-r(100%, 50px, 30px);
-      padding: 2px;
+      @include wh-ht-r(99%, 50px, 30px);
 
       &_ellipse {
         @extend .ellipse;
-        width: 8%;
-        height: 1vh;
-        transform: translateY(-3.5vh);
-        filter: blur(8px);
-        background: $yellow-ellipse;
+        @include wh-ht(8%, 1vh);
+        @include ellipse-default(-3.5vh, 8px, $yellow-ellipse);
         z-index: 1;
       }
 
       & > button {
         @include bl-flex-center(center, center, row, 0);
-        @include wh-ht-r(100%, auto, 100px);
-        @include back-bor(none, none);
-        margin: 3.5% 0;
-        flex-grow: 1;
+        @include wh-ht(80%, 5vh);
+        @include back-bor-none();
       }
     }
   }
@@ -48,8 +41,6 @@
     &_content {
       &_links {
         &_ellipse {
-          width: 8%;
-          filter: blur(8px);
           transform: translateY(-5vh);
         }
       }
@@ -64,8 +55,7 @@
     &_content {
       &_links {
         &_ellipse {
-          width: 5%;
-          filter: blur(8px);
+          @include wh-ht(4%, 1vh);
           transform: translateY(-3.2vh);
         }
       }

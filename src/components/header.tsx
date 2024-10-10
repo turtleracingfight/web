@@ -1,25 +1,44 @@
-import {memo, useState} from "react";
-import wallet from '../assets/wallet.svg'
-import settings from '../assets/settings.svg'
-import styles from '../styles/components/header.module.scss'
-import {useNavigate} from "react-router-dom";
+import { FC, memo, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CURRENCY } from "../constants/links.ts";
+import { ROUTES } from "../constants/route.tsx";
+import { IHeader } from "../types/ts-header.ts";
+import { requestTon } from "../api/connect.ts";
+import settings from "/pages/in-settings.svg";
+import wallet from "/pages/in-wallet.svg";
+import styles from "../styles/components/header.module.scss";
 
-const countTon = 1.533
+let localAddress: string | undefined = undefined;
+export const Header: FC<IHeader> = memo(({ isMargin, address }) => {
+  const navigate = useNavigate();
+  const [balance, setBalance] = useState<number>(0);
 
-export const Header = memo(({isMargin}: { isMargin: boolean }) => {
-    const navigate = useNavigate()
-    const [connected, setConnected] = useState(false);
-    const handlerConnectWallet = () => {
-        setConnected(true)
-        navigate('/connect')
-    }
-    const handlerNavigateToSettings = () => navigate('/settings')
+  const handlerConnectWallet = () => navigate(ROUTES.connect);
+  const handlerNavigateToSettings = () => navigate(ROUTES.settings);
 
-    return <div className={styles.container} style={{width: isMargin ? '90%' : ''}}>
-        <div><img src={settings} alt="settings" onClick={handlerNavigateToSettings}/></div>
-        <div className={styles.container_wallet}>
-            <p>{connected ? `${countTon} TON` : 'Подключить'}</p>
-            <img onClick={handlerConnectWallet} src={wallet} alt="wallet"/>
-        </div>
+  if (localAddress !== address) localAddress = address;
+
+  useEffect(() => {
+    if (address) requestTon.getTonBalance(address, setBalance);
+  }, [address]);
+
+  useEffect(() => {
+    if (!address) setBalance(0);
+  }, [address]);
+
+  return (
+    <div className={styles.container} style={{ width: isMargin ? "90%" : "" }}>
+      <div>
+        <img
+          src={settings}
+          alt="settings"
+          onClick={handlerNavigateToSettings}
+        />
+      </div>
+      <div className={styles.container_wallet}>
+        <p>{balance ? `${balance.toFixed(2)} ${CURRENCY}` : "Подключить"}</p>
+        <img onClick={handlerConnectWallet} src={wallet} alt="wallet" />
+      </div>
     </div>
-})
+  );
+});

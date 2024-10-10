@@ -1,6 +1,6 @@
-@import 'mixins.module';
-@import './variables.module';
-@import './common.module';
+@import '../mixins.module';
+@import '../variables.module';
+@import '../common.module';
 
 .container {
   width: 100%;
@@ -32,7 +32,7 @@
 
         & > p {
           @include bl-flex-center(center, center, row, 0);
-          @include wh-ht-r(100%, 38px, 30px);
+          @include wh-ht-r(100%, 4.5vh, 30px);
           background: $back-linear-gradient;
         }
 
@@ -49,6 +49,7 @@
             @include bl-flex-center(flex-end, flex-start, column, 0);
 
             & > p {
+              text-wrap: nowrap;
               font-family: DigitalICG;
               width: 62px;
               margin: 0;
@@ -75,8 +76,8 @@
 
           img {
             position: relative;
-            top: 40%;
-            width: 50%;
+            top: 5.3vh;
+            width: 60%;
           }
 
           & > p {
@@ -87,7 +88,7 @@
 
         & > p {
           @include bl-flex-center(center, center, row, 0);
-          @include wh-ht-r(100%, 38px, 30px);
+          @include wh-ht-r(100%, 4.5vh, 5vh);
           background: $back-linear-gradient;
         }
       }
@@ -121,12 +122,45 @@
 
     &_bl {
       &_stats {
+        &_elipse {
+          @extend .ellipse;
+          @include wh-ht(45%, 4vh);
+          left: 25%;
+          filter: blur(40px);
+        }
+
         &_bet {
           &_content {
             img {
               position: relative;
-              top: 75%;
+              top: 65%;
               width: 50%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(min-height: 1366px) {
+  .container {
+    top: 88vh;
+
+    &_bl {
+      &_stats {
+        &_elipse {
+          @include wh-ht(55%, 4vh);
+          left: 20%;
+          filter: blur(55px);
+        }
+
+        &_bet {
+          &_content {
+            img {
+              position: relative;
+              top: 65%;
+              width: 60%;
             }
           }
         }

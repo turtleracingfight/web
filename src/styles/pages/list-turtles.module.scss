@@ -23,23 +23,22 @@
 
 
       &_content {
+        @include bl-flex-center(flex-start, center, row, 0);
+        @include wh-ht(50%, 12vh);
         color: white;
 
         &_elipse {
           @extend .ellipse;
-          @include wh-ht(90%, 5vh);
-          transform: translate(-12%);
+          @include wh-ht(90%, 4vh);
+          left: -30%;
           filter: blur(35px);
           background: $lime-background;
-          box-shadow: $yellow-shadow;
         }
 
-        @include bl-flex-center(center, center, row, 0);
-        @include wh-ht(50%, 12vh);
 
         & > img {
           z-index: 2;
-          height: 13vh;
+          height: 12vh;
         }
 
         & > p {
@@ -52,12 +51,31 @@
         @include bl-flex-center(space-around, center, column, 0);
         @include wh-ht(50%, 12vh);
 
+        & > button {
+          @include wh-ht(90% !important, 4.5vh !important);
+        }
+
         & > p {
           @include bl-flex-center(center, center, row, 0);
-          @include wh-ht-r(172px, 34px, 30px);
+          @include wh-ht-r(90%, 4.5vh, 30px);
           color: white;
           margin: 0;
           background: $back-linear-gradient;
+        }
+      }
+    }
+  }
+}
+
+@media(max-height: 800px) {
+  .container {
+    &_bl {
+      &_turtle {
+        &_content {
+          &_elipse {
+            left: -40%;
+            filter: blur(25px);
+          }
         }
       }
     }
@@ -69,13 +87,20 @@
     &_bl {
       &_turtle {
         &_content {
+          @include bl-flex-center(flex-start, center, row, 8%);
+
+          & > p {
+            font-size: 17px;
+          }
+
+          & > img {
+            height: 17vh;
+          }
+
           &_elipse {
-            @extend .ellipse;
-            @include wh-ht(70%, 6vh);
-            transform: translate(-10%);
-            filter: blur(40px);
-            background: $lime-background;
-            box-shadow: $yellow-shadow;
+            @include wh-ht(90%, 5vh);
+            left: -35%;
+            filter: blur(45px);
           }
         }
       }

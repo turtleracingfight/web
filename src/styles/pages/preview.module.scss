@@ -1,4 +1,4 @@
-@import './mixins.module';
+@import '../mixins.module';
 
 .elem {
   @include bl-flex-center(center, center, column, 3px);
@@ -108,7 +108,7 @@
     @include bl-flex-center(center, center, row, 5%);
 
     & > button {
-      @include wh-ht-r(26px, 26px, 30px);
+      @include wh-ht-r(29px, 29px, 30px);
       background: none;
       border: solid 1px white;
     }
@@ -118,7 +118,42 @@
       @include bl-flex-center(space-around, center, row, 0);
 
       & > div {
-        @include wh-ht-r(10px, 10px, 30px);
+        @include wh-ht-r(9px, 9px, 30px);
+      }
+    }
+  }
+}
+
+@media (min-height: 1024px) {
+  .container {
+    &_content {
+      &_elipse {
+        @include wh-ht(55%, 13vh);
+        @include ellipse(65px, 8vh);
+      }
+    }
+
+    &_switcher {
+      width: 100%;
+      margin-bottom: 5%;
+      @include bl-flex-center(center, center, row, 2%);
+
+      & > button {
+        @include bl-flex-center(center, center, row, 0);
+        @include wh-ht-r(40px, 40px, 30px);
+
+        & > img {
+          width: 10px;
+        }
+      }
+
+      & > div {
+        width: 30%;
+        @include bl-flex-center(space-around, center, row, 0);
+
+        & > div {
+          @include wh-ht-r(10px, 10px, 30px);
+        }
       }
     }
   }
