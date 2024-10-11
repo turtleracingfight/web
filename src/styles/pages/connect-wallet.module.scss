@@ -1,5 +1,6 @@
 @import '../mixins.module';
 @import '../variables.module';
+@import '../common.module';
 
 .container {
   @include bl-flex-center(space-between, center, column, 0);
@@ -14,7 +15,7 @@
     @include bl-flex-center(center, center, column, 2%);
 
     & > p {
-      @include width-sz-al-cl(278px, 14px, center, $grey-light);
+      @include width-sz-al-cl(278px, 14px, center, $grey);
     }
   }
 
@@ -26,7 +27,7 @@
 
 
     & > p {
-      @include width-sz-al-cl(278px, 14px, center, $grey-light);
+      @include width-sz-al-cl(278px, 14px, center, $grey);
       margin: 0;
     }
 
@@ -35,6 +36,7 @@
     }
 
     & > button {
+      width: 65%;
       margin-top: 6%;
     }
   }
@@ -47,11 +49,20 @@
     }
 
     &_back {
-      @include wh-ht(100%, 20vh);
-      background: $ellipse-background-gradient;
+      @extend .ellipse;
+      @include wh-ht(100%, 14vh);
       box-shadow: 0 0 80px $yellow-ellipse;
       filter: blur(60px);
-      position: absolute;
+    }
+  }
+}
+
+@media (max-height: 680px) {
+  .container {
+    &_connected {
+      & > button {
+        height: 5vh;
+      }
     }
   }
 }

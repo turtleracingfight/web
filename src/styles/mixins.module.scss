@@ -1,5 +1,5 @@
 @import './variables.module';
-//block
+//position-block
 @mixin bl-flex-center($justify, $align, $direction, $gap) {
   display: flex;
   justify-content: $justify;
@@ -45,6 +45,12 @@
   top: $top;
 }
 
+@mixin bl-position-rl($top) {
+  position: relative;
+  top: $top;
+}
+
+
 @mixin border-im-sce($bis, $border) {
   border-image-slice: 1;
   border-image-source: $bis;
@@ -69,4 +75,15 @@
   transform: translateY($trY);
   filter: blur($blur);
   background: $background;
+}
+
+@mixin content-block($back,$left,$top) {
+  content: '';
+  position: absolute;
+  left: $left;
+  top: $top;
+  z-index: -1;
+  border-radius: 60px;
+  padding: 1px;
+  background: $back;
 }

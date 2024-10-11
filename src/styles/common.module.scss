@@ -2,9 +2,9 @@
 @import './variables.module';
 
 .ellipse {
-  position: absolute;
   background: $ellipse-background-gradient;
-  box-shadow: 0 5px 5px rgba(186, 189, 28, 1);
+  box-shadow: 0 5px $lemon;
+  position: absolute;
   border-radius: 100%;
   z-index: -1;
 }
@@ -12,34 +12,25 @@
 .bt_connect_tg {
   @include bl-flex-center(center, center, row, 5px);
   @include wh-ht-r(200px, 38px, 60px);
+  background: $blue;
+  color: $white;
   font-size: 14px;
-  background: rgba(0, 152, 234, 1);
-  color: white;
   border: none;
-  cursor: pointer;
 }
 
 .bt_default {
   @include bl-flex-center(center, center, row, 0);
   @include wh-ht-r(auto, 4.5vh, 60px);
+  color: $white;
+  background: $back;
+  position: relative;
   text-wrap: nowrap;
   font-size: 14px;
-  color: white;
-  cursor: pointer;
-  background: rgba(1, 1, 1, 1);
   border: none;
-  position: relative;
 
   &:before {
     @include wh-ht-r(100%, 100%, 60px);
-    content: "";
-    background: $ellipse-background-gradient;
-    border-radius: 60px;
-    left: -1px;
-    top: -1px;
-    padding: 1px;
-    position: absolute;
-    z-index: -1;
+    @include content-block($ellipse-background-gradient, -1px, -1px);
   }
 
   & > p {
@@ -48,8 +39,8 @@
   }
 
   & > img {
-    transition: 300ms;
     @include wh-ht(9px, 11px);
+    transition: 300ms;
     padding: 0 10px;
   }
 }

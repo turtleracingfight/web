@@ -7,6 +7,7 @@
   @include wh-ht(100%, 99.4vh);
   @include border-im-sce($back-linear-gradient-top-bottom, auto);
   position: fixed;
+  box-shadow: 0 0 15px $green-ellipse;
   color: white;
   border-top: 0.4vh solid;
   border-bottom: 0.4vh solid;
@@ -31,13 +32,13 @@
 
     &_winning {
       @include bl-flex-center(center, center, row, 2px);
-      @include wh-ht-r(320px, 80px, 60px);
+      @include wh-ht-r(85%, 80px, 60px);
       position: relative;
       background: $back-linear-gradient;
-      color: $grey-light;
+      color: $grey;
 
-      & > input {
-        @include width-sz-al-cl(auto, 50px, right, white);
+      input {
+        @include width-sz-al-cl(50%, 50px, right, white);
         @include back-bor-none();
         min-width: 10px;
         max-width: 160px;
@@ -46,16 +47,14 @@
 
       &:before {
         @include wh-ht-r(100%, 80px, 60px);
+        @include content-block($back-gradient-value-ton, -2px, -2px);
         background: $back-gradient-value-ton;
-        position: absolute;
-        content: "";
-        left: -2px;
-        top: -2px;
         padding: 2px;
-        z-index: -1;
       }
 
       & > p {
+        text-wrap: nowrap;
+        overflow: hidden;
         padding-top: 4px;
         font-size: 50px;
       }
@@ -68,20 +67,20 @@
       margin-top: 10%;
 
       & > button {
-        width: 30%;
+        width: 40%;
       }
 
       &_elipse {
         @extend .ellipse;
-        @include wh-ht(45%, 4vh);
-        filter: blur(30px);
+        @include wh-ht(45%, 5vh);
+        filter: blur(25px);
       }
 
     }
   }
 
   & > p {
-    @include width-sz-al-cl(339px, auto, center, $grey-light);
+    @include width-sz-al-cl(339px, auto, center, $grey);
     margin-top: 20vh;
   }
 
@@ -90,6 +89,16 @@
 @media(max-height: 900px) {
   .container {
     height: 99.3vh;
+
+    &_content {
+      &_button {
+
+        &_elipse {
+          @include wh-ht(40%, 3vh);
+          filter: blur(35px);
+        }
+      }
+    }
   }
 }
 
@@ -99,8 +108,39 @@
 
     &_content {
       &_button {
+        & > button {
+          width: 25%;
+        }
+
         &_elipse {
-          @extend .ellipse;
+          @include wh-ht(40%, 3vh);
+          filter: blur(35px);
+        }
+      }
+
+      &_winning {
+        justify-content: center !important;
+
+        & > input {
+          width: 100% !important;
+          max-width: 300px;
+        }
+      }
+    }
+  }
+}
+
+@media(max-height: 680px) {
+  .container {
+    height: 99.3vh;
+
+    &_content {
+      &_button {
+        & > button {
+          height: 5vh;
+        }
+
+        &_elipse {
           @include wh-ht(40%, 3vh);
           filter: blur(35px);
         }

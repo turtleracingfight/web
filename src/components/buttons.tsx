@@ -1,7 +1,7 @@
 import tg from "/components/other/in-ton.svg";
 import styles from "../styles/common.module.scss";
 import arrowRight from "/components/other/arrow-right.svg";
-import { TBtnCommon } from "../types/button-types.ts";
+import { TBtnCommon } from "../types/ts_buttons.ts";
 import { FC } from "react";
 import { useTonConnectModal } from "@tonconnect/ui-react";
 
@@ -9,7 +9,9 @@ export const BtnConnectTg = () => {
   const { open } = useTonConnectModal();
   return (
     <button onClick={open} className={styles.bt_connect_tg}>
-      <img src={tg} alt="tg" />
+      <div>
+        <img src={tg} alt="connect-ton" />
+      </div>
       <p>Подключить кошелёк</p>
     </button>
   );

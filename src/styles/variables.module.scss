@@ -1,13 +1,16 @@
 //colors
 $yellow-ellipse: #A3B940;
 $green-ellipse: #39712A;
-$grey-light: rgba(112, 112, 112, 1);
-$black: rgba(1, 1, 1, 1);
-$dark-grey: rgba(29, 29, 29, 1);
+$white: #FEFDFF;
+$back: #010101;
+$lemon: #BABD1C;
+$blue: #0098EA;
+$grey: #707070;
+$grey2: #1D1D1D;
 
 //backgrounds
 $ellipse-background-gradient: linear-gradient(180deg, $yellow-ellipse 0%, $green-ellipse 100%);
-$yellow-shadow: 0 5px 5px rgba(186, 189, 28, 1);
+$yellow-shadow: 0 5px 5px $lemon;
 $lime-background: radial-gradient(circle, rgba(174, 255, 78, 0.6) 0%, rgba(0, 0, 0, 0) 70%);
 $back-linear-gradient: radial-gradient(41.03% 100% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%),
 linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%);
@@ -17,6 +20,17 @@ $back-linear-gradient-top-bottom: linear-gradient(90deg, #010101 0%, #3F4B25 51%
 $back-gradient-value-ton: linear-gradient(90deg, #010101 0%, #71893F 20%, #010101 100%);
 $flashlight: radial-gradient(23.75% 30% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%),
 linear-gradient(179.93deg, #0C0C0C -1.98%, #000000 99.94%);
+$home-background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
+radial-gradient(
+                23.75% 58.62% at 50% 0%,
+                rgba(136, 138, 53, 0.3) 0%,
+                rgba(1, 1, 1, 0.1) 100%
+);
+$additional-home: linear-gradient(
+                rgba(113, 137, 63, 1) 26%,
+                rgba(57, 113, 42, 1) 56%,
+                rgba(0, 0, 0, 1) 70%
+);
 
 //block
 $height-page: 85vh;

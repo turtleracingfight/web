@@ -7,7 +7,7 @@
   position: absolute;
 
   &:before {
-    background: $black;
+    background: $back;
     content: "";
     border-radius: 30px;
     position: absolute;
@@ -27,7 +27,7 @@
   }
 
   p {
-    @include size-color(12px, $grey-light);
+    @include size-color(12px, $grey);
     margin: 0;
   }
 
@@ -46,7 +46,7 @@
   }
 
   &:nth-child(2) {
-    border: solid 1px $grey-light;
+    border: solid 1px $grey;
     @include wh-ht(65px, 29px);
     transform: translate(-165%, 20vh) rotate(-10deg);
 
@@ -60,7 +60,7 @@
   }
 
   &:nth-child(3) {
-    border: solid 1px $grey-light;
+    border: solid 1px $grey;
     @include wh-ht(87px, 39px);
     transform: translate(150%, 15vh) rotate(15deg);
 

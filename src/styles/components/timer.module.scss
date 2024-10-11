@@ -1,26 +1,28 @@
 @import '../mixins.module';
+@import '../variables.module';
 
 .container {
   @include bl-flex-center(center, center, row, 0);
   width: 100%;
 
-  p {
-    width: 90px;
-    color: white;
-    font-size: 60px;
+  & > p {
+    @include width-sz-al-cl(90px, 60px, center, $white);
     margin: 0;
-    text-align: center;
   }
 
   p:nth-child(even) {
-    width: 15px;
+    width: 3%;
   }
 }
 
-@media(max-height: 670px) {
+@media(max-height: 800px) {
   .container {
-    p {
+    & > p {
       font-size: 45px;
+    }
+
+    p:nth-child(even) {
+      width: 0;
     }
   }
 }

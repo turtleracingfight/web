@@ -7,9 +7,13 @@ import { requestTon } from "../api/connect.ts";
 import settings from "/pages/in-settings.svg";
 import wallet from "/pages/in-wallet.svg";
 import styles from "../styles/components/header.module.scss";
+import {
+  helperExcessMargin,
+  helperUnnecessaryHeader
+} from "../utils/usefulFunc.ts";
 
 let localAddress: string | undefined = undefined;
-export const Header: FC<IHeader> = memo(({ isMargin, address }) => {
+export const Header: FC<IHeader> = memo(({ address, pathname }) => {
   const navigate = useNavigate();
   const [balance, setBalance] = useState<number>(0);
 
@@ -26,8 +30,17 @@ export const Header: FC<IHeader> = memo(({ isMargin, address }) => {
     if (!address) setBalance(0);
   }, [address]);
 
+  const isMargin: boolean = helperExcessMargin(pathname);
+  const isUnnecessary: boolean = helperUnnecessaryHeader(pathname);
+
   return (
-    <div className={styles.container} style={{ width: isMargin ? "90%" : "" }}>
+    <div
+      className={styles.container}
+      style={{
+        width: isMargin ? "90%" : "",
+        display: isUnnecessary ? "none" : "flex"
+      }}
+    >
       <div>
         <img
           src={settings}

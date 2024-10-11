@@ -9,7 +9,7 @@ export const helperNavigationStyles = (path: string) => {
     case ROUTES.statistics:
       currentPage = "20.14%";
       break;
-    case ROUTES.info:
+    case ROUTES.preview:
       currentPage = "80.14%";
       break;
   }

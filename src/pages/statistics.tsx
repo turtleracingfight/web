@@ -12,7 +12,7 @@ export const Statistics = () => {
                 <p>Ставка</p>
                 <img src={el.svg} alt={el.name} />
               </div>
-              <p>{(Math.random() * 100).toFixed(2)} TON</p>
+              <p>{(Math.random() * 100).toFixed(2)} {CURRENCY}</p>
             </div>
             <div className={styles.container_bl_stats_elipse}></div>
             <div className={styles.container_bl_stats_win}>

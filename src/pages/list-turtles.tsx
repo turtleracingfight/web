@@ -14,7 +14,7 @@ export const ListTurtles = () => {
           <div className={styles.container_bl_turtle}>
             <div className={styles.container_bl_turtle_content}>
               <div className={styles.container_bl_turtle_content_elipse}></div>
-              <img height={"13vh"} src={el.svg} alt={el.name} />
+              <img src={el.svg} alt={el.name} />
               <p>{el.name}</p>
             </div>
             <div className={styles.container_bl_turtle_bet}>
@@ -24,7 +24,6 @@ export const ListTurtles = () => {
               <BtnCommon
                 handlerClick={handlerMakeBet}
                 text={"Сделать ставку"}
-                width={"172px"}
               />
             </div>
           </div>

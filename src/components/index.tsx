@@ -3,7 +3,6 @@ import { Header } from "./header.tsx";
 import { Navigation } from "./navigation.tsx";
 import {
   helperExcessMargin,
-  helperUnnecessaryHeader,
   helperUnnecessaryNavigation
 } from "../utils/usefulFunc.ts";
 import { useLocation } from "react-router-dom";
@@ -17,9 +16,7 @@ export const Layout = () => {
   return (
     <>
       <div style={{ margin: isMargin ? "" : "0 5%" }}>
-        {helperUnnecessaryHeader(pathname) ? null : (
-          <Header address={addressTon} isMargin={isMargin} />
-        )}
+        <Header pathname={pathname} address={addressTon} />
         <RoutePages address={addressTon} />
         {helperUnnecessaryNavigation(pathname) ? null : <Navigation />}
       </div>

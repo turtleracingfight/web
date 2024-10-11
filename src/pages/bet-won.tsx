@@ -4,12 +4,12 @@ import { BtnCommon } from "../components/buttons.tsx";
 import { ChangeEvent, useState } from "react";
 import { CURRENCY } from "../constants/links.ts";
 
-const LIGHT_GREY = "rgba(112, 112, 112, 1)";
+const LIGHT_GREY = "#707070";
 
 export const BetWon = () => {
   const [value, setValue] = useState<string>("");
   const [isInput, setIsInput] = useState<boolean>(false);
-  const [isWinning, setIsWinning] = useState<boolean>(true);
+  const [isWinning, setIsWinning] = useState<boolean>(false);
 
   const handlerClickInput = () => setIsInput(true);
   const handlerBlurInput = () => setIsInput(false);

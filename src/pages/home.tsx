@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
 import { ROUTES } from "../constants/route.tsx";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { LIST_TURTLES, TURTLES } from "../constants/links.ts";
+import { CURRENCY, LIST_TURTLES, TURTLES } from "../constants/links.ts";
 import { IAddressWallet, TSwiper } from "../types/ts-common.ts";
 import arrowright from "/components/other/arrow-right.svg";
 import arrowleft from "/components/other/arrow-left.svg";
@@ -40,6 +40,16 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     setTimeout(() => setIsBlock(false), 350);
   };
 
+  const memoListTurtles = useMemo(
+    () =>
+      LIST_TURTLES.map(el => (
+        <div key={el.id}>
+          <img src={el.img} alt="turtle" />
+        </div>
+      )),
+    []
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.container_turtles}>
@@ -49,6 +59,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
           loop={true}
           centeredSlides={true}
           spaceBetween={30}
+          allowTouchMove={false}
         >
           {TURTLES.map(el => (
             <SwiperSlide
@@ -82,19 +93,13 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
           </div>
           <div className={styles.container_turtles_ton}>
             <p>Поставили:</p>
-            <p>0.4 TON</p>
+            <p>0.4 {CURRENCY}</p>
           </div>
         </Swiper>
       </div>
       <div className={styles.container_bl}>
         <div className={styles.container_bl_list}>
-          <div className={styles.container_bl_list_hero}>
-            {LIST_TURTLES.map(el => (
-              <div key={el.id}>
-                <img src={el.img} alt="turtle" />
-              </div>
-            ))}
-          </div>
+          <div className={styles.container_bl_list_hero}>{memoListTurtles}</div>
           <BtnCommon
             handlerClick={handlerNavigateToAllTurtles}
             text={"Список черепах"}

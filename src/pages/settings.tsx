@@ -16,7 +16,6 @@ export const Settings = () => {
       >
         <div className={styles.container_lang_button}>
           <BtnCommon
-            height={"40px"}
             text={"Выберите язык"}
             handlerClick={handlerLanguage}
             rtArrow={isOpen}

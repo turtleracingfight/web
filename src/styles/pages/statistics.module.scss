@@ -13,7 +13,7 @@
     &_border {
       @include wh-ht(100%, 1px);
       margin-top: 5%;
-      background: $dark-grey;
+      background: $grey2;
     }
 
     &_stats {
@@ -56,7 +56,7 @@
               font-size: 16px;
 
               &:nth-child(1) {
-                color: $grey-light;
+                color: $grey;
                 font-family: cygre-semibold;
               }
             }
@@ -75,8 +75,7 @@
           overflow: hidden;
 
           img {
-            position: relative;
-            top: 5.3vh;
+            @include bl-position-rl(5.3vh);
             width: 60%;
           }
 
@@ -104,9 +103,8 @@
       &_stats {
         &_bet {
           &_content {
-            img {
-              position: relative;
-              top: 55%;
+            & > img {
+              @include bl-position-rl(5.5vh);
               width: 50%;
             }
           }
@@ -123,8 +121,7 @@
     &_bl {
       &_stats {
         &_elipse {
-          @extend .ellipse;
-          @include wh-ht(45%, 4vh);
+          @include wh-ht(40%, 4vh);
           left: 25%;
           filter: blur(40px);
         }
@@ -132,8 +129,7 @@
         &_bet {
           &_content {
             img {
-              position: relative;
-              top: 65%;
+              @include bl-position-rl(6.5vh);
               width: 50%;
             }
           }
@@ -150,7 +146,7 @@
     &_bl {
       &_stats {
         &_elipse {
-          @include wh-ht(55%, 4vh);
+          @include wh-ht(45%, 4vh);
           left: 20%;
           filter: blur(55px);
         }
@@ -158,8 +154,7 @@
         &_bet {
           &_content {
             img {
-              position: relative;
-              top: 65%;
+              @include bl-position-rl(6vh);
               width: 60%;
             }
           }

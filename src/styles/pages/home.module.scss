@@ -1,40 +1,39 @@
-@import '../mixins.module';
-@import '../variables.module';
-@import '../common.module';
+@import "../mixins.module";
+@import "../variables.module";
+@import "../common.module";
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
-  width: 100%;
-  height: 85vh;
+  @include wh-ht(100%, 85vh);
   max-height: 70vh;
   border-radius: 30px;
   border-top: 2px solid;
-  border-image-source: linear-gradient(90deg, #010101 0%, #71893F 51%, #010101 100%);
+  border-image-source: $back-linear-gradient-top-bottom;
   border-image-slice: 1;
-  background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
-  radial-gradient(23.75% 58.62% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+  background: $home-background;
 
   &_bl {
     @include bl-flex-center(space-between, center, column, 10px);
     width: 100%;
     flex-grow: 1;
 
-
     &_footer {
-      width: 100%;
       @include bl-flex-center(space-between, center, column, 0);
+      @include wh-ht(100%, 15vh);
       z-index: 2;
-      height: 15vh;
 
       &_button {
-        width: 100%;
         @include bl-flex-center(center, center, column, 0);
+        width: 100%;
+
         & > button {
+          text-wrap: nowrap;
           width: 50%;
         }
+
         &_ellipse {
           @extend .ellipse;
-          @include wh-ht(60%, 4vh);
+          @include wh-ht(50%, 4vh);
           filter: blur(30px);
         }
       }
@@ -43,20 +42,18 @@
     &_list {
       @include bl-flex-center(space-between, center, row, 0);
       @include wh-ht-r(85%, 5vh, 30em);
-      background: radial-gradient(64.71% 553.41% at 3.53% 14.86%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+      background: $back-linear-gradient-left;
       margin-top: 2vh;
       z-index: 1;
 
       &_hero {
         @include bl-flex-center(space-around, center, row, 0px);
-        width: 50%;
+        @include wh-ht(50%, 5vh);
         z-index: -1;
 
         & > div {
-          width: 33px;
-          height: 34px;
-          border-radius: 30em;
-          background: rgba(1, 1, 1, 1);
+          @include wh-ht-r(33px, 34px, 30em);
+          background: $back;
 
           & > img {
             transform: translateY(-3px);
@@ -66,9 +63,9 @@
       }
 
       & > button {
-        width: 44%;
-        position: absolute;
+        @include wh-ht(44%, 5vh);
         left: 45%;
+        position: absolute;
       }
     }
   }
@@ -86,8 +83,7 @@
       top: 0;
 
       &_active {
-        position: relative;
-        top: -4vh;
+        @include bl-position-rl(-4vh);
         width: 100%;
         transform: scale(2);
       }
@@ -95,22 +91,17 @@
 
     &_ton {
       @include bl-flex-center(center, center, column, 10%);
-      position: absolute;
-      width: 116px;
-      height: 52px;
-      border-radius: 30px;
-      top: 10vh;
+      @include wh-ht-r(116px, 52px, 30px);
+      @include bl-position-ab(10vh);
       left: 4%;
       background: $ellipse-background-gradient;
       padding: 1px;
       z-index: -1;
 
       &:before {
-        width: 98%;
-        height: 97%;
+        @include wh-ht-r(98%, 97%, 30px);
         background: black;
         content: "";
-        border-radius: 30px;
         position: absolute;
       }
 
@@ -119,7 +110,7 @@
         margin: 0;
 
         &:nth-child(1) {
-          color: $grey-light;
+          color: $grey;
           font-size: 12px;
         }
 
@@ -131,60 +122,49 @@
     }
 
     &_additional {
-      width: 100%;
-      height: 100%;
-      position: absolute;
+      @include wh-ht(100%, 100%);
+      @include bl-position-ab(8vh);
       border-top-left-radius: 30px;
       border-top-right-radius: 30px;
-      top: 8vh;
-      background: linear-gradient(rgba(113, 137, 63, 1) 26%, rgba(57, 113, 42, 1) 56%, rgba(0, 0, 0, 1) 70%);
+      background: $additional-home;
       z-index: -1;
     }
 
     &_header {
+      @include wh-ht(100%, 8vh);
       @include bl-flex-center(center, center, row, 0);
-      width: 100%;
-      height: 8vh;
+      @include bl-position-ab(0);
       color: white;
-      position: absolute;
-      background: linear-gradient(179.93deg, #141414 -1.98%, #000000 99.94%),
-      radial-gradient(23.75% 58.62% at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%);
+      background: $home-background;
       padding-bottom: 15vh;
       z-index: -2;
       border-radius: 30px 30px 0 0;
-      top: 0;
 
       &_ellipse {
         @extend .ellipse;
-        width: 5%;
-        height: 2vh;
+        @include wh-ht(5%, 2vh);
         top: -2vh;
         filter: blur(8px);
-        background: rgba(186, 189, 28, 1);
+        background: $lemon;
       }
 
       &_ellipse:nth-child(2) {
         @extend .ellipse;
-        width: 12%;
-        height: 2vh;
+        @include wh-ht(12%, 2vh);
         top: -2vh;
         filter: blur(30px);
-        background: rgba(186, 189, 28, 1);
+        background: $lemon;
       }
 
       &_name {
-        width: 150px;
-        text-align: center;
-        font-size: 16px;
-        font-family: 'DigitalICG';
+        @include width-sz-al-cl(150px, 16px, center, auto);
+        font-family: "DigitalICG";
       }
     }
-
   }
 }
 
-
-@media(max-height: 800px) {
+@media (max-height: 800px) {
   .container {
     &_bl {
       &_footer {
@@ -192,6 +172,9 @@
 
         &_button {
           @include bl-flex-center(center, center, column, 0);
+          & > button {
+            width: 60%;
+          }
 
           &_ellipse {
             @extend .ellipse;
@@ -217,7 +200,7 @@
 
     &_turtles {
       &_slider {
-        width: 32% !important;
+        width: 33% !important;
       }
 
       &_ton {
@@ -229,7 +212,7 @@
   }
 }
 
-@media(min-width: 540px) {
+@media (min-width: 540px) {
   .container {
     &_bl {
       &_footer {
@@ -273,35 +256,38 @@
   }
 }
 
-@media(min-height: 1024px) {
+@media (min-height: 1024px) {
   .container {
     border-radius: 60px 60px 0 0;
 
     &_bl {
-
       &_footer {
         margin-top: 5vh;
         z-index: 2;
         height: 15vh;
         @include bl-flex-center(space-between, center, column, 0);
 
+
         &_button {
+          & > button {
+            width: 30%;
+            height: 4.5vh;
+          }
           @include bl-flex-center(center, center, column, 0);
 
           &_ellipse {
-            width: 25%;
+            width: 30%;
           }
         }
       }
 
       &_list {
-        height: 6vh;
+        height: 5vh;
         margin-top: 4vh;
 
         &_hero {
           & > div {
-            width: 50px;
-            height: 51px;
+            @include wh-ht(50px, 51px);
 
             & > img {
               transform: translateY(-2px);
@@ -318,13 +304,10 @@
       }
 
       &_slider {
-        width: 26% !important;
         top: -2vh;
-        height: 17vh;
 
         &_active {
-          position: relative;
-          top: -2vh;
+          @include bl-position-rl(-2vh);
           transform: scale(2);
         }
       }
@@ -334,8 +317,7 @@
       }
 
       &_ton {
-        width: 140px;
-        height: 60px;
+        @include wh-ht(140px, 60px);
         left: 20%;
         top: 27%;
       }
