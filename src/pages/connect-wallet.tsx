@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { CURRENCY } from "../constants/links.ts";
 import { requestTon } from "../api/connect.ts";
-import connectTurtle from "/pages/ct-ton.svg";
+import connectTurtle from "/pages/ct-ton.png";
 import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";

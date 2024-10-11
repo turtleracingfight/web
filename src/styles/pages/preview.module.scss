@@ -1,7 +1,7 @@
 @import '../mixins.module';
 
 .elem {
-  @include bl-flex-center(center, center, column, 3px);
+  @include bl-flex-center(center, center, column, 2%);
   border-radius: 30px;
   padding: 1px;
   position: absolute;

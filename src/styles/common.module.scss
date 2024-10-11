@@ -20,7 +20,7 @@
 
 .bt_default {
   @include bl-flex-center(center, center, row, 0);
-  @include wh-ht-r(auto, 4.5vh, 60px);
+  @include wh-ht-r(auto, 38px, 60px);
   color: $white;
   background: $back;
   position: relative;

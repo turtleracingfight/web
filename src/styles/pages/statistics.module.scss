@@ -70,16 +70,18 @@
         width: 49%;
 
         &_content {
+          width: 100%;
           @include bl-flex-center(space-between, flex-end, row, 0);
           height: 10vh;
           overflow: hidden;
 
-          img {
+          & > img {
             @include bl-position-rl(5.3vh);
-            width: 60%;
+            width: 100px;
           }
 
           & > p {
+            flex-grow: 1;
             font-size: 12px;
             margin: 0;
           }
@@ -128,7 +130,7 @@
 
         &_bet {
           &_content {
-            img {
+            & > img {
               @include bl-position-rl(6.5vh);
               width: 50%;
             }
@@ -153,7 +155,7 @@
 
         &_bet {
           &_content {
-            img {
+            & > img {
               @include bl-position-rl(6vh);
               width: 60%;
             }

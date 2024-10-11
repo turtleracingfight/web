@@ -52,12 +52,12 @@
         @include wh-ht(50%, 12vh);
 
         & > button {
-          @include wh-ht(90% !important, 4.5vh !important);
+          @include wh-ht(172px, 38px);
         }
 
         & > p {
           @include bl-flex-center(center, center, row, 0);
-          @include wh-ht-r(90%, 4.5vh, 30px);
+          @include wh-ht-r(172px, 38px, 30px);
           color: white;
           margin: 0;
           background: $back-linear-gradient;
@@ -101,6 +101,16 @@
             @include wh-ht(90%, 5vh);
             left: -35%;
             filter: blur(45px);
+          }
+        }
+
+        &_bet {
+          & > p {
+            @include wh-ht(300px, 50px);
+          }
+
+          & > button {
+            @include wh-ht(300px, 50px);
           }
         }
       }
