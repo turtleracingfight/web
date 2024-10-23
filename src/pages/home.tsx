@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
@@ -18,11 +18,12 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const navigate = useNavigate();
   const [turtle, setTurtle] = useState<number>(0);
   const [isBlock, setIsBlock] = useState<boolean>(false);
+  const test = useRef(null);
 
   const handlerNextTurtle = () => {
     if (isBlock) return;
     if (!TURTLES[turtle + 1]) setTurtle(0);
-    else setTurtle(state => state + 1);
+    else setTurtle(turtle + 1);
     swiperInstance?.slideNext();
     handlerIsBlock();
   };
@@ -37,7 +38,9 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const handlerMakeBet = () => navigate(ROUTES.makeBet);
   const handlerIsBlock = () => {
     setIsBlock(true);
-    setTimeout(() => setIsBlock(false), 350);
+    setTimeout(() => {
+      setIsBlock(false);
+    }, 350);
   };
 
   const memoListTurtles = useMemo(
@@ -54,12 +57,18 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     <div className={styles.container}>
       <div className={styles.container_turtles}>
         <Swiper
-          onSwiper={swiper => (swiperInstance = swiper)}
+          ref={test}
+          onSwiper={swiper => {
+            swiperInstance = swiper;
+          }}
+          onSlideChange={swiper => {
+            setTurtle(swiper.realIndex);
+          }}
           slidesPerView="auto"
           loop={true}
           centeredSlides={true}
           spaceBetween={30}
-          allowTouchMove={false}
+          allowTouchMove={!isBlock}
         >
           {TURTLES.map(el => (
             <SwiperSlide

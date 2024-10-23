@@ -63,7 +63,6 @@
     &_button {
       @include bl-flex-center(center, center, row, 0);
       width: 100%;
-      z-index: 1;
       margin-top: 10%;
 
       & > button {
@@ -136,12 +135,9 @@
 
     &_content {
       &_button {
-        & > button {
-          height: 5vh;
-        }
 
         &_elipse {
-          @include wh-ht(40%, 3vh);
+          @include wh-ht(45%, 5vh);
           filter: blur(35px);
         }
       }

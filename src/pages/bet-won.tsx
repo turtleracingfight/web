@@ -72,9 +72,9 @@ export const BetWon = () => {
           </div>
         ) : (
           <div className={styles.container_content_button}>
-            {value && (
+            {value ? (
               <div className={styles.container_content_button_elipse}></div>
-            )}
+            ) : null}
             <BtnCommon text={"Подтвердить"} />
           </div>
         )}

@@ -1,81 +1,82 @@
 @font-face {
-    font-family: "cygre-semibold";
-    src: url("../fonts/cygre-semibold.ttf") format("woff2"),
+  font-family: "cygre-semibold";
+  src:
+    url("../fonts/cygre-semibold.ttf") format("woff2"),
     url("../fonts/cygre-semibold.ttf") format("woff");
-    font-weight: normal;
-    font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: "DigitalICG";
-    src: url("../fonts/digitalicg.ttf") format("woff2"),
+  font-family: "DigitalICG";
+  src:
+    url("../fonts/digitalicg.ttf") format("woff2"),
     url("../fonts/digitalicg.ttf") format("woff");
-    font-weight: normal;
-    font-style: normal;
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    background: #010101;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #010101;
 }
 
 p {
-    font-family: "cygre-semibold";
+  font-family: cygre-semibold, "San Francisco";
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .swiper-wrapper {
-    margin-top: 18vh;
-    height: auto;
+  margin-top: 18vh;
+  height: auto;
 }
 
 .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .swiper-slide img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    transition: 300ms;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: 300ms;
 }
 
 @media (max-height: 800px) {
-    .swiper-slide-next {
-        position: relative;
-        left: 5%;
-    }
+  .swiper-slide-next {
+    position: relative;
+    left: 5%;
+  }
 
-    .swiper-slide-prev {
-        position: relative;
-        left: -5%;
-    }
+  .swiper-slide-prev {
+    position: relative;
+    left: -5%;
+  }
 }
 
 @media (min-height: 1024px) {
-    .swiper-slide-next {
-        position: relative;
-        left: 20%;
-    }
+  .swiper-slide-next {
+    position: relative;
+    left: 20%;
+  }
 
-    .swiper-slide-prev {
-        position: relative;
-        left: -20%;
-    }
+  .swiper-slide-prev {
+    position: relative;
+    left: -20%;
+  }
 }
-
