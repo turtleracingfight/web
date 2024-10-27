@@ -1,6 +1,6 @@
-@import '../mixins.module';
-@import '../variables.module';
-@import '../common.module';
+@import "../mixins.module";
+@import "../variables.module";
+@import "../common.module";
 
 .container {
   @include bl-flex-center(center, center, column, 0);
@@ -15,7 +15,6 @@
   & > img {
     margin-top: 10%;
   }
-
 
   &_content {
     @include bl-flex-center(center, center, column, 15px);
@@ -74,7 +73,6 @@
         @include wh-ht(45%, 5vh);
         filter: blur(25px);
       }
-
     }
   }
 
@@ -82,16 +80,28 @@
     @include width-sz-al-cl(339px, auto, center, $grey);
     margin-top: 20vh;
   }
-
 }
 
-@media(max-height: 900px) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
   .container {
     height: 99.3vh;
 
     &_content {
       &_button {
+        &_elipse {
+          display: none;
+        }
+      }
+    }
+  }
+}
 
+@media (max-height: 900px) {
+  .container {
+    height: 99.3vh;
+
+    &_content {
+      &_button {
         &_elipse {
           @include wh-ht(40%, 3vh);
           filter: blur(35px);
@@ -101,7 +111,7 @@
   }
 }
 
-@media(min-height: 1024px) {
+@media (min-height: 1024px) {
   .container {
     height: 99.25vh;
 
@@ -129,13 +139,12 @@
   }
 }
 
-@media(max-height: 680px) {
+@media (max-height: 680px) {
   .container {
     height: 99.3vh;
 
     &_content {
       &_button {
-
         &_elipse {
           @include wh-ht(45%, 5vh);
           filter: blur(35px);

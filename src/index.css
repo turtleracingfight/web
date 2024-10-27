@@ -24,7 +24,13 @@ body {
 }
 
 p {
-  font-family: cygre-semibold, "San Francisco";
+  font-family: cygre-semibold, Calibri;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  p {
+    font-family: "Calibri";
+  }
 }
 
 button {
