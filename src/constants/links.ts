@@ -54,6 +54,19 @@ export const INFO_LIST = [
   }
 ];
 
+export const OBJECT_TURTLES = {
+  "1": { svg: zoom, name: "ЗУМ" },
+  "2": { svg: zoom, name: "ТВЕРДЫНЯ" },
+  "3": { svg: zoom, name: "ЭКШН-ТРЕК" },
+  "4": { svg: zoom, name: "ГЛАДИАТОР" },
+  "5": { svg: zoom, name: "ШТОПОР" },
+  "6": { svg: zoom, name: "ФОРМУЛА-1" },
+  "7": { svg: zoom, name: "ИМУЛЬС" },
+  "8": { svg: zoom, name: "НИТРО" },
+  "9": { svg: zoom, name: "НИНДЗЯ" },
+  "10": { svg: zoom, name: "ПАРА-ПСИ" }
+};
+
 export const TURTLES = [
   { id: 0, svg: zoom, name: "ЗУМ" },
   { id: 1, svg: stronghold, name: "ТВЕРДЫНЯ" },

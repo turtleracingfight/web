@@ -3,21 +3,28 @@ import { memo, useEffect, useState } from "react";
 
 let interval = 0;
 export const Timer = memo(() => {
-  const [hours, setHours] = useState<number>(10);
-  const [minutes, setMinutes] = useState<number>(1);
-  const [seconds, setSeconds] = useState<number>(60);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
+
+  useEffect(() => {
+    const date = new Date();
+    setHours(24 - date.getHours());
+    setMinutes(60 - date.getMinutes());
+    setSeconds(60 - date.getSeconds());
+  }, []);
 
   useEffect(() => {
     if (hours) {
       interval = setInterval(() => {
         if (!minutes) {
           setHours(state => state - 1);
-          setMinutes(60);
+          setMinutes(59);
         }
         if (!seconds) {
           setMinutes(state => state - 1);
         }
-        setSeconds(seconds ? seconds - 1 : 60);
+        setSeconds(seconds ? seconds - 1 : 59);
       }, 1000);
     }
     return () => clearInterval(interval);

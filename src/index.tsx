@@ -7,7 +7,7 @@ import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { THEME } from "@tonconnect/ui";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+  // <StrictMode>
     <BrowserRouter>
       <TonConnectUIProvider
         uiPreferences={{ theme: THEME.DARK }}
@@ -16,5 +16,5 @@ createRoot(document.getElementById("root")!).render(
         <Layout />
       </TonConnectUIProvider>
     </BrowserRouter>
-  </StrictMode>
+  // </StrictMode>
 );

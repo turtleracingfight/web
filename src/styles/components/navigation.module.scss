@@ -1,9 +1,10 @@
-@import '../mixins.module';
+@import "../mixins.module";
 @import "../variables.module";
 @import "../common.module";
 
 .container {
   @include bl-position-fx(90vh);
+  @include bl-flex-center(center, center, row, 0);
   position: fixed;
   width: 90%;
   z-index: 1;
@@ -17,8 +18,6 @@
     &_links {
       @include bl-flex-center(space-around, center, row, 5%);
       @include wh-ht-r(99%, 50px, 30px);
-
-
 
       &_ellipse {
         @extend .ellipse;
@@ -36,7 +35,7 @@
   }
 }
 
-@media(max-height: 800px) {
+@media (max-height: 800px) {
   .container {
     top: 88vh;
 
@@ -49,7 +48,7 @@
   }
 }
 
-@media(min-height: 1024px) {
+@media (min-height: 1024px) {
   .container {
     top: 90vh;
 
@@ -63,4 +62,3 @@
     }
   }
 }
-

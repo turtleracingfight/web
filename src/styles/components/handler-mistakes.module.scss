@@ -1,0 +1,52 @@
+@import "../mixins.module";
+@import "../variables.module";
+
+.container {
+  margin-top: 2vh;
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  &_mistake {
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    width: 85%;
+    height: auto;
+    border-radius: 10px;
+    background: #1d1d1d;
+    gap: 10px;
+
+    &_inf {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      &_img {
+        gap: 7px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: row;
+        & img {
+          width: 40px;
+          height: 40px;
+          margin-left: 4px;
+        }
+        & > h3 {
+          color: #ee384d;
+          margin: 0;
+        }
+      }
+      & > p {
+        width: auto;
+        margin: 0 0 0 52px;
+        color: darkgray;
+      }
+    }
+  }
+}

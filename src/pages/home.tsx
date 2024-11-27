@@ -1,4 +1,4 @@
-import { FC, useMemo, useRef, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
@@ -12,30 +12,55 @@ import styles from "../styles/pages/home.module.scss";
 import "swiper/css";
 import "swiper/css/pagination";
 import "../index.css";
+import { useControlCenter } from "../hooks/useControlCenter.tsx";
 
+let time = 0;
 let swiperInstance: TSwiper = null;
 export const Home: FC<IAddressWallet> = ({ address }) => {
   const navigate = useNavigate();
   const [turtle, setTurtle] = useState<number>(0);
   const [isBlock, setIsBlock] = useState<boolean>(false);
-  const test = useRef(null);
+  const [results, setResults] = useState({});
+  const { getBetsToday, getInitBetsToday, isControllerLoading } =
+    useControlCenter();
 
-  const handlerNextTurtle = () => {
+  const handlerGetBetsToday = async () => {
+    try {
+      if (time) clearTimeout(time);
+      setTimeout(async () => {
+        const data = await getBetsToday();
+        console.log(data, "data");
+        if (data) {
+          const results: { [key: string]: string } = {};
+          for (const bet in data) {
+            if (typeof data[bet] === "bigint")
+              results[bet] = data[bet].toString();
+          }
+          console.log(results, "t");
+          setResults(results);
+        }
+      }, 1250);
+    } catch (error) {}
+  };
+
+  const handlerNextTurtle = async () => {
     if (isBlock) return;
     if (!TURTLES[turtle + 1]) setTurtle(0);
     else setTurtle(turtle + 1);
     swiperInstance?.slideNext();
     handlerIsBlock();
+    await handlerGetBetsToday();
   };
-  const handlerPrevTurtle = () => {
+  const handlerPrevTurtle = async () => {
     if (isBlock) return;
     if (!turtle) setTurtle(() => TURTLES.length);
     setTurtle(state => state - 1);
     swiperInstance?.slidePrev();
     handlerIsBlock();
+    await handlerGetBetsToday();
   };
   const handlerNavigateToAllTurtles = () => navigate(ROUTES.listTurtles);
-  const handlerMakeBet = () => navigate(ROUTES.makeBet);
+  const handlerMakeBet = () => navigate(`${ROUTES.makeBet}/${turtle + 1}`);
   const handlerIsBlock = () => {
     setIsBlock(true);
     setTimeout(() => {
@@ -53,15 +78,30 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     []
   );
 
+  useEffect(() => {
+    if (!isControllerLoading) {
+      (async () => {
+        const data = await getInitBetsToday();
+        if (data) setResults(data);
+      })();
+    }
+  }, [isControllerLoading]);
+
+  const ton = +results[`total${turtle + 1}`] / 10 ** 9 || 0;
+  const toned = Math.floor(ton * 100) / 100;
+
+  const me = +results[`me${turtle + 1}`] / 10 ** 9 || 0;
+  const metoned = Math.floor(me * 100) / 100;
+
   return (
     <div className={styles.container}>
       <div className={styles.container_turtles}>
         <Swiper
-          ref={test}
           onSwiper={swiper => {
             swiperInstance = swiper;
           }}
-          onSlideChange={swiper => {
+          onSlideChangeTransitionEnd={async () => await handlerGetBetsToday()}
+          onSlideChange={async swiper => {
             setTurtle(swiper.realIndex);
           }}
           slidesPerView="auto"
@@ -101,8 +141,10 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
             />
           </div>
           <div className={styles.container_turtles_ton}>
-            <p>Поставили:</p>
-            <p>0.4 {CURRENCY}</p>
+            <p>Поставили: {toned}</p>
+            <p>
+              {metoned} {CURRENCY}
+            </p>
           </div>
         </Swiper>
       </div>

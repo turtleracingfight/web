@@ -6,20 +6,36 @@ import {
   helperUnnecessaryNavigation
 } from "../utils/usefulFunc.ts";
 import { useLocation } from "react-router-dom";
-import { useTonWallet } from "@tonconnect/ui-react";
+import loadingGif from "../../public/components/other/loading.gif";
+import styles from "../styles/common.module.scss";
+import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { useGetBalance } from "../hooks/useGetBalance.tsx";
 
 export const Layout = () => {
   const { pathname } = useLocation();
   const isMargin: boolean = helperExcessMargin(pathname);
-  const wallet = useTonWallet();
-  const addressTon = wallet?.account?.address;
+  const { isControllerLoading, isRequest, address } = useControlCenter();
+  const { loading, balance } = useGetBalance();
+
   return (
     <>
-      <div style={{ margin: isMargin ? "" : "0 5%" }}>
-        <Header pathname={pathname} address={addressTon} />
-        <RoutePages address={addressTon} />
-        {helperUnnecessaryNavigation(pathname) ? null : <Navigation />}
-      </div>
+      {isControllerLoading || loading || isRequest ? (
+        <div className={styles.loading}>
+          <img src={loadingGif} alt="loading" />
+        </div>
+      ) : (
+        <div style={{ margin: isMargin ? "" : "0 5%" }}>
+          <Header
+            pathname={pathname}
+            balance={balance}
+            address={address as string}
+          />
+          <RoutePages balance={balance} address={address as string} />
+          {helperUnnecessaryNavigation(pathname) ? null : (
+            <Navigation pathname={pathname} />
+          )}
+        </div>
+      )}
     </>
   );
 };

@@ -4,8 +4,7 @@
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
-  @include wh-ht(100%, 85vh);
-  max-height: 70vh;
+  @include wh-ht(100%, 70vh);
   border-radius: 30px;
   border-top: 2px solid;
   border-image-source: $back-linear-gradient-top-bottom;
@@ -244,7 +243,6 @@
     }
   }
 }
-
 
 @media (min-height: 1024px) {
   .container {

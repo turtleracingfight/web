@@ -5,4 +5,5 @@ export type TBtnCommon = {
   style?: CSSProperties;
   handlerClick?: () => void;
   rtArrow?: boolean;
+  disabled?: boolean;
 };

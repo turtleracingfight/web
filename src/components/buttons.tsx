@@ -21,9 +21,11 @@ export const BtnCommon: FC<TBtnCommon> = ({
   text,
   style,
   handlerClick,
-  rtArrow
+  rtArrow,
+  disabled
 }) => (
   <button
+    disabled={disabled}
     onClick={handlerClick}
     style={{
       ...style

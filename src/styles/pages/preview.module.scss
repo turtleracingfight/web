@@ -1,4 +1,5 @@
-@import '../mixins.module';
+@import "../mixins.module";
+@import "../variables.module";
 
 .elem {
   @include bl-flex-center(center, center, column, 2%);
@@ -30,7 +31,6 @@
     @include size-color(12px, $grey);
     margin: 0;
   }
-
 
   &:nth-child(1) {
     @include wh-ht(116px, 52px);
@@ -75,36 +75,34 @@
 }
 
 .container {
-  @include bl-flex-center(center, center, column, 12%);
-  @include wh-ht($width-page, $height-page);
+  @include bl-flex-center(flex-start, center, column, 0);
+  @include wh-ht(100%, 72vh);
 
   &_content {
+    height: 30vh;
     color: white;
-    width: 100%;
-    @include bl-flex-center(space-between, center, column, 15px);
+    @include bl-flex-center(space-between, center, column, 5%);
 
     &_elipse {
       @include wh-ht(80%, 20vh);
-      @include ellipse(45px, 8vh);
+      @include ellipse(45px, 1vh);
       z-index: -2;
     }
 
     & > img {
-      height: 29vh;
       z-index: 10;
     }
 
-
     & > p {
+      width: 85%;
       height: 5vh;
       text-align: center;
-      font-size: 18px;
+      font-size: 17px;
     }
   }
 
   &_switcher {
     width: 100%;
-    margin-bottom: 5%;
     @include bl-flex-center(center, center, row, 5%);
 
     & > button {
@@ -135,7 +133,6 @@
 
     &_switcher {
       width: 100%;
-      margin-bottom: 5%;
       @include bl-flex-center(center, center, row, 2%);
 
       & > button {
@@ -173,7 +170,6 @@
       transform: translate(175%, 15vh) rotate(10deg);
     }
   }
-
 }
 
 @media (max-height: 800px) {

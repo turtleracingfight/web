@@ -29,7 +29,7 @@ export const LIST_ROUTES = [
   { path: ROUTES.statistics, component: <Statistics /> },
   { path: ROUTES.preview, component: <Preview /> },
   { path: ROUTES.settings, component: <Settings /> },
-  { path: ROUTES.makeBet, component: <BetWon /> },
+  { path: "/make-bet/:id", component: <BetWon /> },
   { path: ROUTES.another, component: <Navigate to={ROUTES.home} /> }
 ];
 

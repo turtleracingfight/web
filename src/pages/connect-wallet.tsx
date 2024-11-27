@@ -1,11 +1,11 @@
-import { FC, useEffect, useState } from "react";
-import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
+import { FC } from "react";
+import { BtnConnectTg } from "../components/buttons.tsx";
 import { CURRENCY } from "../constants/links.ts";
-import { requestTon } from "../api/connect.ts";
 import connectTurtle from "/pages/ct-ton.png";
 import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";
+import { TonConnectButton, useTonAddress } from "@tonconnect/ui-react";
 
 const ConnectWalletBtn = () => {
   return (
@@ -19,22 +19,16 @@ const ConnectWalletBtn = () => {
 const ConnectedWallet: FC<TConnectWallet> = ({ ton }) => {
   return (
     <div className={styles.container_connected}>
-      <p>Ваша баланс:</p>
+      <p>Ваш баланс:</p>
       <p>
-        {ton.toFixed(2)} {CURRENCY}
+        {ton} {CURRENCY}
       </p>
-      <BtnCommon text={"Пополнить баланс"} />
+      <TonConnectButton />
     </div>
   );
 };
 
-export const ConnectWallet: FC<IAddressWallet> = ({ address }) => {
-  const [balance, setBalance] = useState<number>(0);
-
-  useEffect(() => {
-    if (address) requestTon.getTonBalance(address, setBalance);
-  }, [address]);
-
+export const ConnectWallet: FC<IAddressWallet> = ({ balance, address = 0 }) => {
   return (
     <div className={styles.container}>
       {address ? <ConnectedWallet ton={balance} /> : <ConnectWalletBtn />}

@@ -1,5 +1,6 @@
 export interface IAddressWallet {
-  address: string | undefined;
+  balance: number;
+  address: string;
 }
 
 export type TSwiper = {

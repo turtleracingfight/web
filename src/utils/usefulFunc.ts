@@ -20,6 +20,7 @@ export const helperNavigationStyles = (path: string) => {
 };
 
 export const helperUnnecessaryNavigation = (path: string) => {
+  if (path.includes(ROUTES.makeBet)) return true;
   switch (path) {
     case ROUTES.listTurtles:
       return true;
@@ -35,21 +36,29 @@ export const helperUnnecessaryNavigation = (path: string) => {
 };
 
 export const helperUnnecessaryHeader = (path: string) => {
+  return path.includes(ROUTES.makeBet);
+};
+
+export const helperExcessMarginNavigation = (path: string) => {
   switch (path) {
-    case ROUTES.makeBet:
+    case ROUTES.preview:
+      return true;
+  }
+};
+
+export const helperExcessMargin = (path: string) => {
+  if (path.includes(ROUTES.makeBet)) return true;
+  switch (path) {
+    case ROUTES.listTurtles:
+      return true;
+    case ROUTES.preview:
       return true;
     default:
       return false;
   }
 };
 
-export const helperExcessMargin = (path: string) => {
-  switch (path) {
-    case ROUTES.listTurtles:
-      return true;
-    case ROUTES.makeBet:
-      return true;
-    default:
-      return false;
-  }
+export const countTotalTon = (value: string | number) => {
+  const ton = +value / 10 ** 9;
+  return Math.floor(ton * 100) / 100;
 };

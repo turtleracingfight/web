@@ -1,6 +1,6 @@
-@import '../mixins.module';
-@import '../variables.module';
-@import '../common.module';
+@import "../mixins.module";
+@import "../variables.module";
+@import "../common.module";
 
 .container {
   @include bl-flex-center(space-between, center, column, 0);
@@ -24,7 +24,6 @@
     flex-grow: 1;
     z-index: 1;
     margin-bottom: 10vh;
-
 
     & > p {
       @include width-sz-al-cl(278px, 14px, center, $grey);

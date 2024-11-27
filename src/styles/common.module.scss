@@ -1,5 +1,14 @@
-@import './mixins.module';
-@import './variables.module';
+@import "./mixins.module";
+@import "./variables.module";
+
+.loading {
+  @include bl-flex-center(center, center, column, 0);
+  @include wh-ht(100%, 100vh);
+  & > img {
+    width: 130px;
+    height: 100px;
+  }
+}
 
 .ellipse {
   background: $ellipse-background-gradient;

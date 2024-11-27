@@ -33,7 +33,7 @@
         & > p {
           @include bl-flex-center(center, center, row, 0);
           @include wh-ht-r(100%, 4.5vh, 30px);
-          background: $back-linear-gradient;
+          background:$back-linear-gradient;
         }
 
         &_name {

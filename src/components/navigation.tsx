@@ -1,19 +1,28 @@
 import styles from "../styles/components/navigation.module.scss";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { NAVIGATION_LINKS } from "../constants/route.tsx";
-import { helperNavigationStyles } from "../utils/usefulFunc.ts";
-import { memo } from "react";
+import {
+  helperExcessMarginNavigation,
+  helperNavigationStyles
+} from "../utils/usefulFunc.ts";
+import { FC, memo } from "react";
+import { INavigation } from "../types/ts-navigation.ts";
 
-export const Navigation = memo(() => {
-  const { pathname } = useLocation();
+export const Navigation: FC<INavigation> = memo(({ pathname }) => {
   const navigate = useNavigate();
 
+  const isMargin = helperExcessMarginNavigation(pathname);
+
   return (
-    <div className={styles.container}>
+    <div
+      className={styles.container}
+      style={{ width: isMargin ? "100%" : "90%" }}
+    >
       <div
         className={styles.container_content}
         style={{
-          background: helperNavigationStyles(pathname).content
+          background: helperNavigationStyles(pathname).content,
+          width: isMargin ? "90%" : "100%"
         }}
       >
         <div
