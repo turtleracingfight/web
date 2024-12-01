@@ -10,11 +10,23 @@ import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { useGetBalance } from "../hooks/useGetBalance.tsx";
 import { Loader } from "./loader.tsx";
 import { Errors } from "./errors.tsx";
+import { useEffect } from "react";
+import { initLang, useLang } from "../hooks/useLang.tsx";
 
 export const Layout = () => {
   const { pathname } = useLocation();
-  const { isControllerLoading, isRequest, address } = useControlCenter();
+  const { isControllerLoading, isRequest, address, setOptions } =
+    useControlCenter();
   const { loading, balance } = useGetBalance();
+  const { lang, selectLang } = useLang();
+
+  useEffect(() => {
+    initLang();
+  }, []);
+
+  useEffect(() => {
+    if (lang) setOptions({ language: lang });
+  }, [lang]);
 
   const isMargin: boolean = helperExcessMargin(pathname);
 
@@ -25,11 +37,17 @@ export const Layout = () => {
       <Errors />
       <div style={{ margin: isMargin ? "" : "0 5%" }}>
         <Header
+          lang={lang}
           pathname={pathname}
           balance={balance}
           address={address as string}
         />
-        <RoutePages balance={balance} address={address as string} />
+        <RoutePages
+          balance={balance}
+          address={address as string}
+          lang={lang}
+          selectLang={selectLang}
+        />
         {helperUnnecessaryNavigation(pathname) ? null : (
           <Navigation pathname={pathname} />
         )}

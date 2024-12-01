@@ -10,12 +10,13 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { TSwiper } from "../types/ts-common.ts";
+import { useLang } from "../hooks/useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
 let swiperInstance: TSwiper = null;
-let time: number | null | undefined = null;
 export const Preview = () => {
+  const { lang } = useLang();
   const [current, setCurrent] = useState<number>(0);
-  const [isScroll, setIsScroll] = useState<boolean>(false);
 
   const handlerChangeNextCurrent = () => {
     setCurrent(current + 1);
@@ -26,13 +27,45 @@ export const Preview = () => {
     swiperInstance?.slidePrev();
   };
 
-  const handlerDebounceMove = e => {
-    setIsScroll(true);
-    if (time) clearTimeout(time);
-    time = setTimeout(() => setIsScroll(false), 100);
-  };
-
   const isVisible = current >= INFO_LIST.length - 1;
+
+  const slides = INFO_LIST.map(el => {
+    return (
+      <SwiperSlide
+        key={el.id}
+        className={styles.container_content}
+        style={{
+          height: "30vh"
+        }}
+      >
+        <div className={styles.container_content_swiperSlide}>
+          {el.id === 2 ? (
+            <>
+              <div className={styles.elem}>
+                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>0.4 {CURRENCY}</p>
+              </div>
+              <div className={styles.elem}>
+                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>1.24 {CURRENCY}</p>
+              </div>
+              <div className={styles.elem}>
+                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>0.62 {CURRENCY}</p>
+              </div>
+            </>
+          ) : null}
+          <img
+            src={el.svg}
+            alt="info-picture"
+            style={{ height: "95%", width: "90%" }}
+          />
+        </div>
+        <div className={styles.container_content_elipse}></div>
+        <p>{el[lang]}</p>
+      </SwiperSlide>
+    );
+  });
 
   return (
     <div className={styles.container}>
@@ -43,7 +76,6 @@ export const Preview = () => {
         onSlideChange={swiper => {
           setCurrent(swiper.realIndex);
         }}
-        onSliderMove={handlerDebounceMove}
         effect={"fade"}
         pagination={{
           clickable: true
@@ -51,49 +83,7 @@ export const Preview = () => {
         className="mySwiper"
         initialSlide={current}
       >
-        {INFO_LIST.map(el => {
-          return (
-            <SwiperSlide
-              className={styles.container_content}
-              style={{
-                height: "30vh"
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                {current === 1 && !isScroll && (
-                  <>
-                    <div className={styles.elem}>
-                      <p>Поставили:</p>
-                      <p>0.4 {CURRENCY}</p>
-                    </div>
-                    <div className={styles.elem}>
-                      <p>Поставили:</p>
-                      <p>1.24 {CURRENCY}</p>
-                    </div>
-                    <div className={styles.elem}>
-                      <p>Поставили:</p>
-                      <p>0.62 {CURRENCY}</p>
-                    </div>
-                  </>
-                )}
-                <img
-                  src={el.svg}
-                  alt="info-picture"
-                  style={{ height: "95%", width: "90%" }}
-                />
-              </div>
-              <div className={styles.container_content_elipse}></div>
-              <p>{el.text}</p>
-            </SwiperSlide>
-          );
-        })}
+        {slides}
       </Swiper>
       <div className={styles.container_switcher}>
         <button
@@ -106,7 +96,7 @@ export const Preview = () => {
         <div>
           {INFO_LIST.map((el, index) => (
             <div
-              key={el.id}
+              key={el.id + el.text}
               style={{
                 background:
                   index === current ? "white" : "rgba(112, 112, 112, 1)"

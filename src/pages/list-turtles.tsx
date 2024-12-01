@@ -5,9 +5,12 @@ import { ROUTES } from "../constants/route.tsx";
 import { useNavigate } from "react-router-dom";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { useEffect, useState } from "react";
+import { LANGS } from "../constants/langs.ts";
+import { useLang } from "../hooks/useLang.tsx";
 
 export const ListTurtles = () => {
   const navigate = useNavigate();
+  const { lang } = useLang();
   const [myBet, setMyBet] = useState({});
   const handlerMakeBet = (id: number) =>
     navigate(`${ROUTES.makeBet}/${id + 1}`);
@@ -39,8 +42,8 @@ export const ListTurtles = () => {
                 <div
                   className={styles.container_bl_turtle_content_elipse}
                 ></div>
-                <img src={el.svg} alt={el.name} />
-                <p>{el.name}</p>
+                <img src={el.svg} alt={el[lang]} />
+                <p>{el[lang]}</p>
               </div>
               <div className={styles.container_bl_turtle_bet}>
                 <p>
@@ -48,7 +51,7 @@ export const ListTurtles = () => {
                 </p>
                 <BtnCommon
                   handlerClick={() => handlerMakeBet(el.id)}
-                  text={"Сделать ставку"}
+                  text={LANGS[lang].makeBet}
                 />
               </div>
             </div>

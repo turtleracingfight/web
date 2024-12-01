@@ -35,7 +35,7 @@
   &:nth-child(1) {
     @include wh-ht(116px, 52px);
     background: $ellipse-background-gradient;
-    transform: translate(-95%, 3vh);
+    transform: translate(-95%, -12.5vh);
 
     & > p {
       &:nth-child(2) {
@@ -48,7 +48,7 @@
   &:nth-child(2) {
     border: solid 1px $grey;
     @include wh-ht(65px, 29px);
-    transform: translate(-165%, 20vh) rotate(-10deg);
+    transform: translate(-195%, 8vh) rotate(-10deg);
 
     & > p {
       font-size: 7px;
@@ -62,7 +62,7 @@
   &:nth-child(3) {
     border: solid 1px $grey;
     @include wh-ht(87px, 39px);
-    transform: translate(150%, 15vh) rotate(15deg);
+    transform: translate(160%, 4vh) rotate(15deg);
 
     & > p {
       font-size: 9px;
@@ -82,6 +82,12 @@
     height: 30vh;
     color: white;
     @include bl-flex-center(space-between, center, column, 5%);
+
+
+    &_swiperSlide {
+      @include bl-flex-center(center, center, row, 0);
+      @include wh-ht(100%, auto);
+    }
 
     &_elipse {
       @include wh-ht(80%, 20vh);
@@ -129,6 +135,9 @@
         @include wh-ht(55%, 13vh);
         @include ellipse(65px, 8vh);
       }
+      &_swiperSlide {
+        width: 90%;
+      }
     }
 
     &_switcher {
@@ -156,18 +165,34 @@
   }
 }
 
-@media (min-height: 1025px) {
+
+@media (min-height: 1024px) {
   .elem {
     &:nth-child(1) {
-      transform: translate(-120%, 5vh);
+      transform: translate(-130%, -17vh);
     }
 
     &:nth-child(2) {
-      transform: translate(-205%, 20vh) rotate(-20deg);
+      transform: translate(-280%, 12vh) rotate(-20deg);
     }
 
     &:nth-child(3) {
-      transform: translate(175%, 15vh) rotate(10deg);
+      transform: translate(225%, 5vh) rotate(10deg);
+    }
+  }
+}
+@media (min-height: 1025px) {
+  .elem {
+    &:nth-child(1) {
+      transform: translate(-170%, -16vh);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-365%, 12vh) rotate(-20deg);
+    }
+
+    &:nth-child(3) {
+      transform: translate(315%, 2vh) rotate(10deg);
     }
   }
 }
@@ -175,15 +200,15 @@
 @media (max-height: 800px) {
   .elem {
     &:nth-child(1) {
-      transform: translate(-80%, 1vh);
+      transform: translate(-90%, -16vh);
     }
 
     &:nth-child(2) {
-      transform: translate(-130%, 19vh) rotate(-20deg);
+      transform: translate(-180%, 9vh) rotate(-20deg);
     }
 
     &:nth-child(3) {
-      transform: translate(120%, 15vh) rotate(10deg);
+      transform: translate(150%, 6vh) rotate(10deg);
     }
   }
 }

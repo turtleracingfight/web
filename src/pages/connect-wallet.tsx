@@ -6,12 +6,15 @@ import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import { useLang } from "../hooks/useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
 const ConnectWalletBtn = () => {
+  const { lang } = useLang();
   return (
     <div className={styles.container_connect}>
-      <p>Для участия в игре необходимо подключить кошелек и сделать ставку</p>
-      <BtnConnectTg />
+      <p>{LANGS[lang].connectForStart}</p>
+      <BtnConnectTg text={LANGS[lang].connect} />
     </div>
   );
 };
