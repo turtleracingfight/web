@@ -6,7 +6,7 @@ import {
 import { useAsyncInitialize } from "./useInitial.tsx";
 import { Address, OpenedContract, toNano } from "@ton/core";
 import { Turtle } from "../../build/Turtle/tact_Turtle.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const messageBet = (turtleId: number): CBet => {
   return {
@@ -14,8 +14,10 @@ const messageBet = (turtleId: number): CBet => {
     $$type: "CBet"
   };
 };
+let time = 0;
 const CONTRACT = "EQA28ww30J6zjj1IoU_fCOkqP53A3Cit5LzztpaZmcTcl0t2";
 export const useControlCenter = () => {
+  const [isLoaded, setIsLoaded] = useState(true);
   const [isRequest, setIsRequest] = useState(false);
   const { address, sender, client } = useAccount();
 
@@ -24,6 +26,18 @@ export const useControlCenter = () => {
     const contract = ControlCenter.fromAddress(Address.parse(CONTRACT));
     return client.open(contract) as OpenedContract<ControlCenter>;
   }, [client, address]);
+
+  const helperLoadedAcc = () => {
+    if (time) clearTimeout(time);
+    time = setTimeout(() => {
+      setIsLoaded(false);
+    }, 1500);
+  };
+
+  useEffect(() => {
+    if (address && controlCenter) setIsLoaded(false);
+    else helperLoadedAcc();
+  }, [address, controlCenter]);
 
   const getActiveAddress = async () => {
     const today = new Date().toLocaleDateString("ru-RU");
@@ -176,7 +190,7 @@ export const useControlCenter = () => {
     },
     getInitBetsToday,
     getBetsToday,
-    isControllerLoading: !Boolean(controlCenter),
+    isControllerLoading: isLoaded,
     address,
     isRequest
   };
