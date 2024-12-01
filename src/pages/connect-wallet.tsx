@@ -5,7 +5,7 @@ import connectTurtle from "/pages/ct-ton.png";
 import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";
-import { TonConnectButton, useTonAddress } from "@tonconnect/ui-react";
+import { TonConnectButton } from "@tonconnect/ui-react";
 
 const ConnectWalletBtn = () => {
   return (

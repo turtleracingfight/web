@@ -142,6 +142,7 @@ export const useControlCenter = () => {
       setIsRequest(false);
     }
   };
+
   return {
     makeBet: (value: number, turtleId: number) => {
       controlCenter?.send(
@@ -151,6 +152,27 @@ export const useControlCenter = () => {
         },
         messageBet(turtleId)
       );
+    },
+    takeBet: async (address: string, minValue: number) => {
+      try {
+        console.log(address, "address");
+        const contract = Turtle.fromAddress(Address.parse(address));
+        const turtle = (await client.open(contract)) as OpenedContract<Turtle>;
+        const id = await turtle.getId();
+        console.log(id, "id");
+        const message = {
+          $$type: "CPnl",
+          id: id
+        };
+        const data = await controlCenter?.send(
+          sender,
+          { value: toNano("0.05") },
+          message
+        );
+        console.log(data, "data");
+      } catch (error) {
+        console.log(error);
+      }
     },
     getInitBetsToday,
     getBetsToday,

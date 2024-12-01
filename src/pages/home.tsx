@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "../index.css";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { countTotalTon } from "../utils/usefulFunc.ts";
 
 let time = 0;
 let swiperInstance: TSwiper = null;
@@ -29,14 +30,12 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
       if (time) clearTimeout(time);
       setTimeout(async () => {
         const data = await getBetsToday();
-        console.log(data, "data");
         if (data) {
           const results: { [key: string]: string } = {};
           for (const bet in data) {
             if (typeof data[bet] === "bigint")
               results[bet] = data[bet].toString();
           }
-          console.log(results, "t");
           setResults(results);
         }
       }, 1250);
@@ -87,11 +86,8 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     }
   }, [isControllerLoading]);
 
-  const ton = +results[`total${turtle + 1}`] / 10 ** 9 || 0;
-  const toned = Math.floor(ton * 100) / 100;
-
-  const me = +results[`me${turtle + 1}`] / 10 ** 9 || 0;
-  const metoned = Math.floor(me * 100) / 100;
+  const toned = countTotalTon(+results[`total${turtle + 1}`]);
+  const metoned = countTotalTon(+results[`me${turtle + 1}`]);
 
   return (
     <div className={styles.container}>

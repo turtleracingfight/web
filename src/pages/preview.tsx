@@ -27,7 +27,6 @@ export const Preview = () => {
   };
 
   const handlerDebounceMove = e => {
-    console.log(e);
     setIsScroll(true);
     if (time) clearTimeout(time);
     time = setTimeout(() => setIsScroll(false), 100);
@@ -42,7 +41,6 @@ export const Preview = () => {
           swiperInstance = swiper;
         }}
         onSlideChange={swiper => {
-          console.log(swiper);
           setCurrent(swiper.realIndex);
         }}
         onSliderMove={handlerDebounceMove}

@@ -2,18 +2,53 @@ import styles from "../styles/pages/statistics.module.scss";
 import { CURRENCY, TURTLES } from "../constants/links.ts";
 import { useEffect, useState } from "react";
 import { countTotalTon } from "../utils/usefulFunc.ts";
+import { useControlCenter } from "../hooks/useControlCenter.tsx";
+
+const checkWinner = bets => {
+  const minBet = [];
+  let wonTurtle = "";
+  for (const bet of TURTLES) {
+    if (bets[`total${bet.id + 1}`]) {
+      minBet.push(+bets[`total${bet.id + 1}`]);
+    }
+  }
+  const minValue = Math.min(...minBet);
+  for (const bet of TURTLES) {
+    if (+bets[`total${bet.id + 1}`] === minValue) wonTurtle = `me${bet.id + 1}`;
+  }
+  let howMuch = 0;
+  if (minValue) {
+    console.log("comein", bets, wonTurtle);
+    for (const bet of TURTLES) {
+      console.log(wonTurtle, `me${bet.id + 1}`);
+      if (+bets[`me${bet.id + 1}`] && `me${bet.id + 1}` === wonTurtle) {
+        const all = (+bets["total"] / 100) * 90;
+        const percent = bets[`me${bet.id + 1}`] / minValue;
+        howMuch = (all / 100) * percent;
+      }
+    }
+  }
+  return { wonTurtle, howMuch };
+};
 
 const helperReturnBet = (bet: any) => {
   const parsedBets = JSON.parse(bet);
   const betTurtles = [];
   for (const elem of parsedBets) {
     if (typeof elem?.bets === "object") {
+      const { howMuch, wonTurtle } = checkWinner(elem.bets);
+      console.log(wonTurtle, howMuch);
       for (const bet_turtle of TURTLES) {
         if (+elem?.bets[`me${bet_turtle.id + 1}`])
           betTurtles.push({
             ...bet_turtle,
             bet: countTotalTon(+elem?.bets[`me${bet_turtle.id + 1}`]),
-            date: elem.date
+            date: elem.date,
+            won:
+              `me${bet_turtle.id + 1}` === wonTurtle
+                ? countTotalTon(howMuch)
+                : 0,
+            address: elem.address
           });
       }
     }
@@ -25,13 +60,14 @@ export const Statistics = () => {
   const [listTurtles, setListTurtles] = useState<any[]>([]);
   const turtles = window.localStorage.getItem("allBets");
 
+  const { takeBet } = useControlCenter();
+
   useEffect(() => {
     if (turtles) {
       const listTurtles = helperReturnBet(turtles);
       setListTurtles(listTurtles);
     }
   }, [turtles]);
-  console.log(listTurtles, "listTurtles");
   return (
     <div className={styles.container}>
       {listTurtles.map(el => (
@@ -55,8 +91,11 @@ export const Statistics = () => {
                 </div>
                 <p>Выигрыш</p>
               </div>
-              <p>
-                {(Math.random() * 100).toFixed(2)} {CURRENCY}
+              <p
+                style={{ border: el.won ? "solid 1px green" : "none" }}
+                onClick={() => takeBet(el.address, el.won)}
+              >
+                {el.won} {CURRENCY}
               </p>
             </div>
           </div>

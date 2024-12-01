@@ -1,5 +1,9 @@
 import axios, { AxiosError } from "axios";
 
+import { EnumHandlerError } from "../types/ts-store-errors.ts";
+import { createErrorStore } from "../store/store-errors.ts";
+import { REQUEST_TO_BALANCE } from "../constants/env.ts";
+
 export const instance = axios.create({});
 
 export const requestTon = {
@@ -9,9 +13,7 @@ export const requestTon = {
     loading: (value: boolean) => void
   ): Promise<void> {
     try {
-      const { data } = await instance.get(
-        `https://testnet.toncenter.com/api/v2/getAddressBalance?address=${address}`
-      );
+      const { data } = await instance.get(`${REQUEST_TO_BALANCE}${address}`);
       if (data?.result) {
         const ton = data.result / 10 ** 9;
         set(Math.floor(ton * 100) / 100);
@@ -23,6 +25,7 @@ export const requestTon = {
     } catch (error) {
       loading(false);
       const err = error as AxiosError;
+      createErrorStore({ text: err.message, type: EnumHandlerError.ERROR });
     }
   }
 };

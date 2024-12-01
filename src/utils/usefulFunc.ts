@@ -1,4 +1,8 @@
 import { ROUTES } from "../constants/route.tsx";
+import error from "../../public/components/other/error.png";
+import success from "../../public/components/other/success.png";
+import { EnumHandlerError } from "../types/ts-store-errors.ts";
+import { THelperError } from "../types/ts-common.ts";
 
 export const helperNavigationStyles = (path: string) => {
   let currentPage = "";
@@ -59,6 +63,28 @@ export const helperExcessMargin = (path: string) => {
 };
 
 export const countTotalTon = (value: string | number) => {
-  const ton = +value / 10 ** 9;
-  return Math.floor(ton * 100) / 100;
+  return Math.floor((+value / 10 ** 9) * 100) / 100;
+};
+
+export const helperErrorType = (type: EnumHandlerError): THelperError => {
+  switch (type) {
+    case EnumHandlerError.ERROR:
+      return {
+        img: error,
+        name: "error",
+        color: "#e12311"
+      };
+    case EnumHandlerError.SUCCESS:
+      return {
+        img: success,
+        name: "success",
+        color: "#32e732"
+      };
+    default:
+      return {
+        img: error,
+        name: "error",
+        color: "red"
+      };
+  }
 };

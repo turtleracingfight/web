@@ -7,3 +7,9 @@ export type TSwiper = {
   slidePrev: () => void;
   slideNext: () => void;
 } | null;
+
+export type THelperError = {
+  img: string;
+  color: string;
+  name: string;
+};

@@ -16,8 +16,10 @@ export const ListTurtles = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await getBetsToday();
-      if (result) setMyBet(result);
+      if (!isControllerLoading) {
+        const result = await getBetsToday();
+        if (result) setMyBet(result);
+      }
     })();
   }, [isControllerLoading]);
 
