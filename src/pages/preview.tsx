@@ -35,22 +35,22 @@ export const Preview = () => {
         key={el.id}
         className={styles.container_content}
         style={{
-          height: "30vh"
+          height: "25vh"
         }}
       >
         <div className={styles.container_content_swiperSlide}>
           {el.id === 2 ? (
             <>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>{LANGS[lang].allPeopleSet}: 10.5 {CURRENCY}</p>
                 <p>0.4 {CURRENCY}</p>
               </div>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>{LANGS[lang].allPeopleSet}: 13.5 {CURRENCY}</p>
                 <p>1.24 {CURRENCY}</p>
               </div>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}:</p>
+                <p>{LANGS[lang].allPeopleSet}: 2.5 {CURRENCY}</p>
                 <p>0.62 {CURRENCY}</p>
               </div>
             </>
@@ -58,7 +58,7 @@ export const Preview = () => {
           <img
             src={el.svg}
             alt="info-picture"
-            style={{ height: "95%", width: "90%" }}
+            style={{ height: "100%", width: "95%" }}
           />
         </div>
         <div className={styles.container_content_elipse}></div>
@@ -96,7 +96,7 @@ export const Preview = () => {
         <div>
           {INFO_LIST.map((el, index) => (
             <div
-              key={el.id + el.text}
+              key={el.id}
               style={{
                 background:
                   index === current ? "white" : "rgba(112, 112, 112, 1)"

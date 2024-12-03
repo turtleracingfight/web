@@ -35,7 +35,15 @@ export const Layout = () => {
   ) : (
     <>
       <Errors />
-      <div style={{ margin: isMargin ? "" : "0 5%" }}>
+      <div
+        style={{
+          margin: isMargin ? "" : "0 5%",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center"
+        }}
+      >
         <Header
           lang={lang}
           pathname={pathname}

@@ -3,21 +3,20 @@
 @import "../common.module";
 
 .container {
-  @include bl-position-fx(90vh);
+  @include bl-position-fx($height-page);
   @include bl-flex-center(center, center, row, 0);
-  position: fixed;
-  width: 90%;
-  z-index: 1;
+  width: 100%;
+  max-width: 450px;
   overflow: hidden;
 
   &_content {
     @include bl-flex-center(center, center, row, 0);
-    @include wh-ht-r(100%, auto, 30px);
+    @include wh-ht-r(90%, auto, 30px);
     padding: 2px;
 
     &_links {
       @include bl-flex-center(space-around, center, row, 5%);
-      @include wh-ht-r(99%, 50px, 30px);
+      @include wh-ht-r(100%, 50px, 30px);
 
       &_ellipse {
         @extend .ellipse;
@@ -28,36 +27,8 @@
 
       & > button {
         @include bl-flex-center(center, center, row, 0);
-        @include wh-ht(80%, 5vh);
+        @include wh-ht(100%, 5vh);
         @include back-bor-none();
-      }
-    }
-  }
-}
-
-@media (max-height: 800px) {
-  .container {
-    top: 88vh;
-
-    &_content {
-      &_links {
-        &_ellipse {
-        }
-      }
-    }
-  }
-}
-
-@media (min-height: 1024px) {
-  .container {
-    top: 90vh;
-
-    &_content {
-      &_links {
-        &_ellipse {
-          @include wh-ht(4%, 1vh);
-          transform: translateY(-3.2vh);
-        }
       }
     }
   }

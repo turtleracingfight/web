@@ -31,7 +31,7 @@ export const useControlCenter = () => {
     if (time) clearTimeout(time);
     time = setTimeout(() => {
       setIsLoaded(false);
-    }, 1500);
+    }, 1);
   };
 
   useEffect(() => {

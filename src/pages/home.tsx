@@ -149,14 +149,14 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
           </div>
         </Swiper>
       </div>
+      <div className={styles.container_list}>
+        <div className={styles.container_list_hero}>{memoListTurtles}</div>
+        <BtnCommon
+          handlerClick={handlerNavigateToAllTurtles}
+          text={LANGS[lang].listTurtles}
+        />
+      </div>
       <div className={styles.container_bl}>
-        <div className={styles.container_bl_list}>
-          <div className={styles.container_bl_list_hero}>{memoListTurtles}</div>
-          <BtnCommon
-            handlerClick={handlerNavigateToAllTurtles}
-            text={LANGS[lang].listTurtles}
-          />
-        </div>
         <div className={styles.container_bl_footer}>
           <Timer />
           <div className={styles.container_bl_footer_button}>

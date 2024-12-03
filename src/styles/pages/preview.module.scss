@@ -1,5 +1,6 @@
 @import "../mixins.module";
 @import "../variables.module";
+@import "../common.module";
 
 .elem {
   @include bl-flex-center(center, center, column, 2%);
@@ -35,7 +36,7 @@
   &:nth-child(1) {
     @include wh-ht(116px, 52px);
     background: $ellipse-background-gradient;
-    transform: translate(-95%, -12.5vh);
+    transform: translate(-95%, -14vh);
 
     & > p {
       &:nth-child(2) {
@@ -62,7 +63,7 @@
   &:nth-child(3) {
     border: solid 1px $grey;
     @include wh-ht(87px, 39px);
-    transform: translate(160%, 4vh) rotate(15deg);
+    transform: translate(155%, 4vh) rotate(15deg);
 
     & > p {
       font-size: 9px;
@@ -76,13 +77,12 @@
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
-  @include wh-ht(100%, 72vh);
+  @include wh-ht(100%, 65vh);
 
   &_content {
-    height: 30vh;
-    color: white;
     @include bl-flex-center(space-between, center, column, 5%);
-
+    position: relative;
+    color: white;
 
     &_swiperSlide {
       @include bl-flex-center(center, center, row, 0);
@@ -90,39 +90,33 @@
     }
 
     &_elipse {
-      @include wh-ht(80%, 20vh);
-      @include ellipse(45px, 1vh);
-      z-index: -2;
-    }
-
-    & > img {
-      z-index: 10;
+      @extend .ellipse;
+      @include wh-ht(85%, 18vh);
+      filter: blur(10vw);
     }
 
     & > p {
       width: 85%;
-      height: 5vh;
-      text-align: center;
-      font-size: 17px;
     }
   }
 
   &_switcher {
-    width: 100%;
-    @include bl-flex-center(center, center, row, 5%);
+    @include bl-flex-center(center, center, row, 0);
+    width: 90%;
+    max-width: 450px;
 
     & > button {
-      @include wh-ht-r(29px, 29px, 30px);
+      @include wh-ht-r(32px, 32px, 30px);
       background: none;
-      border: solid 1px white;
+      border: solid 0.5px white;
     }
 
     & > div {
-      width: 35%;
+      width: 60%;
       @include bl-flex-center(space-around, center, row, 0);
 
       & > div {
-        @include wh-ht-r(9px, 9px, 30px);
+        @include wh-ht-r(11px, 11px, 30px);
       }
     }
   }
@@ -132,67 +126,60 @@
   .container {
     &_content {
       &_elipse {
-        @include wh-ht(55%, 13vh);
-        @include ellipse(65px, 8vh);
-      }
-      &_swiperSlide {
-        width: 90%;
-      }
-    }
-
-    &_switcher {
-      width: 100%;
-      @include bl-flex-center(center, center, row, 2%);
-
-      & > button {
-        @include bl-flex-center(center, center, row, 0);
-        @include wh-ht-r(40px, 40px, 30px);
-
-        & > img {
-          width: 10px;
-        }
-      }
-
-      & > div {
-        width: 30%;
-        @include bl-flex-center(space-around, center, row, 0);
-
-        & > div {
-          @include wh-ht-r(10px, 10px, 30px);
-        }
+        @include wh-ht(60%, 18vh);
+        @include ellipse(55px, 0);
       }
     }
   }
 }
+
+@media (min-height: 600px) {
+  .container {
+    height: 70vh;
+    &_content {
+      &_elipse {
+        @include wh-ht(60%, 18vh);
+        @include ellipse(55px, 0);
+      }
+
+      &_swiperSlide {
+        @include bl-flex-center(center, center, row, 0);
+        @include wh-ht(75%, auto);
+      }
+    }
+  }
+}
+
+@media (min-width: 320px) {
+  .container {
+    &_content {
+      &_elipse {
+        @include wh-ht(60%, 18vh);
+        @include ellipse(55px, 0);
+      }
+
+      &_swiperSlide {
+        @include bl-flex-center(center, center, row, 0);
+        @include wh-ht(75%, auto);
+      }
+    }
+  }
+}
+
 
 
 @media (min-height: 1024px) {
   .elem {
     &:nth-child(1) {
-      transform: translate(-130%, -17vh);
+      transform: translate(-100%, -13vh);
     }
 
     &:nth-child(2) {
-      transform: translate(-280%, 12vh) rotate(-20deg);
+      transform: translate(-200%, 8vh) rotate(-20deg);
     }
 
     &:nth-child(3) {
-      transform: translate(225%, 5vh) rotate(10deg);
-    }
-  }
-}
-@media (min-height: 1025px) {
-  .elem {
-    &:nth-child(1) {
-      transform: translate(-170%, -16vh);
-    }
-
-    &:nth-child(2) {
-      transform: translate(-365%, 12vh) rotate(-20deg);
-    }
-
-    &:nth-child(3) {
-      transform: translate(315%, 2vh) rotate(10deg);
+      transform: translate(180%, 3vh) rotate(10deg);
     }
   }
 }
@@ -200,7 +187,7 @@
 @media (max-height: 800px) {
   .elem {
     &:nth-child(1) {
-      transform: translate(-90%, -16vh);
+      transform: translate(-90%, -16.5vh);
     }
 
     &:nth-child(2) {
@@ -208,7 +195,39 @@
     }
 
     &:nth-child(3) {
-      transform: translate(150%, 6vh) rotate(10deg);
+      transform: translate(140%, 6vh) rotate(10deg);
+    }
+  }
+}
+
+@media (max-width: 344px) {
+  .elem {
+    &:nth-child(1) {
+      transform: translate(-80%, -11vh);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-180%, 9vh) rotate(-20deg);
+    }
+
+    &:nth-child(3) {
+      transform: translate(130%, 3vh) rotate(10deg);
+    }
+  }
+}
+
+@media (max-height: 568px) {
+  .elem {
+    &:nth-child(1) {
+      transform: translate(-80%, -17vh);
+    }
+
+    &:nth-child(2) {
+      transform: translate(-140%, 9vh) rotate(-20deg);
+    }
+
+    &:nth-child(3) {
+      transform: translate(120%, 3vh) rotate(10deg);
     }
   }
 }

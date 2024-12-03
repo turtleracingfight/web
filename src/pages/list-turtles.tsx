@@ -11,11 +11,11 @@ import { useLang } from "../hooks/useLang.tsx";
 export const ListTurtles = () => {
   const navigate = useNavigate();
   const { lang } = useLang();
+  const { getBetsToday, isControllerLoading } = useControlCenter();
   const [myBet, setMyBet] = useState({});
+
   const handlerMakeBet = (id: number) =>
     navigate(`${ROUTES.makeBet}/${id + 1}`);
-
-  const { getBetsToday, isControllerLoading } = useControlCenter();
 
   useEffect(() => {
     (async () => {
@@ -30,11 +30,6 @@ export const ListTurtles = () => {
     <div className={styles.container}>
       {TURTLES.map(el => {
         let betTon = 0;
-        if (myBet[`total${el.id + 1}`])
-          betTon =
-            Math.floor(
-              (Number(BigInt(myBet[`total${el.id + 1}`])) / 10 ** 9) * 100
-            ) / 100;
         return (
           <div key={el.id} className={styles.container_bl}>
             <div className={styles.container_bl_turtle}>

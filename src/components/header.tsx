@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { CURRENCY } from "../constants/links.ts";
 import { ROUTES } from "../constants/route.tsx";
@@ -16,7 +16,6 @@ import { LANGS } from "../constants/langs.ts";
 let localAddress: string | undefined = undefined;
 export const Header: FC<IHeader> = ({ address, pathname, balance, lang }) => {
   const navigate = useNavigate();
-  console.log("here!");
 
   const isSettingsPage = pathname === ROUTES.settings;
   const handlerConnectWallet = () => navigate(ROUTES.connect);
@@ -33,7 +32,7 @@ export const Header: FC<IHeader> = ({ address, pathname, balance, lang }) => {
       className={styles.container}
       style={{
         width: isMargin ? "90%" : "",
-        display: isUnnecessary ? "none" : "flex"
+        // display: isUnnecessary ? "none" : "flex"
       }}
     >
       <div>
@@ -43,11 +42,11 @@ export const Header: FC<IHeader> = ({ address, pathname, balance, lang }) => {
           onClick={handlerNavigateToSettings}
         />
       </div>
-      <div className={styles.container_wallet}>
+      <div className={styles.container_wallet} onClick={handlerConnectWallet}>
         <p>
           {balance ? `${balance.toFixed(2)} ${CURRENCY}` : LANGS[lang].connect}
         </p>
-        <img onClick={handlerConnectWallet} src={wallet} alt="wallet" />
+        <img src={wallet} alt="wallet" />
       </div>
     </div>
   );

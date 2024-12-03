@@ -9,9 +9,7 @@ export const BtnConnectTg: FC<TBtnConnectWallet> = ({ text }) => {
   const { open } = useTonConnectModal();
   return (
     <button onClick={open} className={styles.bt_connect_tg}>
-      <div>
-        <img src={tg} alt="connect-ton" />
-      </div>
+      <img src={tg} alt="connect-ton" />
       <p>{text}</p>
     </button>
   );

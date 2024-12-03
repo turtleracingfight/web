@@ -1,4 +1,4 @@
-@import './variables.module';
+@import "./variables.module";
 //position-block
 @mixin bl-flex-center($justify, $align, $direction, $gap) {
   display: flex;
@@ -13,7 +13,7 @@
   height: $height;
 }
 
-@mixin wh-ht-r($width, $height,$radius) {
+@mixin wh-ht-r($width, $height, $radius) {
   width: $width;
   height: $height;
   border-radius: $radius;
@@ -24,7 +24,6 @@
   border: none;
   outline: none;
 }
-
 
 //style-block
 @mixin ellipse($blur, $translateY) {
@@ -50,20 +49,24 @@
   top: $top;
 }
 
-
 @mixin border-im-sce($bis, $border) {
   border-image-slice: 1;
   border-image-source: $bis;
   border: $border;
 }
 
+@mixin grow-marginB($grow, $bottom) {
+  flex-grow: $grow;
+  margin-bottom: $bottom;
+}
+
 //style-text
-@mixin size-color($size,$color) {
+@mixin size-color($size, $color) {
   font-size: $size;
   color: $color;
 }
 
-@mixin width-sz-al-cl($width,$sz:14px,$al,$cl) {
+@mixin width-sz-al-cl($width, $sz: 14px, $al, $cl) {
   width: $width;
   font-size: $sz;
   text-align: $al;
@@ -71,14 +74,14 @@
 }
 
 //style-other
-@mixin ellipse-default($trY,$blur, $background) {
+@mixin ellipse-default($trY, $blur, $background) {
   transform: translateY($trY);
   filter: blur($blur);
   background: $background;
 }
 
-@mixin content-block($back,$left,$top) {
-  content: '';
+@mixin content-block($back, $left, $top) {
+  content: "";
   position: absolute;
   left: $left;
   top: $top;
