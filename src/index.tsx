@@ -6,6 +6,7 @@ import "./index.css";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 import { THEME } from "@tonconnect/ui";
 import { MANIFEST_TON } from "./constants/env.ts";
+import "@twa-dev/sdk"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

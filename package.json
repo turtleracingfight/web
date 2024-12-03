@@ -5,26 +5,32 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc.json"
+    "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./.prettierrc.json",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
+  "homepage": "https://turtleracingfight.github.io/web",
   "dependencies": {
     "@orbs-network/ton-access": "^2.3.3",
     "@ton/core": "^0.59.0",
     "@ton/crypto": "^3.3.0",
     "@ton/ton": "^15.1.0",
     "@tonconnect/ui-react": "^2.0.9",
+    "@twa-dev/sdk": "^8.0.1",
     "axios": "^1.7.7",
     "buffer": "^6.0.3",
+    "gh-pages": "^6.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",
     "sass": "^1.78.0",
     "swiper": "^11.1.14",
-    "vite-plugin-node-polyfills": "^0.22.0"
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
