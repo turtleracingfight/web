@@ -6,10 +6,6 @@
   @include wh-ht(100%, 10vh);
   margin: 0 auto;
 
-  & > img {
-    cursor: pointer;
-  }
-
   &_wallet {
     @include bl-flex-center(flex-end, center, row, 0);
     @include wh-ht-r(173px, 40px, 30px);

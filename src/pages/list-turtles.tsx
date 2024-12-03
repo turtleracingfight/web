@@ -5,14 +5,17 @@ import { ROUTES } from "../constants/route.tsx";
 import { useNavigate } from "react-router-dom";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { useEffect, useState } from "react";
+import { LANGS } from "../constants/langs.ts";
+import { useLang } from "../hooks/useLang.tsx";
 
 export const ListTurtles = () => {
   const navigate = useNavigate();
+  const { lang } = useLang();
+  const { getBetsToday, isControllerLoading } = useControlCenter();
   const [myBet, setMyBet] = useState({});
+
   const handlerMakeBet = (id: number) =>
     navigate(`${ROUTES.makeBet}/${id + 1}`);
-
-  const { getBetsToday, isControllerLoading } = useControlCenter();
 
   useEffect(() => {
     (async () => {
@@ -27,11 +30,6 @@ export const ListTurtles = () => {
     <div className={styles.container}>
       {TURTLES.map(el => {
         let betTon = 0;
-        if (myBet[`total${el.id + 1}`])
-          betTon =
-            Math.floor(
-              (Number(BigInt(myBet[`total${el.id + 1}`])) / 10 ** 9) * 100
-            ) / 100;
         return (
           <div key={el.id} className={styles.container_bl}>
             <div className={styles.container_bl_turtle}>
@@ -39,8 +37,8 @@ export const ListTurtles = () => {
                 <div
                   className={styles.container_bl_turtle_content_elipse}
                 ></div>
-                <img src={el.svg} alt={el.name} />
-                <p>{el.name}</p>
+                <img src={el.svg} alt={el[lang]} />
+                <p>{el[lang]}</p>
               </div>
               <div className={styles.container_bl_turtle_bet}>
                 <p>
@@ -48,7 +46,7 @@ export const ListTurtles = () => {
                 </p>
                 <BtnCommon
                   handlerClick={() => handlerMakeBet(el.id)}
-                  text={"Сделать ставку"}
+                  text={LANGS[lang].makeBet}
                 />
               </div>
             </div>

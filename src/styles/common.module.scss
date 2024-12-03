@@ -4,13 +4,15 @@
 .loading {
   @include bl-flex-center(center, center, column, 0);
   @include wh-ht(100%, 100vh);
+
   & > img {
-    width: 130px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 }
 
 .ellipse {
+  max-width: 450px;
   background: $ellipse-background-gradient;
   box-shadow: 0 5px $lemon;
   position: absolute;
@@ -20,21 +22,22 @@
 
 .bt_connect_tg {
   @include bl-flex-center(center, center, row, 5px);
-  @include wh-ht-r(200px, 38px, 60px);
+  @include wh-ht-r(220px, 45px, 60px);
   background: $blue;
   color: $white;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
+  box-shadow: 0 0 5px black;
 }
 
 .bt_default {
   @include bl-flex-center(center, center, row, 0);
-  @include wh-ht-r(auto, 38px, 60px);
+  @include wh-ht-r(auto, 4.5vh, 60px);
   color: $white;
   background: $back;
   position: relative;
   text-wrap: nowrap;
-  font-size: 14px;
+  font-size: 15px;
   border: none;
 
   &:before {
@@ -44,11 +47,11 @@
 
   & > p {
     padding-left: 15px;
-    font-size: 14px;
   }
 
   & > img {
     @include wh-ht(9px, 11px);
+    margin-top: 0.2vh;
     transition: 300ms;
     padding: 0 10px;
   }

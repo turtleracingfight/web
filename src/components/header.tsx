@@ -1,22 +1,26 @@
-import { FC, memo } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { CURRENCY } from "../constants/links.ts";
 import { ROUTES } from "../constants/route.tsx";
 import { IHeader } from "../types/ts-header.ts";
 import settings from "/pages/in-settings.svg";
+import gohome from "/pages/gohome.svg";
 import wallet from "/pages/in-wallet.svg";
 import styles from "../styles/components/header.module.scss";
 import {
   helperExcessMargin,
   helperUnnecessaryHeader
 } from "../utils/usefulFunc.ts";
+import { LANGS } from "../constants/langs.ts";
 
 let localAddress: string | undefined = undefined;
-export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
+export const Header: FC<IHeader> = ({ address, pathname, balance, lang }) => {
   const navigate = useNavigate();
 
+  const isSettingsPage = pathname === ROUTES.settings;
   const handlerConnectWallet = () => navigate(ROUTES.connect);
-  const handlerNavigateToSettings = () => navigate(ROUTES.settings);
+  const handlerNavigateToSettings = () =>
+    navigate(isSettingsPage ? ROUTES.home : ROUTES.settings);
 
   if (localAddress !== address) localAddress = address;
 
@@ -28,20 +32,22 @@ export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
       className={styles.container}
       style={{
         width: isMargin ? "90%" : "",
-        display: isUnnecessary ? "none" : "flex"
+        // display: isUnnecessary ? "none" : "flex"
       }}
     >
       <div>
         <img
-          src={settings}
+          src={isSettingsPage ? gohome : settings}
           alt="settings"
           onClick={handlerNavigateToSettings}
         />
       </div>
-      <div className={styles.container_wallet}>
-        <p>{balance ? `${balance.toFixed(2)} ${CURRENCY}` : "Подключить"}</p>
-        <img onClick={handlerConnectWallet} src={wallet} alt="wallet" />
+      <div className={styles.container_wallet} onClick={handlerConnectWallet}>
+        <p>
+          {balance ? `${balance.toFixed(2)} ${CURRENCY}` : LANGS[lang].connect}
+        </p>
+        <img src={wallet} alt="wallet" />
       </div>
     </div>
   );
-});
+};

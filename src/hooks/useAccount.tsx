@@ -3,13 +3,20 @@ import { Address, SenderArguments } from "@ton/core";
 import { ROUTES } from "../constants/route.tsx";
 import { useNavigate } from "react-router-dom";
 import { useTonClient } from "./useTonClient.tsx";
+import { useLang } from "./useLang.tsx";
+import { useEffect } from "react";
 
 export const useAccount = () => {
-  const [tonConnectUI] = useTonConnectUI();
+  const [tonConnectUI, setOptions] = useTonConnectUI();
   const wallet = useTonWallet();
+  const { lang } = useLang();
   let network = wallet?.account.chain;
   const navigate = useNavigate();
   const { client } = useTonClient(network as CHAIN);
+
+  useEffect(() => {
+    if (tonConnectUI && lang) setOptions({ language: lang });
+  }, []);
 
   return {
     sender: {
@@ -36,6 +43,7 @@ export const useAccount = () => {
     },
     client,
     address: wallet?.account.address ?? null,
-    network: network ?? null
+    network: network ?? null,
+    setOptions
   };
 };

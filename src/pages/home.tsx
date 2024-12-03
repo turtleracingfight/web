@@ -14,6 +14,8 @@ import "swiper/css/pagination";
 import "../index.css";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { countTotalTon } from "../utils/usefulFunc.ts";
+import { useLang } from "../hooks/useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
 let time = 0;
 let swiperInstance: TSwiper = null;
@@ -24,6 +26,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const [results, setResults] = useState({});
   const { getBetsToday, getInitBetsToday, isControllerLoading } =
     useControlCenter();
+  const { lang } = useLang();
 
   const handlerGetBetsToday = async () => {
     try {
@@ -128,7 +131,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
             <div className={styles.container_turtles_header_ellipse}></div>
             <img src={arrowleft} alt="arrow-left" onClick={handlerPrevTurtle} />
             <p className={styles.container_turtles_header_name}>
-              {TURTLES[turtle].name}
+              {TURTLES[turtle][lang]}
             </p>
             <img
               src={arrowright}
@@ -137,21 +140,23 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
             />
           </div>
           <div className={styles.container_turtles_ton}>
-            <p>Поставили: {toned}</p>
+            <p>
+              {LANGS[lang].allPeopleSet}: {toned}
+            </p>
             <p>
               {metoned} {CURRENCY}
             </p>
           </div>
         </Swiper>
       </div>
+      <div className={styles.container_list}>
+        <div className={styles.container_list_hero}>{memoListTurtles}</div>
+        <BtnCommon
+          handlerClick={handlerNavigateToAllTurtles}
+          text={LANGS[lang].listTurtles}
+        />
+      </div>
       <div className={styles.container_bl}>
-        <div className={styles.container_bl_list}>
-          <div className={styles.container_bl_list_hero}>{memoListTurtles}</div>
-          <BtnCommon
-            handlerClick={handlerNavigateToAllTurtles}
-            text={"Список черепах"}
-          />
-        </div>
         <div className={styles.container_bl_footer}>
           <Timer />
           <div className={styles.container_bl_footer_button}>
@@ -159,10 +164,10 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
             {address ? (
               <BtnCommon
                 handlerClick={handlerMakeBet}
-                text={"Сделать ставку"}
+                text={LANGS[lang].makeBet}
               />
             ) : (
-              <BtnConnectTg />
+              <BtnConnectTg text={LANGS[lang].connectWallet} />
             )}
           </div>
         </div>

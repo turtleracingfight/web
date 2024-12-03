@@ -19,7 +19,7 @@ const CONTRACT = "EQA28ww30J6zjj1IoU_fCOkqP53A3Cit5LzztpaZmcTcl0t2";
 export const useControlCenter = () => {
   const [isLoaded, setIsLoaded] = useState(true);
   const [isRequest, setIsRequest] = useState(false);
-  const { address, sender, client } = useAccount();
+  const { address, sender, client, setOptions } = useAccount();
 
   const controlCenter = useAsyncInitialize(async () => {
     if (!client || !address) return;
@@ -31,7 +31,7 @@ export const useControlCenter = () => {
     if (time) clearTimeout(time);
     time = setTimeout(() => {
       setIsLoaded(false);
-    }, 1500);
+    }, 1);
   };
 
   useEffect(() => {
@@ -169,11 +169,9 @@ export const useControlCenter = () => {
     },
     takeBet: async (address: string, minValue: number) => {
       try {
-        console.log(address, "address");
         const contract = Turtle.fromAddress(Address.parse(address));
         const turtle = (await client.open(contract)) as OpenedContract<Turtle>;
         const id = await turtle.getId();
-        console.log(id, "id");
         const message = {
           $$type: "CPnl",
           id: id
@@ -183,7 +181,6 @@ export const useControlCenter = () => {
           { value: toNano("0.05") },
           message
         );
-        console.log(data, "data");
       } catch (error) {
         console.log(error);
       }
@@ -192,6 +189,7 @@ export const useControlCenter = () => {
     getBetsToday,
     isControllerLoading: isLoaded,
     address,
-    isRequest
+    isRequest,
+    setOptions
   };
 };

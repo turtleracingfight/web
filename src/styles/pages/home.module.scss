@@ -4,80 +4,77 @@
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
-  @include wh-ht(100%, 70vh);
+  @include wh-ht(100%, 89vh);
   border-radius: 30px;
   border-top: 2px solid;
   border-image-source: $back-linear-gradient-top-bottom;
   border-image-slice: 1;
 
+  &_list {
+    @include bl-flex-center(flex-start, center, row, 0);
+    @include wh-ht-r(80%, 38px, 30em);
+    margin-top: 1vh;
+    position: relative;
+    background: $back-linear-gradient-left;
+    z-index: 1;
+
+    &_hero {
+      @include bl-flex-center(space-around, center, row, 0px);
+      @include wh-ht(50%, 38px);
+      z-index: -1;
+
+      & > div {
+        @include bl-flex-center(center, center, row, 0px);
+        @include wh-ht-r(33px, 34px, 30em);
+        background: $back;
+
+        & > img {
+          transform: translateY(-3px);
+          width: 37px;
+        }
+      }
+    }
+
+    & > button {
+      @include wh-ht(55%, 38px);
+      left: 45%;
+      position: absolute;
+    }
+  }
+
   &_bl {
-    @include bl-flex-center(space-between, center, column, 10px);
-    width: 100%;
+    @include bl-flex-center(flex-start, center, column, 0);
     flex-grow: 1;
+    width: 100%;
 
     &_footer {
       @include bl-flex-center(space-between, center, column, 0);
       @include wh-ht(100%, 15vh);
-      z-index: 2;
+      margin-top: 8vh;
 
       &_button {
         @include bl-flex-center(center, center, column, 0);
         width: 100%;
 
-        & > button {
-          text-wrap: nowrap;
-        }
-
         &_ellipse {
           @extend .ellipse;
-          @include wh-ht(50%, 4vh);
+          @include wh-ht(250px, 40px);
           filter: blur(30px);
         }
-      }
-    }
-
-    &_list {
-      @include bl-flex-center(space-between, center, row, 0);
-      @include wh-ht-r(85%, 38px, 30em);
-      background: $back-linear-gradient-left;
-      margin-top: 2vh;
-      z-index: 1;
-
-      &_hero {
-        @include bl-flex-center(space-around, center, row, 0px);
-        @include wh-ht(50%, 38px);
-        z-index: -1;
-
-        & > div {
-          @include wh-ht-r(33px, 34px, 30em);
-          background: $back;
-
-          & > img {
-            transform: translateY(-3px);
-            width: 100%;
-          }
-        }
-      }
-
-      & > button {
-        @include wh-ht(44%, 38px);
-        left: 45%;
-        position: absolute;
       }
     }
   }
 
   &_turtles {
     @include bl-flex-center(center, center, row, 0);
-    height: 40vh;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
     z-index: 1;
+    height: 40vh;
+    position: relative;
 
     &_slider {
-      width: 38% !important;
-      position: relative;
-      top: 0;
+      width: 40% !important;
 
       &_active {
         @include bl-position-rl(-4vh);
@@ -92,8 +89,6 @@
       @include bl-position-ab(10vh);
       left: 4%;
       background: $ellipse-background-gradient;
-      padding: 1px;
-      z-index: -1;
 
       &:before {
         @include wh-ht-r(98%, 97%, 30px);
@@ -131,16 +126,9 @@
       @include wh-ht(100%, 8vh);
       @include bl-flex-center(center, center, row, 0);
       @include bl-position-ab(0);
-      color: white;
       background: $home-background;
-      padding-bottom: 15vh;
-      z-index: -2;
+      color: white;
       border-radius: 30px 30px 0 0;
-
-      & > img {
-        padding: 10px;
-        width: 2%;
-      }
 
       &_ellipse {
         @extend .ellipse;
@@ -148,6 +136,7 @@
         top: -2vh;
         filter: blur(8px);
         background: $lemon;
+        z-index: 1;
       }
 
       &_ellipse:nth-child(2) {
@@ -168,37 +157,13 @@
 
 @media (max-height: 800px) {
   .container {
-    &_bl {
-      &_footer {
-        &_button {
-          &_ellipse {
-            @include wh-ht(60%, 4vh);
-          }
-        }
-      }
-
-      &_list {
-        margin-top: 4vh;
-
-        &_hero {
-          & > div {
-            & > img {
-              transform: translateY(-2px);
-            }
-          }
-        }
-      }
+    &_list {
+      @include wh-ht-r(87%, 38px, 30em);
     }
 
     &_turtles {
-      height: 43vh;
       &_slider {
         width: 33% !important;
-        &_active {
-          @include bl-position-rl(-3.7vh);
-          width: 100%;
-          transform: scale(2);
-        }
       }
 
       &_ton {
@@ -207,107 +172,149 @@
         top: 23%;
       }
     }
+
+    &_bl {
+      &_footer {
+        @include wh-ht(100%, 18vh);
+        margin-top: 8vh;
+      }
+    }
   }
 }
 
-@media (min-width: 540px) {
+@media (max-height: 720px) {
   .container {
-    &_bl {
-      &_footer {
-        @include bl-flex-center(space-between, center, column, 0);
-
-        &_button {
-          @include bl-flex-center(center, center, column, 0);
-
-          &_ellipse {
-            @include wh-ht(40%, 4vh);
-          }
-        }
-      }
-
-      &_list {
-        margin-top: 4vh;
-      }
-    }
-
     &_turtles {
       &_slider {
-        width: 25% !important;
-      }
-
-      &_ton {
-        @include wh-ht(110px, 48px);
-        left: 5%;
-        top: 23%;
+        width: 30% !important;
       }
     }
   }
 }
 
-@media (min-height: 1024px) {
+@media (min-height: 1025px) {
   .container {
-    border-radius: 60px 60px 0 0;
-
-    &_bl {
-      &_footer {
-        &_button {
-          & > button {
-            width: 35%;
-            height: 5vh;
-          }
-
-          @include bl-flex-center(center, center, column, 0);
-
-          &_ellipse {
-            width: 35%;
-          }
-        }
-      }
-
-      &_list {
-        height: 60px;
-        margin-top: 4vh;
-
-        &_hero {
-          & > div {
-            @include wh-ht(50px, 51px);
-
-            & > img {
-              transform: translateY(-2px);
-            }
-          }
-        }
-
-        & > button {
-          height: 60px;
-        }
-      }
-    }
-
     &_turtles {
+      height: 37vh;
+      &_slider {
+        width: 50% !important;
+        &_active {
+          @include bl-position-rl(-6vh);
+        }
+      }
+
+      &_header{
+        @include wh-ht(100%, 6vh);
+      }
+
       &_additional {
-        border-top-left-radius: 60px;
-        border-top-right-radius: 60px;
-      }
-
-      &_slider {
-        top: -2vh;
-
-        &_active {
-          @include bl-position-rl(-2vh);
-          transform: scale(2);
-        }
-      }
-
-      &_header {
-        border-radius: 60px 60px 0 0;
-      }
-
-      &_ton {
-        @include wh-ht(140px, 60px);
-        left: 20%;
-        top: 27%;
+        @include bl-position-ab(6vh);
       }
     }
   }
 }
+
+
+
+//
+//@media (min-width: 540px) {
+//  .container {
+//    &_bl {
+//      &_footer {
+//        @include bl-flex-center(space-between, center, column, 0);
+//
+//        &_button {
+//          @include bl-flex-center(center, center, column, 0);
+//
+//          &_ellipse {
+//            @include wh-ht(40%, 4vh);
+//          }
+//        }
+//      }
+//
+//      &_list {
+//        margin-top: 4vh;
+//      }
+//    }
+//
+//    &_turtles {
+//      &_slider {
+//        width: 25% !important;
+//      }
+//
+//      &_ton {
+//        @include wh-ht(110px, 48px);
+//        left: 5%;
+//        top: 23%;
+//      }
+//    }
+//  }
+//}
+//
+//@media (min-height: 1024px) {
+//  .container {
+//    border-radius: 60px 60px 0 0;
+//
+//    &_bl {
+//      &_footer {
+//        &_button {
+//          & > button {
+//            width: 220px;
+//            height: 45px;
+//          }
+//
+//          @include bl-flex-center(center, center, column, 0);
+//
+//          &_ellipse {
+//            width: 35%;
+//          }
+//        }
+//      }
+//
+//      &_list {
+//        height: 60px;
+//        margin-top: 4vh;
+//
+//        &_hero {
+//          & > div {
+//            @include wh-ht(50px, 51px);
+//
+//            & > img {
+//              transform: translateY(-2px);
+//            }
+//          }
+//        }
+//
+//        & > button {
+//          height: 60px;
+//        }
+//      }
+//    }
+//
+//    &_turtles {
+//      &_additional {
+//        border-top-left-radius: 60px;
+//        border-top-right-radius: 60px;
+//      }
+//
+//      &_slider {
+//        top: -2vh;
+//
+//        &_active {
+//          @include bl-position-rl(-2vh);
+//          transform: scale(2);
+//        }
+//      }
+//
+//      &_header {
+//        border-radius: 60px 60px 0 0;
+//      }
+//
+//      &_ton {
+//        @include wh-ht(140px, 60px);
+//        left: 20%;
+//        top: 27%;
+//      }
+//    }
+//  }
+//}

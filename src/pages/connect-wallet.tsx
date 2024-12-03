@@ -6,20 +6,22 @@ import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";
 import { TonConnectButton } from "@tonconnect/ui-react";
+import { useLang } from "../hooks/useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
-const ConnectWalletBtn = () => {
+const ConnectWalletBtn: FC<TConnectWallet> = ({ lang }) => {
   return (
     <div className={styles.container_connect}>
-      <p>Для участия в игре необходимо подключить кошелек и сделать ставку</p>
-      <BtnConnectTg />
+      <p>{LANGS[lang].connectForStart}</p>
+      <BtnConnectTg text={LANGS[lang].connect} />
     </div>
   );
 };
 
-const ConnectedWallet: FC<TConnectWallet> = ({ ton }) => {
+const ConnectedWallet: FC<TConnectWallet> = ({ ton, lang }) => {
   return (
     <div className={styles.container_connected}>
-      <p>Ваш баланс:</p>
+      <p>{LANGS[lang].balance}:</p>
       <p>
         {ton} {CURRENCY}
       </p>
@@ -29,12 +31,17 @@ const ConnectedWallet: FC<TConnectWallet> = ({ ton }) => {
 };
 
 export const ConnectWallet: FC<IAddressWallet> = ({ balance, address = 0 }) => {
+  const { lang } = useLang();
   return (
     <div className={styles.container}>
-      {address ? <ConnectedWallet ton={balance} /> : <ConnectWalletBtn />}
+      {address ? (
+        <ConnectedWallet ton={balance} lang={lang} />
+      ) : (
+        <ConnectWalletBtn lang={lang} />
+      )}
       <div className={styles.container_footer}>
         <div className={styles.container_footer_back}></div>
-        {!address && <img src={connectTurtle} alt="connect-turtle" />}
+        <img src={connectTurtle} alt="connect-turtle" />
       </div>
     </div>
   );

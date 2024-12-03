@@ -7,3 +7,7 @@ export type TBtnCommon = {
   rtArrow?: boolean;
   disabled?: boolean;
 };
+
+export type TBtnConnectWallet = {
+  text: string;
+};

@@ -3,48 +3,37 @@
 @import "../common.module";
 
 .container {
-  @include bl-flex-center(space-between, center, column, 0);
-  @include wh-ht(100%, 90vh);
-
-  & > p {
-    line-height: 20px;
-  }
+  @include bl-flex-center(center, center, column, 0);
+  @include wh-ht(100%, $height-page);
+  //position: fixed;
 
   &_connect {
-    flex-grow: 1;
-    @include bl-flex-center(center, center, column, 2%);
+    @include bl-flex-center(flex-end, center, column, 2%);
+    @include grow-marginB(1, 17vh);
 
     & > p {
-      @include width-sz-al-cl(278px, 14px, center, $grey);
+      @include width-sz-al-cl(100%, 16px, center, $grey);
     }
   }
 
   &_connected {
-    @include bl-flex-center(center, center, column, 2%);
-    flex-grow: 1;
-    z-index: 1;
-    margin-bottom: 10vh;
+    @include bl-flex-center(flex-end, center, column, 2%);
+    @include grow-marginB(1, 17vh);
 
     & > p {
-      @include width-sz-al-cl(278px, 14px, center, $grey);
+      @include width-sz-al-cl(278px, 15px, center, $grey);
       margin: 0;
     }
 
     p:nth-child(2) {
       @include width-sz-al-cl(333px, 60px, center, white);
     }
-
-    & > button {
-      width: 55%;
-      margin-top: 6%;
-    }
   }
 
   &_footer {
     @include bl-flex-center(flex-end, center, column, 2%);
-
     & > img {
-      z-index: 2;
+      width: 100%;
     }
 
     &_back {
@@ -52,31 +41,6 @@
       @include wh-ht(100%, 14vh);
       box-shadow: 0 0 80px $yellow-ellipse;
       filter: blur(60px);
-    }
-  }
-}
-
-@media (max-height: 680px) {
-  .container {
-    &_connected {
-      & > button {
-        height: 5vh;
-      }
-    }
-  }
-}
-
-@media (min-height: 1024px) {
-  .container {
-    &_footer {
-      & > img {
-        width: 150%;
-      }
-
-      &_back {
-        @include wh-ht(100%, 16vh);
-        filter: blur(100px);
-      }
     }
   }
 }

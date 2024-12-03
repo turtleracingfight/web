@@ -2,29 +2,25 @@
 @import "../variables.module";
 
 .container {
-  margin-top: 2vh;
-  z-index: 10;
-  position: absolute;
+  @include bl-flex-center(center, center, column, 1vh);
+  max-width: 450px;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
+  margin: 2vh auto;
+  z-index: 2;
+  position: absolute;
 
   &_mistake {
-    @include bl-flex-center(flex-start, center, row, 2%);
-    @include wh-ht(85%, 5vh);
-    padding: 5px 10px;
+    @include bl-flex-center(center, center, row, 3%);
+    @include wh-ht(90%, 5vh);
+    padding: 0.5vh 3%;
     cursor: pointer;
-    border-radius: 10px;
-    background: #151515;
+    border-radius: 15px;
+    background: #101010;
     color: darkgray;
-
-    box-shadow: 0 0 3px #575757;
+    box-shadow:  0 0 5px black;
 
     & > img {
-      width: 7vw;
+      height: 3vh
     }
   }
 }

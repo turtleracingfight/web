@@ -1,64 +1,61 @@
-@import '../mixins.module';
-@import '../variables.module';
-@import '../common.module';
+@import "../mixins.module";
+@import "../variables.module";
+@import "../common.module";
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
-  width: 100%;
 
   &_bl {
     @include bl-flex-center(flex-start, center, column, 0);
-    margin-top: 8%;
     width: 100%;
 
     &_border {
       @include wh-ht(100%, 1px);
-      margin-top: 8%;
       background: $yellow-ellipse;
     }
 
     &_turtle {
-      @include bl-flex-center(space-between, flex-start, row, 0px);
+      @include bl-flex-center(space-between, flex-start, row, 0);
       width: 100%;
-
 
       &_content {
         @include bl-flex-center(flex-start, center, row, 0);
-        @include wh-ht(50%, 12vh);
+        position: relative;
+        height: 18vh;
         color: white;
+        width: 50%;
 
         &_elipse {
           @extend .ellipse;
-          @include wh-ht(90%, 4vh);
-          left: -30%;
-          filter: blur(35px);
+          @include wh-ht(120%, 6vh);
+          left: -13vw;
+          filter: blur(25px);
           background: $lime-background;
         }
 
-
         & > img {
-          z-index: 2;
-          height: 12vh;
+          height: 15vh;
         }
 
         & > p {
-          width: 100px;
+          margin: 0;
           font-family: DigitalICG;
         }
       }
 
       &_bet {
         @include bl-flex-center(space-around, center, column, 0);
-        @include wh-ht(50%, 12vh);
+        width: 50%;
+        height: 18vh;
+        color: white;
 
         & > button {
-          @include wh-ht(172px, 38px);
+          @include wh-ht(90%, 4.5vh);
         }
 
         & > p {
           @include bl-flex-center(center, center, row, 0);
-          @include wh-ht-r(172px, 38px, 30px);
-          color: white;
+          @include wh-ht-r(90%, 4.5vh, 30px);
           margin: 0;
           background: $back-linear-gradient;
         }
@@ -67,14 +64,15 @@
   }
 }
 
-@media(max-height: 800px) {
+@media (min-height: 1024px) {
   .container {
     &_bl {
       &_turtle {
         &_content {
           &_elipse {
-            left: -40%;
-            filter: blur(25px);
+            @include wh-ht(120%, 7vh);
+            left: -5vw;
+            filter: blur(30px);
           }
         }
       }
@@ -82,35 +80,31 @@
   }
 }
 
-@media(min-height: 1024px) {
+@media (min-width: 1024px) {
   .container {
     &_bl {
       &_turtle {
         &_content {
-          @include bl-flex-center(flex-start, center, row, 8%);
-
-          & > p {
-            font-size: 17px;
-          }
-
-          & > img {
-            height: 17vh;
-          }
-
           &_elipse {
-            @include wh-ht(90%, 5vh);
-            left: -35%;
-            filter: blur(45px);
+            @include wh-ht(120%, 9vh);
+            left: -5vw;
+            filter: blur(30px);
           }
         }
+      }
+    }
+  }
+}
 
-        &_bet {
-          & > p {
-            @include wh-ht(300px, 50px);
-          }
-
-          & > button {
-            @include wh-ht(300px, 50px);
+@media (min-width: 1400px) {
+  .container {
+    &_bl {
+      &_turtle {
+        &_content {
+          &_elipse {
+            @include wh-ht(120%, 9vh);
+            left: -2vw;
+            filter: blur(30px);
           }
         }
       }

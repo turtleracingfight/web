@@ -2,22 +2,22 @@
 @import '../variables.module';
 
 .container {
-  @include bl-flex-center(flex-start, flex-start, row, 0);
+  @include bl-flex-center(center, flex-start, row, 0);
   @include wh-ht(100%, $height-page);
 
   &_lang {
     @include bl-flex-center(flex-start, center, column, 0);
-    margin-top: 15%;
-    transition: 400ms;
+    transition: 300ms;
     width: 100%;
     overflow: hidden;
     background: $back-linear-gradient-black;
+    margin-top: 5%;
 
     &_button {
       @include bl-flex-center(center, center, column, 0);
       width: 100%;
       margin: 0.5% 0.5%;
-      z-index: 5;
+      z-index: 1;
 
       & > button {
         width: 99.4%;
@@ -26,7 +26,6 @@
 
     &_choose {
       @include bl-flex-center(center, center, column, 0);
-      padding-top: 1%;
       color: white;
       width: 100%;
 

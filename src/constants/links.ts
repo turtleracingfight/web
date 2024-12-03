@@ -15,6 +15,7 @@ import wallet from "/components/other/wallet.png";
 import percent from "/components/other/percent.png";
 import fg_russia from "/components/other/fg-rus.svg";
 import fg_english from "/components/other/fg-english.svg";
+import { TListLanguages } from "../types/ts-links.ts";
 
 export const CURRENCY = "TON";
 
@@ -28,59 +29,56 @@ export const LIST_TURTLES = [
 export const INFO_LIST = [
   {
     id: 1,
-    text: "В игре участвуют 10 черепах. Участники могут делать ставки на любое количество черепах и на любую из них",
+    ru: "В игре участвуют 10 черепах. Участники могут делать ставки на любое количество черепах и на любую из них",
+    en: "There are 10 turtles in the game. Participants can place bets on any number of turtles and on any of them",
     svg: turtles
   },
   {
     id: 2,
-    text: "Победителем считается черепаха, на которую поставили меньше всего",
+    ru: "Победителем считается черепаха, на которую поставили меньше всего",
+    en: "The winner is the turtle that has the least bet on",
     svg: impulse
   },
-  { id: 3, text: "Забег заканчивается в субботу вечером", svg: moon },
+  {
+    id: 3,
+    ru: "Забег заканчивается в субботу вечером",
+    en: "The race ends on Saturday evening",
+    svg: moon
+  },
   {
     id: 4,
-    text: "Сумма ставок делится между всеми игроками, которые поставили на победившую черепаху",
+    ru: "Сумма ставок делится между всеми игроками, которые поставили на победившую черепаху",
+    en: "The amount of bets is divided among all the players who bet on the winning turtle",
     svg: money
   },
   {
     id: 5,
-    text: "Сумма выигрыша автоматически зачисляется на ваш кошелек",
+    ru: "Сумма выигрыша автоматически зачисляется на ваш кошелек",
+    en: "The winning amount is automatically credited to your wallet",
     svg: wallet
   },
   {
     id: 6,
-    text: "Наша комиссия составляет 10% от общей суммы ставок",
+    ru: "Наша комиссия составляет 10% от общей суммы ставок",
+    en: "Our commission is 10% of the total amount of bets",
     svg: percent
   }
 ];
 
-export const OBJECT_TURTLES = {
-  "1": { svg: zoom, name: "ЗУМ" },
-  "2": { svg: zoom, name: "ТВЕРДЫНЯ" },
-  "3": { svg: zoom, name: "ЭКШН-ТРЕК" },
-  "4": { svg: zoom, name: "ГЛАДИАТОР" },
-  "5": { svg: zoom, name: "ШТОПОР" },
-  "6": { svg: zoom, name: "ФОРМУЛА-1" },
-  "7": { svg: zoom, name: "ИМУЛЬС" },
-  "8": { svg: zoom, name: "НИТРО" },
-  "9": { svg: zoom, name: "НИНДЗЯ" },
-  "10": { svg: zoom, name: "ПАРА-ПСИ" }
-};
-
 export const TURTLES = [
-  { id: 0, svg: zoom, name: "ЗУМ" },
-  { id: 1, svg: stronghold, name: "ТВЕРДЫНЯ" },
-  { id: 2, svg: track, name: "ЭКШН-ТРЕК" },
-  { id: 3, svg: gladiator, name: "ГЛАДИАТОР" },
-  { id: 4, svg: corkscrew, name: "ШТОПОР" },
-  { id: 5, svg: formula, name: "ФОРМУЛА-1" },
-  { id: 6, svg: impulse, name: "ИМУЛЬС" },
-  { id: 7, svg: nitro, name: "НИТРО" },
-  { id: 8, svg: ninja, name: "НИНДЗЯ" },
-  { id: 9, svg: parapsi, name: "ПАРА-ПСИ" }
+  { id: 0, svg: zoom, ru: "ЗУМ", en: "Zoom" },
+  { id: 1, svg: stronghold, ru: "ТВЕРДЫНЯ", en: "STRONGHOLD" },
+  { id: 2, svg: track, ru: "ЭКШН-ТРЕК", en: "ACTION TRACK" },
+  { id: 3, svg: gladiator, ru: "ГЛАДИАТОР", en: "GLADIATOR" },
+  { id: 4, svg: corkscrew, ru: "ШТОПОР", en: "CORKSCREW" },
+  { id: 5, svg: formula, ru: "ФОРМУЛА-1", en: "FORMULA-1" },
+  { id: 6, svg: impulse, ru: "ИМУЛЬС", en: "IMPULSE" },
+  { id: 7, svg: nitro, ru: "НИТРО", en: "NITRO" },
+  { id: 8, svg: ninja, ru: "НИНДЗЯ", en: "NINJA" },
+  { id: 9, svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PSI" }
 ];
 
-export const LIST_LANGUAGES = [
-  { id: 1, lang: "Русский", svg: fg_russia },
-  { id: 2, lang: "English", svg: fg_english }
+export const LIST_LANGUAGES: TListLanguages[] = [
+  { id: 1, ru: "Русский", en: "Russian", svg: fg_russia, lang: "ru" },
+  { id: 2, ru: "Английский", en: "English", svg: fg_english, lang: "en" }
 ];

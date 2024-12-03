@@ -18,9 +18,7 @@ const checkWinner = bets => {
   }
   let howMuch = 0;
   if (minValue) {
-    console.log("comein", bets, wonTurtle);
     for (const bet of TURTLES) {
-      console.log(wonTurtle, `me${bet.id + 1}`);
       if (+bets[`me${bet.id + 1}`] && `me${bet.id + 1}` === wonTurtle) {
         const all = (+bets["total"] / 100) * 90;
         const percent = bets[`me${bet.id + 1}`] / minValue;
@@ -37,7 +35,6 @@ const helperReturnBet = (bet: any) => {
   for (const elem of parsedBets) {
     if (typeof elem?.bets === "object") {
       const { howMuch, wonTurtle } = checkWinner(elem.bets);
-      console.log(wonTurtle, howMuch);
       for (const bet_turtle of TURTLES) {
         if (+elem?.bets[`me${bet_turtle.id + 1}`])
           betTurtles.push({
