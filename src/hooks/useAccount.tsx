@@ -7,6 +7,7 @@ import { useLang } from "./useLang.tsx";
 import { useEffect } from "react";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
+import { LANGS } from "../constants/langs.ts";
 
 export const useAccount = () => {
   const location = useLocation();
@@ -18,7 +19,12 @@ export const useAccount = () => {
   const { client } = useTonClient(network as CHAIN);
 
   useEffect(() => {
-    if (tonConnectUI && lang) setOptions({ language: lang });
+    if (tonConnectUI && lang)
+      setOptions({
+        enableAndroidBackHandler: true,
+        language: lang,
+        actionsConfiguration: { notifications: ["before"] }
+      });
   }, []);
 
   return {
@@ -33,11 +39,11 @@ export const useAccount = () => {
                 payload: args.body?.toBoc().toString("base64")
               }
             ],
-            validUntil: Date.now() + 1 * 60 * 1000 // 1 minutes for user to approve
+            validUntil: Date.now() + 60 * 1000 // 1 minutes for user to approve
           });
           if (transaction.boc) {
             createErrorStore({
-              text: "Ставка поставлена",
+              text: LANGS[lang].placedBet,
               type: EnumHandlerError.SUCCESS
             });
             navigate(
@@ -48,7 +54,7 @@ export const useAccount = () => {
           }
         } catch (error) {
           createErrorStore({
-            text: "Ставка была отменена",
+            text: LANGS[lang].cancelledBet,
             type: EnumHandlerError.ERROR
           });
         }

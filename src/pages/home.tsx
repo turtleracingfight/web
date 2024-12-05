@@ -65,7 +65,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   useEffect(() => {
     if (!isControllerLoading) {
       (async () => {
-        const data = await requestGetResults();
+        const data = await requestGetResults(true);
         if (data) setBets(data);
       })();
     }
