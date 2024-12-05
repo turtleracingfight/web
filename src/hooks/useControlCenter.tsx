@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { AxiosError } from "axios";
+import { useLang } from "./useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
 const messageBet = (turtleId: number): CBet => {
   return {
@@ -19,8 +21,10 @@ const messageBet = (turtleId: number): CBet => {
 };
 
 let time = 0;
+let firstBet = false;
 const CONTRACT = "EQA28ww30J6zjj1IoU_fCOkqP53A3Cit5LzztpaZmcTcl0t2";
 export const useControlCenter = () => {
+  const { lang } = useLang();
   const [isLoaded, setIsLoaded] = useState(true);
   const [isRequest, setIsRequest] = useState(false);
   const { address, sender, client, setOptions } = useAccount();
@@ -52,7 +56,7 @@ export const useControlCenter = () => {
     } catch (error) {
       setIsRequest(false);
       createErrorStore({
-        text: "Неудалось получить активный адрес турнира",
+        text: LANGS[lang].activeAddress,
         type: EnumHandlerError.ERROR
       });
     }
@@ -159,33 +163,33 @@ export const useControlCenter = () => {
     }
   };
 
-  const requestGetResults = async () => {
+  const requestGetResults = async (isInit = false) => {
     try {
       if (!client) return;
+      setIsRequest(true);
       const address = await requestActiveAddress();
       if (address) {
         const contract = Turtle.fromAddress(Address.parse(address as string));
         const turtle = client.open(contract) as OpenedContract<Turtle>;
         const data = await turtle.getData(Address.parse(address as string));
-        if (data) requestIsData(turtle);
+        if (data && isInit) requestIsData(turtle);
         return data;
-      } else
-        createErrorStore({
-          text: "Отсутствует активный адрес",
-          type: EnumHandlerError.ERROR
-        });
+      }
+      setIsRequest(false);
     } catch (error) {
+      setIsRequest(false);
       const err = error as AxiosError;
       if (err.status === 504) {
         createErrorStore({
-          text: "Слишком много запросов, повторите позже",
+          text: LANGS[lang].lotRequest,
           type: EnumHandlerError.ERROR
         });
         return;
       }
-      if (err.message.includes("Unable to execute get method")) {
+      if (err.message.includes("Unable to execute get method") && !firstBet) {
+        firstBet = true;
         createErrorStore({
-          text: "Будьте первыми сделайте ставку",
+          text: LANGS[lang].beFirst,
           type: EnumHandlerError.SUCCESS
         });
       } else {
@@ -208,7 +212,7 @@ export const useControlCenter = () => {
       );
     } catch (error) {
       createErrorStore({
-        text: "Неудалось поставить ставку",
+        text: LANGS[lang].failPlaceBet,
         type: EnumHandlerError.ERROR
       });
     }

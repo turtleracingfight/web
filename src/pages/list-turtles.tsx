@@ -7,11 +7,13 @@ import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { useEffect, useState } from "react";
 import { LANGS } from "../constants/langs.ts";
 import { useLang } from "../hooks/useLang.tsx";
+import { Loader } from "../components/loader.tsx";
 
 export const ListTurtles = () => {
   const navigate = useNavigate();
   const { lang } = useLang();
-  const { isControllerLoading, requestGetResults } = useControlCenter();
+  const { isControllerLoading, isRequest, requestGetResults } =
+    useControlCenter();
   const [bet, setMyBet] = useState<{ [key: string]: bigint | string }>({});
 
   const handlerMakeBet = (id: number) =>
@@ -28,6 +30,7 @@ export const ListTurtles = () => {
 
   return (
     <div className={styles.container}>
+      {isRequest && <Loader />}
       {TURTLES.map(el => {
         let betTon = +bet[`me${el.id + 1}`]?.toString() || 0;
         return (
