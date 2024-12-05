@@ -10,7 +10,7 @@
   position: absolute;
 
   &_mistake {
-    @include bl-flex-center(center, center, row, 3%);
+    @include bl-flex-center(flex-start, center, row, 3%);
     @include wh-ht(90%, 5vh);
     padding: 0.5vh 3%;
     cursor: pointer;

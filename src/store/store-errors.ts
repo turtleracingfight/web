@@ -2,10 +2,7 @@ import { create } from "zustand";
 import { TError, TStoreError } from "../types/ts-store-errors.ts";
 
 export const useStoreErrors = create<TStoreError>(set => ({
-  errors: [
-
-
-  ],
+  errors: [],
   createError: (error: TError) =>
     set(state => ({
       errors: [...state.errors, { ...error, id: state.errors.length + 1 }]
@@ -15,5 +12,5 @@ export const useStoreErrors = create<TStoreError>(set => ({
 }));
 
 export const createErrorStore = (error: TError) => {
-  useStoreErrors().createError(error);
+  useStoreErrors.getState().createError(error);
 };

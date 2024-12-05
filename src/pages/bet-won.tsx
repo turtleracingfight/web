@@ -5,14 +5,17 @@ import { ChangeEvent, useState } from "react";
 import { CURRENCY } from "../constants/links.ts";
 import { useParams } from "react-router-dom";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { useLang } from "../hooks/useLang.tsx";
+import { LANGS } from "../constants/langs.ts";
 
 const LIGHT_GREY = "#707070";
-
 export const BetWon = () => {
+  const { requestMakeBet } = useControlCenter();
+  const { lang } = useLang();
+
   const [value, setValue] = useState<string>("");
   const [isInput, setIsInput] = useState<boolean>(false);
   const [isWinning] = useState<boolean>(false);
-  const { makeBet } = useControlCenter();
 
   const { id } = useParams();
 
@@ -22,11 +25,7 @@ export const BetWon = () => {
     setValue(e.target.value);
 
   const handlerMakeBet = () => {
-    if (id) {
-      makeBet(+value, +id);
-      // navigate(ROUTES.listTurtles);
-      // alert("Ставка поставлена");
-    }
+    if (id) requestMakeBet(+value, +id);
   };
 
   return (
@@ -45,7 +44,7 @@ export const BetWon = () => {
               <p>Ваш выигрыш составил:</p>
             </>
           ) : (
-            <p style={{ color: LIGHT_GREY }}>Сделайте ставку</p>
+            <p style={{ color: LIGHT_GREY }}>{LANGS[lang].makeBet}</p>
           )}
         </div>
         {!id ? (
@@ -90,7 +89,7 @@ export const BetWon = () => {
             ) : null}
             <BtnCommon
               disabled={!value.length}
-              text={"Подтвердить"}
+              text={LANGS[lang].confirm}
               handlerClick={handlerMakeBet}
             />
           </div>

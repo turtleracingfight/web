@@ -1,12 +1,15 @@
 import { CHAIN, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { Address, SenderArguments } from "@ton/core";
 import { ROUTES } from "../constants/route.tsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useTonClient } from "./useTonClient.tsx";
 import { useLang } from "./useLang.tsx";
 import { useEffect } from "react";
+import { createErrorStore } from "../store/store-errors.ts";
+import { EnumHandlerError } from "../types/ts-store-errors.ts";
 
 export const useAccount = () => {
+  const location = useLocation();
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const wallet = useTonWallet();
   const { lang } = useLang();
@@ -32,9 +35,22 @@ export const useAccount = () => {
             ],
             validUntil: Date.now() + 1 * 60 * 1000 // 1 minutes for user to approve
           });
-          if (transaction.boc) navigate(ROUTES.listTurtles);
+          if (transaction.boc) {
+            createErrorStore({
+              text: "Ставка поставлена",
+              type: EnumHandlerError.SUCCESS
+            });
+            navigate(
+              location?.state === ROUTES.listTurtles
+                ? ROUTES.listTurtles
+                : ROUTES.home
+            );
+          }
         } catch (error) {
-          alert("Оплата не прошла!");
+          createErrorStore({
+            text: "Ставка была отменена",
+            type: EnumHandlerError.ERROR
+          });
         }
       },
       address: wallet?.account?.address

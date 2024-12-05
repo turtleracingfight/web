@@ -62,8 +62,10 @@ export const helperExcessMargin = (path: string) => {
   }
 };
 
-export const countTotalTon = (value: string | number) => {
-  return Math.floor((+value / 10 ** 9) * 100) / 100;
+export const countTotalTon = (value: bigint | string) => {
+  if (!value) return 0;
+  const bet = typeof value === "bigint" ? value.toString() : String(value);
+  return Math.floor((+bet / 10 ** 9) * 100) / 100;
 };
 
 export const helperErrorType = (type: EnumHandlerError): THelperError => {
@@ -71,19 +73,19 @@ export const helperErrorType = (type: EnumHandlerError): THelperError => {
     case EnumHandlerError.ERROR:
       return {
         img: error,
-        name: "error",
+        name: EnumHandlerError.ERROR,
         color: "#e12311"
       };
     case EnumHandlerError.SUCCESS:
       return {
         img: success,
-        name: "success",
+        name: EnumHandlerError.SUCCESS,
         color: "#32e732"
       };
     default:
       return {
         img: error,
-        name: "error",
+        name: EnumHandlerError.ERROR,
         color: "red"
       };
   }

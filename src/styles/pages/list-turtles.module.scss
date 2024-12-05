@@ -4,11 +4,11 @@
 
 .container {
   @include bl-flex-center(flex-start, center, column, 0);
+  @include wh-ht(100%, $height-page);
 
   &_bl {
     @include bl-flex-center(flex-start, center, column, 0);
     width: 100%;
-
     &_border {
       @include wh-ht(100%, 1px);
       background: $yellow-ellipse;

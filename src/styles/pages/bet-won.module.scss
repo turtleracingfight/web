@@ -4,10 +4,10 @@
 
 .container {
   @include bl-flex-center(center, center, column, 0);
-  @include wh-ht(100%, 99.4vh);
+  max-width: 450px;
+  @include wh-ht(100%, 100vh);
   @include border-im-sce($back-linear-gradient-top-bottom, auto);
   position: fixed;
-  box-shadow: 0 0 15px $green-ellipse;
   color: white;
   border-top: 0.4vh solid;
   border-bottom: 0.4vh solid;
@@ -24,7 +24,7 @@
       @include bl-flex-center(center, center, column, 5px);
 
       & > p {
-        @include width-sz-al-cl(191px, 16px, center, auto);
+        @include width-sz-al-cl(191px, 15px, center, auto);
         margin: 0;
       }
     }
@@ -79,77 +79,5 @@
   & > p {
     @include width-sz-al-cl(339px, auto, center, $grey);
     margin-top: 20vh;
-  }
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-  .container {
-    height: 99.3vh;
-
-    &_content {
-      &_button {
-        &_elipse {
-          display: none;
-        }
-      }
-    }
-  }
-}
-
-@media (max-height: 900px) {
-  .container {
-    height: 99.3vh;
-
-    &_content {
-      &_button {
-        &_elipse {
-          @include wh-ht(40%, 3vh);
-          filter: blur(35px);
-        }
-      }
-    }
-  }
-}
-
-@media (min-height: 1024px) {
-  .container {
-    height: 99.25vh;
-
-    &_content {
-      &_button {
-        & > button {
-          width: 25%;
-        }
-
-        &_elipse {
-          @include wh-ht(40%, 3vh);
-          filter: blur(35px);
-        }
-      }
-
-      &_winning {
-        justify-content: center !important;
-
-        & > input {
-          width: 100% !important;
-          max-width: 300px;
-        }
-      }
-    }
-  }
-}
-
-@media (max-height: 680px) {
-  .container {
-    height: 99.3vh;
-
-    &_content {
-      &_button {
-        &_elipse {
-          @include wh-ht(45%, 5vh);
-          filter: blur(35px);
-        }
-      }
-    }
   }
 }

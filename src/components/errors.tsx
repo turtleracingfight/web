@@ -5,6 +5,7 @@ import { memo } from "react";
 
 export const Errors = memo(() => {
   const { errors, removeError } = useStoreErrors();
+
   return (
     <div className={styles.container}>
       {errors.map(el => {
