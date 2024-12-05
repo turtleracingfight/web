@@ -11,17 +11,17 @@ import { useLang } from "../hooks/useLang.tsx";
 export const ListTurtles = () => {
   const navigate = useNavigate();
   const { lang } = useLang();
-  const { getBetsToday, isControllerLoading } = useControlCenter();
-  const [myBet, setMyBet] = useState({});
+  const { isControllerLoading, requestGetResults } = useControlCenter();
+  const [bet, setMyBet] = useState<{ [key: string]: bigint | string }>({});
 
   const handlerMakeBet = (id: number) =>
-    navigate(`${ROUTES.makeBet}/${id + 1}`);
+    navigate(`${ROUTES.makeBet}/${id + 1}`, { state: ROUTES.listTurtles });
 
   useEffect(() => {
     (async () => {
       if (!isControllerLoading) {
-        const result = await getBetsToday();
-        if (result) setMyBet(result);
+        const data = await requestGetResults();
+        if (data) setMyBet(data);
       }
     })();
   }, [isControllerLoading]);
@@ -29,7 +29,7 @@ export const ListTurtles = () => {
   return (
     <div className={styles.container}>
       {TURTLES.map(el => {
-        let betTon = 0;
+        let betTon = +bet[`me${el.id + 1}`]?.toString() || 0;
         return (
           <div key={el.id} className={styles.container_bl}>
             <div className={styles.container_bl_turtle}>

@@ -10,7 +10,8 @@ export const LANGS: any = {
     connectWallet: "Connect wallet",
     connect: "Connect",
     connectForStart:
-      "To participate in the game, you need to connect your wallet and place a bet"
+      "To participate in the game, you need to connect your wallet and place a bet",
+    confirm: "Confirm"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -23,6 +24,7 @@ export const LANGS: any = {
     connectWallet: "Подключить кошелёк",
     connect: "Подключить",
     connectForStart:
-      "Чтобы принять участие в игре, вам необходимо подключить свой кошелек и сделать ставку"
+      "Чтобы принять участие в игре, вам необходимо подключить свой кошелек и сделать ставку",
+    confirm: "Подтвердить"
   }
 };

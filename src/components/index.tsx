@@ -38,8 +38,9 @@ export const Layout = () => {
       <div
         style={{
           margin: isMargin ? "" : "0 5%",
+          height: "100vh",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           flexDirection: "column",
           alignItems: "center"
         }}

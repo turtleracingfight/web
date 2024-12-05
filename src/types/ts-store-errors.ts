@@ -11,6 +11,6 @@ export type TError = {
 };
 
 export enum EnumHandlerError {
-  ERROR = "error",
+  ERROR = "ERROR",
   SUCCESS = "SUCCESS"
 }
