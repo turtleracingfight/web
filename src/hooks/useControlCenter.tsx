@@ -22,7 +22,7 @@ const messageBet = (turtleId: number): CBet => {
 
 let time = 0;
 let firstBet = false;
-const CONTRACT = "EQA28ww30J6zjj1IoU_fCOkqP53A3Cit5LzztpaZmcTcl0t2";
+const CONTRACT = "EQC6shQUxTFkodw_h_OSnwDr_GIy4Xq9nWBAHnQlzuAHRNpl";
 export const useControlCenter = () => {
   const { lang } = useLang();
   const [isLoaded, setIsLoaded] = useState(true);
