@@ -23,7 +23,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const [turtle, setTurtle] = useState<number>(0);
   const [isBlock, setIsBlock] = useState<boolean>(false);
   const [bets, setBets] = useState<{ [key: string]: string | bigint }>({});
-  const { requestGetResults, isControllerLoading } = useControlCenter();
+  const { requestGetData, isControllerLoading } = useControlCenter();
   const { lang } = useLang();
 
   const handlerNextTurtle = async () => {
@@ -65,8 +65,8 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   useEffect(() => {
     if (!isControllerLoading) {
       (async () => {
-        const data = await requestGetResults(true);
-        if (data) setBets(data);
+        const data = await requestGetData();
+        if (data && Object.values(data).length) setBets(data);
       })();
     }
   }, [isControllerLoading]);

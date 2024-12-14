@@ -17,7 +17,8 @@ export const LANGS: any = {
     beFirst: "Be the first to place a bet",
     failPlaceBet: "Failed to place a bet",
     placedBet: "The bet is placed",
-    cancelledBet: "The bet has been canceled"
+    cancelledBet: "The bet has been canceled",
+    nextTour: "Error in getting time to the next tournament"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -37,6 +38,7 @@ export const LANGS: any = {
     beFirst: "Будьте первыми, сделайте ставку",
     failPlaceBet: "Не удалось поставить ставку",
     placedBet: "Ставка поставлена",
-    cancelledBet: "Ставка была отменена"
+    cancelledBet: "Ставка была отменена",
+    nextTour: "Ошибка при получении времени до следующего турнира"
   }
 };

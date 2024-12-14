@@ -5,7 +5,6 @@ import {
 } from "../../build/ControlCenter/tact_ControlCenter.ts";
 import { useAsyncInitialize } from "./useInitial.tsx";
 import { Address, OpenedContract, toNano } from "@ton/core";
-import { Turtle } from "../../build/Turtle/tact_Turtle.ts";
 import { useEffect, useState } from "react";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
@@ -18,6 +17,94 @@ const messageBet = (turtleId: number): CBet => {
     turtleNumber: BigInt(turtleId),
     $$type: "CBet"
   };
+};
+
+const helperReturnData = () => {
+  const data = {
+    me1: BigInt(""),
+    me2: BigInt(""),
+    me3: BigInt(""),
+    me4: BigInt(""),
+    me5: BigInt(""),
+    me6: BigInt(""),
+    me7: BigInt(""),
+    me8: BigInt(""),
+    me9: BigInt(""),
+    me10: BigInt(""),
+    total1: BigInt(""),
+    total2: BigInt(""),
+    total3: BigInt(""),
+    total4: BigInt(""),
+    total5: BigInt(""),
+    total6: BigInt(""),
+    total7: BigInt(""),
+    total8: BigInt(""),
+    total9: BigInt(""),
+    total10: BigInt(""),
+    pnl: BigInt(""),
+    winner: BigInt("")
+  };
+  for (const total in data) {
+    const random = Math.floor(Math.random() * 10);
+    if (total.includes("total"))
+      data[total] =
+        random >= 4
+          ? BigInt(
+              Math.floor(
+                Math.random() *
+                  (random * Math.floor(Math.random() * 10)) *
+                  10000000000
+              )
+            )
+          : "0";
+  }
+  for (const me in data) {
+    const random = Math.floor(Math.random() * 10);
+    if (
+      me.includes("me") &&
+      data[`total${me[2]}`] &&
+      BigInt(data[`total${me[2]}`]) > 0
+    ) {
+      data[me] =
+        random >= 5
+          ? BigInt(
+              Math.floor(
+                Math.random() *
+                  (random * Math.floor(Math.random() * 10)) *
+                  100000000
+              )
+            )
+          : "0";
+    }
+  }
+  return data;
+};
+const timeToRequest = 2000;
+const testController = {
+  getActiveId: (): Promise<{ data: number; status: number }> => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ data: 5, status: 200 });
+      }, timeToRequest);
+    });
+  },
+  getNext: (): Promise<{ data: number; status: number }> => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve({ data: 3005, status: 200 });
+      }, timeToRequest);
+    });
+  },
+  getData: (
+    id: number
+  ): Promise<{ data: { [key: string]: BigInt } | null; status: number }> => {
+    return new Promise((resolve, reject) => {
+      if (!id) reject({ data: null, status: 204 });
+      setTimeout(() => {
+        resolve({ data: helperReturnData(), status: 200 });
+      }, timeToRequest);
+    });
+  }
 };
 
 let time = 0;
@@ -47,12 +134,16 @@ export const useControlCenter = () => {
     else helperLoadedAcc();
   }, [address, controlCenter]);
 
-  const requestActiveAddress = async () => {
+  const requestGetActiveId = async () => {
     try {
       setIsRequest(true);
-      const address = await controlCenter?.getTournamentActive();
+      const { data } = await testController.getActiveId();
+      if (data) {
+        setIsRequest(false);
+        return data;
+      }
       setIsRequest(false);
-      return address?.toString();
+      return null;
     } catch (error) {
       setIsRequest(false);
       createErrorStore({
@@ -62,120 +153,38 @@ export const useControlCenter = () => {
     }
   };
 
-  // const initActiveAddress = async (): Promise<null | string> => {
-  //   const todayAddress = await requestActiveAddress();
-  //   const parsedTodayAddress = todayAddress.toString();
-  //   let activeAddress: string | null =
-  //     window.localStorage.getItem("activeAddress");
-  //   if (activeAddress) {
-  //     const parsedAddress = JSON.parse(activeAddress) as string || ''
-  //     if (todayAddress && parsedAddress !== todayAddress.toString()) {
-  //       if (parsedTodayAddress) {
-  //         window.localStorage.setItem(
-  //           "activeAddress",
-  //           JSON.stringify(parsedTodayAddress)
-  //         );
-  //       }
-  //     }
-  //     return parsedTodayAddress
-  //   }
-  //   const address = await requestActiveAddress();
-  //   if (address) {
-  //     window.localStorage.setItem(
-  //       "activeAddress",
-  //       JSON.stringify({ address: address.toString(), date: today })
-  //     );
-  //     activeAddress = address.toString();
-  //   }
-  //   return activeAddress;
-  // };
-
-  const requestIsData = async (turtle: OpenedContract<Turtle>) => {
+  const requestGetNext = async () => {
     try {
-      const id = await turtle.getId();
-      const parsedId = +id?.toString();
-      if (parsedId > 0) {
-        const allResults = window.localStorage.getItem("statistics");
-        let minusId = parsedId - 1;
-        const addresses: { id: number; address: string }[] = [];
-        const parsedStatistics = allResults && JSON.parse(allResults);
-        for (let i = 0; i < 2; i++) {
-          if (minusId > 0) {
-            const isId =
-              Array.isArray(parsedStatistics) &&
-              parsedStatistics.find(el => +el.id === +minusId);
-            if (!isId) {
-              const address = await controlCenter?.getTournamentAddress(
-                BigInt(minusId)
-              );
-              if (address)
-                addresses.push({ address: address.toString(), id: minusId });
-              minusId = minusId - 1;
-            }
-          }
-        }
-        const statistics = Array.isArray(parsedStatistics)
-          ? parsedStatistics
-          : [];
-        if (addresses.length) {
-          let time = 0;
-          let count = 0;
-          time = setInterval(async () => {
-            try {
-              if (count < 2 && addresses[count]?.address) {
-                const data = await turtle.getData(
-                  Address.parse(addresses[count].address as string)
-                );
-                if (data) {
-                  const newData = {};
-                  for (const field in data) {
-                    if (typeof data[field] === "bigint")
-                      newData[field] = data[field].toString();
-                  }
-                  statistics.push({ id: addresses[count].id, data: newData });
-                }
-              } else {
-                window.localStorage.setItem(
-                  "statistics",
-                  JSON.stringify(statistics)
-                );
-                clearInterval(time);
-              }
-            } catch (error) {
-              clearInterval(time);
-              if (statistics.length) {
-                window.localStorage.setItem(
-                  "statistics",
-                  JSON.stringify(statistics)
-                );
-              }
-            }
-            count += 1;
-          }, 2000);
-        }
+      setIsRequest(true);
+      const { data } = await testController.getNext();
+      let hours = 0;
+      let minutes = 0;
+      let seconds = 0;
+      if (data) {
+        hours = Math.floor(data / 3600);
+        minutes = Math.floor((data % 3600) / 60);
+        seconds = data % 60;
+        setIsRequest(false);
+        return { hours, minutes, seconds };
       }
+      setIsRequest(false);
+      return { hours, minutes, seconds };
     } catch (error) {
-      const err = error as AxiosError;
+      setIsRequest(false);
       createErrorStore({
-        text: err.message,
+        text: LANGS[lang].nextTour,
         type: EnumHandlerError.ERROR
       });
     }
   };
 
-  const requestGetResults = async (isInit = false) => {
+  const requestGetData = async () => {
     try {
-      if (!client) return;
+      const id = await requestGetActiveId();
+      if (!id) return;
       setIsRequest(true);
-      const address = await requestActiveAddress();
-      if (address) {
-        const contract = Turtle.fromAddress(Address.parse(address as string));
-        const turtle = client.open(contract) as OpenedContract<Turtle>;
-        const data = await turtle.getData(Address.parse(address as string));
-        if (data && isInit) requestIsData(turtle);
-        return data;
-      }
-      setIsRequest(false);
+      const { data } = await testController.getData(id);
+      return data;
     } catch (error) {
       setIsRequest(false);
       const err = error as AxiosError;
@@ -219,26 +228,10 @@ export const useControlCenter = () => {
   };
 
   return {
-    // takeBet: async (address: string, minValue: number) => {
-    //   try {
-    //     const contract = Turtle.fromAddress(Address.parse(address));
-    //     const turtle = (await client.open(contract)) as OpenedContract<Turtle>;
-    //     const id = await turtle.getId();
-    //     const message = {
-    //       $$type: "CPnl",
-    //       id: id
-    //     };
-    //     const data = await controlCenter?.send(
-    //       sender,
-    //       { value: toNano("0.05") },
-    //       message
-    //     );
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    requestGetData,
+    requestGetNext,
     requestMakeBet,
-    requestGetResults,
+    requestGetActiveId,
     isControllerLoading: isLoaded,
     address,
     isRequest,

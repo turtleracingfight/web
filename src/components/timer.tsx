@@ -1,21 +1,25 @@
 import styles from "../styles/components/timer.module.scss";
 import { memo, useEffect, useState } from "react";
+import { useControlCenter } from "../hooks/useControlCenter.tsx";
 
 let interval = 0;
 export const Timer = memo(() => {
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
+  const { requestGetNext } = useControlCenter();
 
   useEffect(() => {
-    const date = new Date();
-    setHours(24 - date.getHours());
-    setMinutes(60 - date.getMinutes());
-    setSeconds(60 - date.getSeconds());
+    (async () => {
+      const { hours, minutes, seconds } = await requestGetNext();
+      setHours(hours);
+      setMinutes(minutes);
+      setSeconds(seconds);
+    })();
   }, []);
 
   useEffect(() => {
-    if (hours) {
+    if (hours || minutes || seconds) {
       interval = setInterval(() => {
         if (!minutes) {
           setHours(state => state - 1);

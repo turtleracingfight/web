@@ -15,8 +15,7 @@ import { initLang, useLang } from "../hooks/useLang.tsx";
 
 export const Layout = () => {
   const { pathname } = useLocation();
-  const { isControllerLoading, isRequest, address, setOptions } =
-    useControlCenter();
+  const { isControllerLoading, isRequest, address, setOptions } = useControlCenter();
   const { loading, balance } = useGetBalance();
   const { lang, selectLang } = useLang();
 
