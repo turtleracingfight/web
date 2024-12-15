@@ -18,7 +18,11 @@ export const LANGS: any = {
     failPlaceBet: "Failed to place a bet",
     placedBet: "The bet is placed",
     cancelledBet: "The bet has been canceled",
-    nextTour: "Error in getting time to the next tournament"
+    nextTour: "Error in getting time to the next tournament",
+    notConnectedWallet: "The wallet is not connected",
+    agoMakeBet: "Ago",
+    winning: "Winning",
+    bet: "Bet"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -39,6 +43,10 @@ export const LANGS: any = {
     failPlaceBet: "Не удалось поставить ставку",
     placedBet: "Ставка поставлена",
     cancelledBet: "Ставка была отменена",
-    nextTour: "Ошибка при получении времени до следующего турнира"
+    nextTour: "Ошибка при получении времени до следующего турнира",
+    notConnectedWallet: "TКошелек не подключен",
+    agoMakeBet: "Назад",
+    winning: "Выигрыш",
+    bet: "Ставка"
   }
 };

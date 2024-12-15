@@ -1,20 +1,23 @@
 import styles from "../styles/components/timer.module.scss";
 import { memo, useEffect, useState } from "react";
-import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { useStoreContact } from "../store/store-contract.ts";
 
 let interval = 0;
 export const Timer = memo(() => {
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
-  const { requestGetNext } = useControlCenter();
+  const requestGetNext = useStoreContact().requestGetNext;
 
   useEffect(() => {
     (async () => {
-      const { hours, minutes, seconds } = await requestGetNext();
-      setHours(hours);
-      setMinutes(minutes);
-      setSeconds(seconds);
+      const data = await requestGetNext();
+      if (data) {
+        const { seconds, minutes, hours } = data;
+        setHours(hours);
+        setMinutes(minutes);
+        setSeconds(seconds);
+      }
     })();
   }, []);
 

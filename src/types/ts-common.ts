@@ -1,5 +1,5 @@
 export interface IAddressWallet {
-  balance: number;
+  balance?: number;
   address: string;
 }
 

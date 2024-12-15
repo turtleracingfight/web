@@ -3,14 +3,16 @@ import coins from "/pages/coins.png";
 import { BtnCommon } from "../components/buttons.tsx";
 import { ChangeEvent, useState } from "react";
 import { CURRENCY } from "../constants/links.ts";
-import { useParams } from "react-router-dom";
-import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useLang } from "../hooks/useLang.tsx";
 import { LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
+import { ROUTES } from "../constants/route.tsx";
 
+const DEFAULT_PNL = 0.05;
 const LIGHT_GREY = "#707070";
 export const BetWon = () => {
-  const { requestMakeBet } = useControlCenter();
+  const requestMakeBet = useStoreContact(state => state.requestMakeBet);
   const { lang } = useLang();
 
   const [value, setValue] = useState<string>("");
@@ -18,14 +20,32 @@ export const BetWon = () => {
   const [isWinning] = useState<boolean>(false);
 
   const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const handlerClickInput = () => setIsInput(true);
-  const handlerBlurInput = () => setIsInput(false);
+  const handlerClickInput = () => {
+    if (value.length) {
+      const pnlValue = +value - DEFAULT_PNL;
+      if (pnlValue > 0) setValue(String(+value - DEFAULT_PNL));
+    }
+    setIsInput(true);
+  };
+  const handlerBlurInput = () => {
+    if (value.length && +value !== 0) setValue(String(+value + DEFAULT_PNL));
+    else setValue("");
+    setIsInput(false);
+  };
   const handlerChangeValue = (e: ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
 
   const handlerMakeBet = () => {
-    if (id) requestMakeBet(+value, +id);
+    if (!value.length)
+      navigate(
+        location?.state === ROUTES.listTurtles
+          ? ROUTES.listTurtles
+          : ROUTES.home
+      );
+    if (id && value.length) requestMakeBet(+value, +id);
   };
 
   return (
@@ -88,8 +108,7 @@ export const BetWon = () => {
               <div className={styles.container_content_button_elipse}></div>
             ) : null}
             <BtnCommon
-              disabled={!value.length}
-              text={LANGS[lang].confirm}
+              text={value.length ? LANGS[lang].confirm : LANGS[lang].agoMakeBet}
               handlerClick={handlerMakeBet}
             />
           </div>

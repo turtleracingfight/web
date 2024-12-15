@@ -1,10 +1,12 @@
-@import '../mixins.module';
-@import '../variables.module';
-@import '../common.module';
+@import "../mixins.module";
+@import "../variables.module";
+@import "../common.module";
 
 .container {
-  width: 100%;
   @include bl-flex-center(flex-start, center, column, 0);
+  width: 100%;
+  max-width: 450px;
+  height: auto;
 
   &_bl {
     width: 100%;
@@ -17,6 +19,7 @@
     }
 
     &_stats {
+      position: relative;
       @include bl-flex-center(center, center, row, 5%);
       width: 100%;
 
@@ -27,13 +30,14 @@
       }
 
       &_win {
+        @include bl-flex-center(flex-end, flex-end, column, 0);
         z-index: 1;
-        width: 49%;
+        width: 45%;
 
         & > p {
           @include bl-flex-center(center, center, row, 0);
           @include wh-ht-r(100%, 4.5vh, 30px);
-          background:$back-linear-gradient;
+          background: $back-linear-gradient;
         }
 
         &_name {
@@ -65,9 +69,9 @@
       }
 
       &_bet {
-        @include bl-flex-center(space-between, center, column, 0);
+        @include bl-flex-center(flex-end, flex-end, column, 0);
         z-index: 1;
-        width: 49%;
+        width: 45%;
 
         &_content {
           width: 100%;
@@ -77,7 +81,7 @@
 
           & > img {
             @include bl-position-rl(5.3vh);
-            width: 100px;
+            width: 10vh;
           }
 
           & > p {
@@ -97,71 +101,71 @@
   }
 }
 
-@media(max-height: 800px) {
-  .container {
-    top: 88vh;
-
-    &_bl {
-      &_stats {
-        &_bet {
-          &_content {
-            & > img {
-              @include bl-position-rl(5.5vh);
-              width: 50%;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media(min-height: 1024px) {
-  .container {
-    top: 88vh;
-
-    &_bl {
-      &_stats {
-        &_elipse {
-          @include wh-ht(40%, 4vh);
-          left: 25%;
-          filter: blur(40px);
-        }
-
-        &_bet {
-          &_content {
-            & > img {
-              @include bl-position-rl(6.5vh);
-              width: 50%;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-@media(min-height: 1366px) {
-  .container {
-    top: 88vh;
-
-    &_bl {
-      &_stats {
-        &_elipse {
-          @include wh-ht(45%, 4vh);
-          left: 20%;
-          filter: blur(55px);
-        }
-
-        &_bet {
-          &_content {
-            & > img {
-              @include bl-position-rl(6vh);
-              width: 60%;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+//@media(max-height: 800px) {
+//  .container {
+//    top: 88vh;
+//
+//    &_bl {
+//      &_stats {
+//        &_bet {
+//          &_content {
+//            & > img {
+//              @include bl-position-rl(5.5vh);
+//              width: 50%;
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//@media(min-height: 1024px) {
+//  .container {
+//    top: 88vh;
+//
+//    &_bl {
+//      &_stats {
+//        &_elipse {
+//          @include wh-ht(40%, 4vh);
+//          left: 25%;
+//          filter: blur(40px);
+//        }
+//
+//        &_bet {
+//          &_content {
+//            & > img {
+//              @include bl-position-rl(6.5vh);
+//              width: 50%;
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+//
+//@media(min-height: 1366px) {
+//  .container {
+//    top: 88vh;
+//
+//    &_bl {
+//      &_stats {
+//        &_elipse {
+//          @include wh-ht(45%, 4vh);
+//          left: 20%;
+//          filter: blur(55px);
+//        }
+//
+//        &_bet {
+//          &_content {
+//            & > img {
+//              @include bl-position-rl(6vh);
+//              width: 60%;
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}

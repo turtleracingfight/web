@@ -1,13 +1,14 @@
 import styles from "../styles/pages/settings.module.scss";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { BtnCommon } from "../components/buttons.tsx";
 import { LIST_LANGUAGES } from "../constants/links.ts";
 import { LANGS } from "../constants/langs.ts";
 import { Locales } from "@tonconnect/ui";
-import { TSettings } from "../types/ts-settings.ts";
+import { useStoreLang } from "../store/store-lang.ts";
 
-export const Settings: FC<TSettings> = ({ selectLang, lang }) => {
+export const Settings = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { lang, selectLang } = useStoreLang();
 
   const openModalLang = () => setIsOpen(!isOpen);
 

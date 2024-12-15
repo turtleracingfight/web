@@ -12,10 +12,10 @@ import styles from "../styles/pages/home.module.scss";
 import "swiper/css";
 import "swiper/css/pagination";
 import "../index.css";
-import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { countTotalTon } from "../utils/usefulFunc.ts";
-import { useLang } from "../hooks/useLang.tsx";
 import { LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
+import { useStoreLang } from "../store/store-lang.ts";
 
 let swiperInstance: TSwiper = null;
 export const Home: FC<IAddressWallet> = ({ address }) => {
@@ -23,8 +23,8 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const [turtle, setTurtle] = useState<number>(0);
   const [isBlock, setIsBlock] = useState<boolean>(false);
   const [bets, setBets] = useState<{ [key: string]: string | bigint }>({});
-  const { requestGetData, isControllerLoading } = useControlCenter();
-  const { lang } = useLang();
+  const { lang } = useStoreLang();
+  const requestGetData = useStoreContact().requestGetData;
 
   const handlerNextTurtle = async () => {
     if (isBlock) return;
@@ -43,7 +43,8 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   };
 
   const handlerNavigateToAllTurtles = () => navigate(ROUTES.listTurtles);
-  const handlerMakeBet = () => navigate(`${ROUTES.makeBet}/${turtle + 1}`);
+  const handlerMakeBet = () =>
+    navigate(`${ROUTES.makeBet}/${turtle + 1}`, { state: ROUTES.home });
 
   const handlerIsBlock = () => {
     setIsBlock(true);
@@ -63,13 +64,11 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   );
 
   useEffect(() => {
-    if (!isControllerLoading) {
-      (async () => {
-        const data = await requestGetData();
-        if (data && Object.values(data).length) setBets(data);
-      })();
-    }
-  }, [isControllerLoading]);
+    (async () => {
+      const data = await requestGetData();
+      if (data && Object.values(data).length) setBets(data);
+    })();
+  }, []);
 
   const betsPlaced = countTotalTon(bets[`total${turtle + 1}`]);
   const betPlaced = countTotalTon(bets[`me${turtle + 1}`]);

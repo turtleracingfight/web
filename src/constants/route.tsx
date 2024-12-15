@@ -1,6 +1,6 @@
 import { ListTurtles } from "../pages/list-turtles.tsx";
 import { Navigate } from "react-router-dom";
-import { Statistics } from "../pages/statistics.tsx";
+import { History } from "../pages/history.tsx";
 import { Preview } from "../pages/preview.tsx";
 import { Settings } from "../pages/settings.tsx";
 import ac_statistics from "/components/navigation/ac-statistics.svg";
@@ -14,7 +14,7 @@ import { BetWon } from "../pages/bet-won.tsx";
 export const ROUTES = {
   listTurtles: "/list-turtles",
   home: "/home",
-  statistics: "/stats",
+  history: "/history",
   preview: "/preview",
   connect: "/connect",
   settings: "/settings",
@@ -26,7 +26,7 @@ export const ROUTES = {
 export const LIST_ROUTES = [
   { path: ROUTES.main, component: <Navigate to={ROUTES.home} /> },
   { path: ROUTES.listTurtles, component: <ListTurtles /> },
-  { path: ROUTES.statistics, component: <Statistics /> },
+  { path: ROUTES.history, component: <History /> },
   { path: ROUTES.preview, component: <Preview /> },
   { path: ROUTES.settings, component: <Settings /> },
   { path: "/make-bet/:id", component: <BetWon /> },
@@ -38,7 +38,7 @@ export const NAVIGATION_LINKS = [
     id: 1,
     visible: ac_statistics,
     hidden: statistics,
-    path: ROUTES.statistics
+    path: ROUTES.history
   },
   { id: 2, visible: ac_main, hidden: main, path: ROUTES.home },
   { id: 3, visible: ac_faq, hidden: faq, path: ROUTES.preview }

@@ -75,8 +75,21 @@ export const TURTLES = [
   { id: 6, svg: impulse, ru: "ИМУЛЬС", en: "IMPULSE" },
   { id: 7, svg: nitro, ru: "НИТРО", en: "NITRO" },
   { id: 8, svg: ninja, ru: "НИНДЗЯ", en: "NINJA" },
-  { id: 9, svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PSI" }
+  { id: 9, svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PS" }
 ];
+
+export const TURTLES_HISTORY = {
+  me1: { svg: zoom, ru: "ЗУМ", en: "Zoom" },
+  me2: { svg: stronghold, ru: "ТВЕРДЫНЯ", en: "STRONGHOLD" },
+  me3: { svg: track, ru: "ЭКШН-ТРЕК", en: "ACTION TRACK" },
+  me4: { svg: gladiator, ru: "ГЛАДИАТОР", en: "GLADIATOR" },
+  me5: { svg: corkscrew, ru: "ШТОПОР", en: "CORKSCREW" },
+  me6: { svg: formula, ru: "ФОРМУЛА-1", en: "FORMULA-1" },
+  me7: { svg: impulse, ru: "ИМУЛЬС", en: "IMPULSE" },
+  me8: { svg: nitro, ru: "НИТРО", en: "NITRO" },
+  me9: { svg: ninja, ru: "НИНДЗЯ", en: "NINJA" },
+  me10: { svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PSI" }
+};
 
 export const LIST_LANGUAGES: TListLanguages[] = [
   { id: 1, ru: "Русский", en: "Russian", svg: fg_russia, lang: "ru" },

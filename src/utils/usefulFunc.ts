@@ -3,6 +3,8 @@ import error from "../../public/components/other/error.png";
 import success from "../../public/components/other/success.png";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { THelperError } from "../types/ts-common.ts";
+import { TURTLES_HISTORY } from "../constants/links.ts";
+import { Locales } from "@tonconnect/ui";
 
 export const helperNavigationStyles = (path: string) => {
   let currentPage = "";
@@ -10,7 +12,7 @@ export const helperNavigationStyles = (path: string) => {
     case ROUTES.home:
       currentPage = "50.14%";
       break;
-    case ROUTES.statistics:
+    case ROUTES.history:
       currentPage = "20.14%";
       break;
     case ROUTES.preview:
@@ -57,6 +59,8 @@ export const helperExcessMargin = (path: string) => {
       return true;
     case ROUTES.preview:
       return true;
+    case ROUTES.history:
+      return true;
     default:
       return false;
   }
@@ -89,4 +93,36 @@ export const helperErrorType = (type: EnumHandlerError): THelperError => {
         color: "red"
       };
   }
+};
+
+export const serializeData = (data: { [key: string]: BigInt }) => {
+  const newData = {};
+  if (data) {
+    const valuesData = Object.keys(data);
+    for (const field of valuesData) {
+      if (typeof data[field] === "bigint")
+        newData[field] = data[field].toString();
+      else newData[field] = data[field];
+    }
+  }
+  return newData;
+};
+
+export const helperHistoryBet = (
+  data: { [key: string]: string },
+  idTour: string,
+  lang: Locales
+) => {
+  const bets = [];
+  for (let i = 0; i < 10; i++) {
+    const id = i + 1;
+    if (data[`me${id}`].length && +data[`me${id}`] > 0)
+      bets.push({
+        name: TURTLES_HISTORY[`me${id}`][lang],
+        svg: TURTLES_HISTORY[`me${id}`].svg,
+        bet: countTotalTon(data[`me${id}`]),
+        tour: idTour
+      });
+  }
+  return bets;
 };
