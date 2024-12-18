@@ -15,8 +15,10 @@ export const ListTurtles = () => {
   const [bet, setMyBet] = useState<{ [key: string]: bigint | string }>({});
   const requestGetData = useStoreContact().requestGetData;
 
-  const handlerMakeBet = (id: number) =>
-    navigate(`${ROUTES.makeBet}/${id + 1}`, { state: ROUTES.listTurtles });
+  const handlerMakeBet = (id: number) => {
+    window.localStorage.setItem("bet-page", ROUTES.listTurtles);
+    navigate(`${ROUTES.makeBet}/${id + 1}`);
+  };
 
   useEffect(() => {
     (async () => {

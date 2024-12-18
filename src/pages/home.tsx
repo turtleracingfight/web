@@ -43,8 +43,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   };
 
   const handlerNavigateToAllTurtles = () => navigate(ROUTES.listTurtles);
-  const handlerMakeBet = () =>
-    navigate(`${ROUTES.makeBet}/${turtle + 1}`, { state: ROUTES.home });
+  const handlerMakeBet = () => navigate(`${ROUTES.makeBet}/${turtle + 1}`);
 
   const handlerIsBlock = () => {
     setIsBlock(true);

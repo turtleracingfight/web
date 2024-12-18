@@ -6,12 +6,16 @@ import PullToRefresh from "react-pull-to-refresh";
 import { useStoreContact } from "../store/store-contract.ts";
 import { useStoreLang } from "../store/store-lang.ts";
 import { LANGS } from "../constants/langs.ts";
+import { ROUTES } from "../constants/route.tsx";
+import { useNavigate } from "react-router-dom";
 
 let currentActiveId: number = 0;
 export const History = () => {
+  const navigate = useNavigate();
   const [listTurtles, setListTurtles] = useState<any[]>([]);
   const { activeId, requestGetData } = useStoreContact(state => state);
   const lang = useStoreLang(state => state.lang);
+  const setWinningBet = useStoreContact(state => state.setWinningBet);
 
   const requestToHistory = async (id: number) => {
     if (id <= 0) {
@@ -69,7 +73,7 @@ export const History = () => {
           allBets.push(...bets);
         }
       }
-      setListTurtles(allBets);
+      setListTurtles(allBets.sort((a, b) => b.id - a.id));
     }
   };
 
@@ -83,6 +87,17 @@ export const History = () => {
   const requestPullToRefresh = async (): Promise<void> =>
     requestToHistory(currentActiveId);
 
+  const handlerTakeWinningBet = (
+    id: number,
+    value: string,
+    isWinning: boolean
+  ) => {
+    if (!(+value > 0) || isWinning) return;
+    setWinningBet(id, value);
+    window.localStorage.setItem("bet-page", ROUTES.history);
+    navigate(`${ROUTES.makeBet}/`);
+  };
+
   return (
     <div className={styles.container}>
       <PullToRefresh
@@ -90,7 +105,7 @@ export const History = () => {
         onRefresh={requestPullToRefresh}
       >
         {listTurtles.map(el => (
-          <div key={el.id + 1 + el.bet}>
+          <div key={el.id + el.name}>
             <div className={styles.container_bl_stats}>
               <div className={styles.container_bl_stats_bet}>
                 <div className={styles.container_bl_stats_bet_content}>
@@ -111,7 +126,12 @@ export const History = () => {
                   <p>{LANGS[lang].winning}</p>
                 </div>
                 <p
-                // onClick={() => takeBet(el.address, el.won)}
+                  style={{
+                    color: +el.won > 0 && !el.isWinning ? "#79d716" : "white"
+                  }}
+                  onClick={() =>
+                    handlerTakeWinningBet(el.id, el.won, el.isWinning)
+                  }
                 >
                   {el.won} {CURRENCY}
                 </p>

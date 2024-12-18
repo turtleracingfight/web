@@ -8,6 +8,8 @@ export type TSender = {
 
 export interface IStoreContract {
   activeId: number | null;
+  id: number | null;
+  winning: string;
   sender: null | TSender;
   contractCenter: null | OpenedContract<ControlCenter>;
   setContractCenter: (
@@ -28,4 +30,6 @@ export interface IStoreContract {
     id?: number
   ) => Promise<{ [key: string]: BigInt } | null | undefined>;
   requestMakeBet: (value: number, turtleId: number) => void;
+  takeWinningBet: () => void;
+  setWinningBet: (id: number | null, winning: string, type?: string) => void;
 }

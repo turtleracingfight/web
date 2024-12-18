@@ -24,14 +24,14 @@ export const Timer = memo(() => {
   useEffect(() => {
     if (hours || minutes || seconds) {
       interval = setInterval(() => {
-        if (!minutes) {
-          setHours(state => state - 1);
-          setMinutes(59);
+        if (seconds) {
+          const sec = seconds - 1;
+          const minute = !sec && minutes ? minutes - 1 : 0;
+          const hour = !minute && hours ? hours - 1 : 0;
+          setHours(hour);
+          setMinutes(minute);
+          setSeconds(sec);
         }
-        if (!seconds) {
-          setMinutes(state => state - 1);
-        }
-        setSeconds(seconds ? seconds - 1 : 59);
       }, 1000);
     }
     return () => clearInterval(interval);

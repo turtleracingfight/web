@@ -5,6 +5,7 @@ import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { THelperError } from "../types/ts-common.ts";
 import { TURTLES_HISTORY } from "../constants/links.ts";
 import { Locales } from "@tonconnect/ui";
+import { LANGS } from "../constants/langs.ts";
 
 export const helperNavigationStyles = (path: string) => {
   let currentPage = "";
@@ -108,12 +109,28 @@ export const serializeData = (data: { [key: string]: BigInt }) => {
   return newData;
 };
 
+const helperCountTotalWon = (total: string, min: string, me: string) => {
+  const all = (total / 100) * 90;
+  const percent = min / me;
+  return countTotalTon((all / 100) * percent);
+};
+
 export const helperHistoryBet = (
   data: { [key: string]: string },
   idTour: string,
   lang: Locales
 ) => {
   const bets = [];
+  const totalBets = {
+    min: data[`total${1}`],
+    id: 1
+  };
+  for (let i = 0; i < 10; i++) {
+    if (data[`total${i + 1}`] && data[`total${i + 1}`] < totalBets.min) {
+      totalBets.min = data[`total${i + 1}`];
+      totalBets.id = i + 1;
+    }
+  }
   for (let i = 0; i < 10; i++) {
     const id = i + 1;
     if (data[`me${id}`].length && +data[`me${id}`] > 0)
@@ -121,7 +138,15 @@ export const helperHistoryBet = (
         name: TURTLES_HISTORY[`me${id}`][lang],
         svg: TURTLES_HISTORY[`me${id}`].svg,
         bet: countTotalTon(data[`me${id}`]),
-        tour: idTour
+        tour: `${LANGS[lang].tournament} ${idTour}`,
+        won:
+          id === totalBets.id
+            ? +data.pnl > 0
+              ? countTotalTon(data.pnl)
+              : helperCountTotalWon(data.total, totalBets.min, data[`me${id}`])
+            : "0",
+        id: idTour,
+        isWinning: !!data["isWinning"]
       });
   }
   return bets;

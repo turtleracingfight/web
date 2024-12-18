@@ -1,16 +1,17 @@
 import { CHAIN, useTonConnectUI, useTonWallet } from "@tonconnect/ui-react";
 import { Address, SenderArguments } from "@ton/core";
 import { ROUTES } from "../constants/route.tsx";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTonClient } from "./useTonClient.tsx";
 import { useLang } from "./useLang.tsx";
 import { useEffect } from "react";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
 
 export const useAccount = () => {
-  const location = useLocation();
+  const setWinningBet = useStoreContact(state => state.setWinningBet);
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const wallet = useTonWallet();
   const { lang } = useLang();
@@ -42,17 +43,30 @@ export const useAccount = () => {
             validUntil: Date.now() + 60 * 1000 // 1 minutes for user to approve
           });
           if (transaction.boc) {
+            const betPage = window.localStorage.getItem("bet-page");
             createErrorStore({
               text: LANGS[lang].placedBet,
               type: EnumHandlerError.SUCCESS
             });
+            if (betPage === ROUTES.history) {
+              setWinningBet(null, "0", "success");
+            }
             navigate(
-              location?.state === ROUTES.listTurtles
-                ? ROUTES.listTurtles
+              betPage
+                ? betPage === ROUTES.history
+                  ? ROUTES.history
+                  : betPage === ROUTES.listTurtles
+                    ? ROUTES.listTurtles
+                    : ROUTES.home
                 : ROUTES.home
             );
+          } else {
+            window.localStorage.setItem("bet-page", "");
+            navigate(ROUTES.home);
           }
         } catch (error) {
+          window.localStorage.setItem("bet-page", "");
+          navigate(ROUTES.home);
           createErrorStore({
             text: LANGS[lang].cancelledBet,
             type: EnumHandlerError.ERROR

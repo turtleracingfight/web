@@ -17,12 +17,18 @@ export const LANGS: any = {
     beFirst: "Be the first to place a bet",
     failPlaceBet: "Failed to place a bet",
     placedBet: "The bet is placed",
-    cancelledBet: "The bet has been canceled",
+    cancelledBet: "The transaction was rejected",
     nextTour: "Error in getting time to the next tournament",
     notConnectedWallet: "The wallet is not connected",
     agoMakeBet: "Ago",
     winning: "Winning",
-    bet: "Bet"
+    bet: "Bet",
+    tournament: "Tournament",
+    congratulate: "Congratulate!",
+    winningAmount: "Your winnings amounted to:",
+    pickup: "Pick up",
+    descriptionWinning:
+      "*The amount will be automatically credited to your wallet"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -42,11 +48,16 @@ export const LANGS: any = {
     beFirst: "Будьте первыми, сделайте ставку",
     failPlaceBet: "Не удалось поставить ставку",
     placedBet: "Ставка поставлена",
-    cancelledBet: "Ставка была отменена",
+    cancelledBet: "Транзакция была отклонена",
     nextTour: "Ошибка при получении времени до следующего турнира",
-    notConnectedWallet: "TКошелек не подключен",
+    notConnectedWallet: "Кошелек не подключен",
     agoMakeBet: "Назад",
     winning: "Выигрыш",
-    bet: "Ставка"
+    bet: "Ставка",
+    tournament: "Турнир",
+    congratulate: "Поздравляем!",
+    winningAmount: "Ваш выигрыш составил:",
+    pickup: "Забрать",
+    descriptionWinning: "*Сумма будет автоматически зачислена на ваш кошелек"
   }
 };

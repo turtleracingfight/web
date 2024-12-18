@@ -42,22 +42,27 @@ const helperReturnData = () => {
     total9: BigInt(""),
     total10: BigInt(""),
     pnl: BigInt(""),
-    winner: BigInt("")
+    winner: BigInt(""),
+    total: BigInt("")
   };
+
+  const random = Math.ceil(Math.random() * 10);
+  if (random <= 2)
+    data.pnl = BigInt(
+      Math.ceil(random * (random * Math.ceil(Math.random() * 100)) * 1000000) +
+        100
+    );
+
   for (const total in data) {
-    const random = Math.floor(Math.random() * 10);
-    if (total.includes("total"))
-      data[total] =
-        random >= 4
-          ? BigInt(
-              Math.floor(
-                Math.random() *
-                  (random * Math.floor(Math.random() * 10)) *
-                  10000000000
-              )
-            )
-          : BigInt('0');
+    const random = Math.ceil(Math.random() * 100);
+    if (total.includes("total")) {
+      data[total] = BigInt(
+        Math.ceil(random * (random * Math.ceil(Math.random() * 100)) * 1000000)
+      );
+      data.total += data[total];
+    }
   }
+
   for (const me in data) {
     const random = Math.floor(Math.random() * 10);
     if (
@@ -66,7 +71,7 @@ const helperReturnData = () => {
       BigInt(data[`total${me[2]}`]) > 0
     ) {
       data[me] =
-        random >= 5
+        random >= 4
           ? BigInt(
               Math.floor(
                 Math.random() *
@@ -74,7 +79,7 @@ const helperReturnData = () => {
                   100000000
               )
             )
-          : BigInt('0');
+          : BigInt("0");
     }
   }
   return data;
@@ -84,14 +89,14 @@ const testController = {
   getActiveId: (): Promise<number> => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(5);
+        resolve(10);
       }, timeToRequest);
     });
   },
   getNext: (): Promise<number> => {
     return new Promise(resolve => {
       setTimeout(() => {
-        resolve(3005);
+        resolve(30);
       }, timeToRequest);
     });
   },
@@ -114,6 +119,8 @@ const notConnectWallet = () => {
 
 export const useStoreContact = create<IStoreContract>((set, get) => ({
   activeId: null,
+  id: null,
+  winning: "0",
   contractCenter: null,
   sender: null,
   setContractCenter: (
@@ -181,7 +188,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         notConnectWallet();
         return null;
       }
-      const id =  pastActiveId || await get().getActiveId();
+      const id = pastActiveId || (await get().getActiveId());
       if (!id) return null;
       setLoadingRequest(true);
       const data = await testController.getData(id);
@@ -230,5 +237,44 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         type: EnumHandlerError.ERROR
       });
     }
+  },
+  takeWinningBet: () => {
+    try {
+      const contract = get().contractCenter;
+      if (!contract || !get().sender) {
+        notConnectWallet();
+        return null;
+      }
+      const message = {
+        $$type: "CPnl",
+        id: get().id
+      };
+      contract?.send(
+        get().sender as TSender,
+        { value: toNano(get().winning) },
+        message
+      );
+    } catch (error) {
+      createErrorStore({
+        text: LANGS[getLang()].failTakeWinningBet,
+        type: EnumHandlerError.ERROR
+      });
+    }
+  },
+  setWinningBet: (id: number | null, winning: string, type?: string) => {
+    if (type === "success") {
+      const history = window.localStorage.getItem("history");
+      if (history) {
+        const parseHistory = JSON.parse(history);
+        if (get().id !== null) {
+          parseHistory[get().id as number] = {
+            ...parseHistory[get().id as number],
+            isWinning: true
+          };
+          window.localStorage.setItem("history", JSON.stringify(parseHistory));
+        }
+      }
+    }
+    set({ id, winning });
   }
 }));
