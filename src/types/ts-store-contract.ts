@@ -11,6 +11,8 @@ export type TSender = {
 export interface IStoreContract {
   activeId: number | null;
   id: number | null;
+  expiredActiveId: number | null;
+  expiredData: number | null
   winning: string;
   sender: null | TSender;
   userAddress: string;

@@ -24,7 +24,7 @@ const messageBet = (turtleId: number): CBet => {
     $$type: "CBet"
   };
 };
-
+const delay = ms => new Promise(res => setTimeout(res, ms));
 const helperReturnData = () => {
   const data = {
     me1: BigInt(""),
@@ -125,6 +125,8 @@ const notConnectWallet = () => {
 
 export const useStoreContact = create<IStoreContract>((set, get) => ({
   activeId: null,
+  expiredActiveId: null,
+  expiredData: null,
   id: null,
   winning: "0",
   contractCenter: null,
@@ -144,9 +146,23 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         notConnectWallet();
         return;
       }
+      let activeAddress = window.localStorage.getItem("activeAddress");
+      let expiredActiveId = window.localStorage.getItem("expiredActiveId");
+      if (expiredActiveId!=null && activeAddress!=null){
+        let seconds = +expiredActiveId
+        console.log("expiredActiveId", expiredActiveId);
+        if (new Date().getTime()<seconds){
+          console.log("getting address")
+          return activeAddress;
+        }
+      }
       setLoadingRequest(true);
       const address = await contract.getTournamentActive();
-      if (address) return address;
+      if (address) {
+        console.log("setting address")
+        window.localStorage.setItem("activeAddress", address.toString());
+        return address;
+      }
       setLoadingRequest(false);
       return;
     } catch (error) {
@@ -158,31 +174,47 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
     }
   },
   getActiveId: async () => {
-    try {
-      const contract = get().contractCenter;
-      if (!contract) {
-        notConnectWallet();
-        return;
-      }
-      setLoadingRequest(true);
-      const data = await contract.getActiveId();
-      if (data) {
-        const activeId = +String(data);
+    for (let i=1;i<10;i++) {
+      try {
+        const contract = get().contractCenter;
+        if (!contract) {
+          notConnectWallet();
+          return;
+        }
+        let id = window.localStorage.getItem("activeId");
+        let expiredActiveId = window.localStorage.getItem("expiredActiveId");
+        if (activeId!=null && expiredActiveId!=null) {
+          if (new Date().getTime() < expiredActiveId){
+            console.log("getting activeID")
+            let activeId = +String(id);
+            set({ activeId });
+            return
+          }
+        }
+        setLoadingRequest(true);
+        const data = await contract.getActiveId();
+        if (data) {
+          const activeId = +String(data);
+          setLoadingRequest(false);
+          console.log("setting activeID")
+          window.localStorage.setItem("activeId", activeId.toString());
+          set({ activeId });
+          return activeId;
+        }
         setLoadingRequest(false);
-        if (!get().activeId) set({ activeId });
-        return activeId;
+        return;
+      } catch (error) {
+        await delay(i*1000)
+        setLoadingRequest(false);
+        createErrorStore({
+          text: LANGS[getLang()].activeAddress,
+          type: EnumHandlerError.ERROR
+        });
       }
-      setLoadingRequest(false);
-      return;
-    } catch (error) {
-      setLoadingRequest(false);
-      createErrorStore({
-        text: LANGS[getLang()].activeAddress,
-        type: EnumHandlerError.ERROR
-      });
     }
   },
   requestGetNext: async () => {
+    for (let i=0;i<10;i++){
     try {
       const contract = get().contractCenter;
       if (!contract) {
@@ -191,15 +223,22 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       }
       setLoadingRequest(true);
       const data = await contract.getNext();
-      if (data) return +data.toString();
       setLoadingRequest(false);
+      if (data) {
+        console.log("setting expired")
+        let seconds = +data.toString()
+        window.localStorage.setItem("expiredActiveId", (new Date().getTime()+seconds).toString());
+        return +data.toString();
+      }
       return 0;
     } catch (error) {
+      await delay(i*1000)
       setLoadingRequest(false);
       createErrorStore({
         text: LANGS[getLang()].nextTour,
         type: EnumHandlerError.ERROR
       });
+    }
     }
   },
   requestGetHistoryData: async (
@@ -211,8 +250,15 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         notConnectWallet();
         return;
       }
-      setLoadingRequest(true);
+
       const id = currentId || (await getActiveId()) || 0;
+      if (id != await getActiveId()){
+          let data = window.localStorage.getItem("data"+id)
+          if (data != undefined) {
+              return JSON.parse(data)
+          }
+      }
+      setLoadingRequest(true);
       const prevAddress = await contractCenter.getTournamentAddress(BigInt(id));
       if (!prevAddress) {
         createErrorStore({
@@ -228,6 +274,11 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
       setLoadingRequest(false);
+      window.localStorage.setItem("data"+id, JSON.stringify(result, (key, value) =>
+        typeof value === 'bigint'
+          ? value.toString()
+          : value // return everything else unchanged
+      ))
       return result;
     } catch (error) {
       setLoadingRequest(false);
@@ -265,6 +316,14 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         notConnectWallet();
         return;
       }
+      let data = window.localStorage.getItem("data")
+      let expirderData = window.localStorage.getItem("expiredData")
+      if (data!=null && expirderData!=null){
+        if (new Date().getTime()<+String(expirderData)){
+          console.log("get data")
+          return JSON.parse(data)
+        }
+      }
       const activeAddress = await getActiveTour();
       if (!activeAddress) return;
       setLoadingRequest(true);
@@ -274,6 +333,13 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
       setLoadingRequest(false);
+      console.log("set data")
+      window.localStorage.setItem("expiredData", (new Date().getTime()+15000).toString())
+      window.localStorage.setItem("data", JSON.stringify(result, (key, value) =>
+        typeof value === 'bigint'
+          ? value.toString()
+          : value // return everything else unchanged
+      ))
       return result;
     } catch (error) {
       setLoadingRequest(false);
