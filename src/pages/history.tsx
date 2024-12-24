@@ -38,9 +38,7 @@ export const History = () => {
       const parsedHistory = JSON.parse(histories) as {
         [key: string]: TResultBets;
       };
-      console.log(parsedHistory, "parsedHistory");
       if (!parsedHistory[id]) {
-        console.log(parsedHistory, "parsedHistoryID");
         const data = await requestGetHistoryData(id);
         if (data) {
           parsedHistory[id] = serializeData(data);

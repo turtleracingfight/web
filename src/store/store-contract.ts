@@ -212,11 +212,8 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         return;
       }
       setLoadingRequest(true);
-      console.log(currentId, "currentId");
       const id = currentId || (await getActiveId()) || 0;
-      console.log(id, "id");
       const prevAddress = await contractCenter.getTournamentAddress(BigInt(id));
-      console.log(prevAddress, "prevAddress");
       if (!prevAddress) {
         createErrorStore({
           text: LANGS[getLang()].prevAddress,
@@ -230,7 +227,6 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       );
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
-      console.log(result, "resultresultresult");
       setLoadingRequest(false);
       return result;
     } catch (error) {

@@ -6,7 +6,6 @@ import { ErrorItem } from "./error-item.tsx";
 
 export const Errors = memo(() => {
   const { errors, removeError } = useStoreErrors();
-  console.log(errors, "errors");
   return (
     <div className={styles.container}>
       {errors.map(el => {
