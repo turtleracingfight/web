@@ -3,29 +3,37 @@ import axios, { AxiosError } from "axios";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { createErrorStore } from "../store/store-errors.ts";
 import { REQUEST_TO_BALANCE } from "../constants/env.ts";
+import { countTotalTon } from "../utils/usefulFunc.ts";
+import { LANGS } from "../constants/langs.ts";
+import { getLang } from "../store/store-lang.ts";
 
 export const instance = axios.create({});
 
 export const requestTon = {
   async getTonBalance(
     address: string,
-    set: (balance: number) => void,
+    set: (balance: string) => void,
     loading: (value: boolean) => void
   ): Promise<void> {
     try {
+      loading(true);
       const { data } = await instance.get(`${REQUEST_TO_BALANCE}${address}`);
       if (data?.result) {
-        const ton = data.result / 10 ** 9;
-        set(Math.floor(ton * 100) / 100);
+        set(countTotalTon(data.result));
         loading(false);
       } else {
-        alert("Отсутствует баланс по указанному адресу");
+        createErrorStore({
+          text: LANGS[getLang()].failBalance,
+          type: EnumHandlerError.ERROR
+        });
         loading(false);
       }
     } catch (error) {
       loading(false);
-      const err = error as AxiosError;
-      createErrorStore({ text: err.message, type: EnumHandlerError.ERROR });
+      createErrorStore({
+        text: LANGS[getLang()].failBalance,
+        type: EnumHandlerError.ERROR
+      });
     }
   }
 };

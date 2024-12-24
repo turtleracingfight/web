@@ -11,14 +11,16 @@ import { useGetBalance } from "../hooks/useGetBalance.tsx";
 import { Loader } from "./loader.tsx";
 import { Errors } from "./errors.tsx";
 import { useEffect } from "react";
-import { initLang, useLang } from "../hooks/useLang.tsx";
+import styles from "../styles/common.module.scss";
+import { useStoreLang } from "../store/store-lang.ts";
+import { useStoreLoadings } from "../store/store-loadings.ts";
 
 export const Layout = () => {
   const { pathname } = useLocation();
-  const { isControllerLoading, isRequest, address, setOptions } =
-    useControlCenter();
+  const { isControllerLoading, address, setOptions } = useControlCenter();
   const { loading, balance } = useGetBalance();
-  const { lang, selectLang } = useLang();
+  const { lang, initLang } = useStoreLang();
+  const isLoadingRequest = useStoreLoadings(state => state.isLoadingRequest);
 
   useEffect(() => {
     initLang();
@@ -30,33 +32,25 @@ export const Layout = () => {
 
   const isMargin: boolean = helperExcessMargin(pathname);
 
-  return isControllerLoading || loading || isRequest ? (
+  return isControllerLoading || loading ? (
     <Loader />
   ) : (
     <>
       <Errors />
       <div
+        className={styles.index}
         style={{
           margin: isMargin ? "" : "0 5%",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "flex-start",
-          flexDirection: "column",
-          alignItems: "center"
+          overflow: isLoadingRequest ? "hidden" : "auto"
         }}
       >
+        {isLoadingRequest && <Loader isLoadingRequest={isLoadingRequest} />}
         <Header
-          lang={lang}
           pathname={pathname}
           balance={balance}
           address={address as string}
         />
-        <RoutePages
-          balance={balance}
-          address={address as string}
-          lang={lang}
-          selectLang={selectLang}
-        />
+        <RoutePages balance={balance} address={address as string} />
         {helperUnnecessaryNavigation(pathname) ? null : (
           <Navigation pathname={pathname} />
         )}

@@ -1,13 +1,13 @@
-import zoom from "/components/turtles/zoom.png";
-import gladiator from "/components/turtles/gladiator.png";
-import formula from "/components/turtles/formula.png";
-import impulse from "/components/turtles/impulse.png";
-import corkscrew from "/components/turtles/corkscrew.png";
-import ninja from "/components/turtles/ninja.png";
-import nitro from "/components/turtles/nitro.png";
-import parapsi from "/components/turtles/parapsi.png";
-import track from "/components/turtles/track.png";
-import stronghold from "/components/turtles/stronghold.png";
+import zoom from "/components/turtles/zoom.avif";
+import gladiator from "/components/turtles/gladiator.avif";
+import formula from "/components/turtles/formula.avif";
+import impulse from "/components/turtles/impulse.avif";
+import corkscrew from "/components/turtles/corkscrew.avif";
+import ninja from "/components/turtles/ninja.avif";
+import nitro from "/components/turtles/nitro.avif";
+import parapsi from "/components/turtles/parapsi.avif";
+import track from "/components/turtles/track.avif";
+import stronghold from "/components/turtles/stronghold.avif";
 import turtles from "/components/other/turtles.png";
 import moon from "/components/other/moon.png";
 import money from "/components/other/money.png";
@@ -16,6 +16,7 @@ import percent from "/components/other/percent.png";
 import fg_russia from "/components/other/fg-rus.svg";
 import fg_english from "/components/other/fg-english.svg";
 import { TListLanguages } from "../types/ts-links.ts";
+import { TInfoList, TTurtleList } from "../types/ts-common.ts";
 
 export const CURRENCY = "TON";
 
@@ -26,7 +27,7 @@ export const LIST_TURTLES = [
   { id: 4, img: impulse }
 ];
 
-export const INFO_LIST = [
+export const INFO_LIST: TInfoList[] = [
   {
     id: 1,
     ru: "В игре участвуют 10 черепах. Участники могут делать ставки на любое количество черепах и на любую из них",
@@ -65,18 +66,18 @@ export const INFO_LIST = [
   }
 ];
 
-export const TURTLES = [
-  { id: 0, svg: zoom, ru: "ЗУМ", en: "Zoom" },
-  { id: 1, svg: stronghold, ru: "ТВЕРДЫНЯ", en: "STRONGHOLD" },
-  { id: 2, svg: track, ru: "ЭКШН-ТРЕК", en: "ACTION TRACK" },
-  { id: 3, svg: gladiator, ru: "ГЛАДИАТОР", en: "GLADIATOR" },
-  { id: 4, svg: corkscrew, ru: "ШТОПОР", en: "CORKSCREW" },
-  { id: 5, svg: formula, ru: "ФОРМУЛА-1", en: "FORMULA-1" },
-  { id: 6, svg: impulse, ru: "ИМУЛЬС", en: "IMPULSE" },
-  { id: 7, svg: nitro, ru: "НИТРО", en: "NITRO" },
-  { id: 8, svg: ninja, ru: "НИНДЗЯ", en: "NINJA" },
-  { id: 9, svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PSI" }
-];
+export const TURTLES_LINKS: TTurtleList = {
+  me1: { id: 0, svg: zoom, ru: "ЗУМ", en: "Zoom" },
+  me2: { id: 1, svg: stronghold, ru: "ТВЕРДЫНЯ", en: "STRONGHOLD" },
+  me3: { id: 2, svg: track, ru: "ЭКШН-ТРЕК", en: "ACTION TRACK" },
+  me4: { id: 3, svg: gladiator, ru: "ГЛАДИАТОР", en: "GLADIATOR" },
+  me5: { id: 4, svg: corkscrew, ru: "ШТОПОР", en: "CORKSCREW" },
+  me6: { id: 5, svg: formula, ru: "ФОРМУЛА-1", en: "FORMULA-1" },
+  me7: { id: 6, svg: impulse, ru: "ИМУЛЬС", en: "IMPULSE" },
+  me8: { id: 7, svg: nitro, ru: "НИТРО", en: "NITRO" },
+  me9: { id: 8, svg: ninja, ru: "НИНДЗЯ", en: "NINJA" },
+  me10: { id: 9, svg: parapsi, ru: "ПАРА-ПСИ", en: "PARA-PSI" }
+};
 
 export const LIST_LANGUAGES: TListLanguages[] = [
   { id: 1, ru: "Русский", en: "Russian", svg: fg_russia, lang: "ru" },

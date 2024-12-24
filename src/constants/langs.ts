@@ -1,4 +1,7 @@
-export const LANGS: any = {
+import { TLangs } from "../types/ts-common.ts";
+import { Locales } from "@tonconnect/ui";
+
+export const LANGS: TLangs = {
   en: {
     makeBet: "Make bet",
     listTurtles: "List of turtles",
@@ -17,7 +20,24 @@ export const LANGS: any = {
     beFirst: "Be the first to place a bet",
     failPlaceBet: "Failed to place a bet",
     placedBet: "The bet is placed",
-    cancelledBet: "The bet has been canceled"
+    cancelledTransaction: "The transaction was rejected",
+    nextTour: "Error in getting time to the next tournament",
+    notConnectedWallet: "The wallet is not connected",
+    agoMakeBet: "Ago",
+    winning: "Winning",
+    bet: "Bet",
+    tournament: "Tournament",
+    congratulate: "Congratulate!",
+    winningAmount: "Your winnings amounted to:",
+    pickup: "Pick up",
+    descriptionWinning:
+      "*The amount will be automatically credited to your wallet",
+    failBalance:
+      "It was not possible to get the wallet balance at the specified address",
+    takeWinning: "Congratulations! The winnings are taken away",
+    endHistory: "The entire betting history has been received",
+    cancelledTakeWinning: "Couldn't collect winnings",
+    prevAddress: "Error when receiving the previous address"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -37,6 +57,29 @@ export const LANGS: any = {
     beFirst: "Будьте первыми, сделайте ставку",
     failPlaceBet: "Не удалось поставить ставку",
     placedBet: "Ставка поставлена",
-    cancelledBet: "Ставка была отменена"
+    cancelledTransaction: "Транзакция была отклонена",
+    nextTour: "Ошибка при получении времени следующего турнира",
+    notConnectedWallet: "Кошелек не подключен",
+    agoMakeBet: "Назад",
+    winning: "Выигрыш",
+    bet: "Ставка",
+    tournament: "Турнир",
+    congratulate: "Поздравляем!",
+    winningAmount: "Ваш выигрыш составил:",
+    pickup: "Забрать",
+    descriptionWinning: "*Сумма будет автоматически зачислена на ваш кошелек",
+    failBalance: "Не удалось получить баланс кошелька по указанному адресу",
+    takeWinning: "Поздравляю! Выигрыш забран",
+    endHistory: "Вся история ставок получена",
+    cancelledTakeWinning: "Не удалось забрать выигрыш",
+    prevAddress: "Ошибка при получении прошлого адреса"
   }
+};
+
+export const helperTranslate = (lang: Locales, minute: number) => {
+  const text = {
+    ru: `Обратите внимание на то что до конца турнира осталось меньше ${minute} минут, ставка может не дойти`,
+    en: `Please note that there are less than ${minute}  minutes left until the end of the tournament, the bet may not reach`
+  };
+  return text[lang];
 };

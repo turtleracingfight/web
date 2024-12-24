@@ -1,33 +1,39 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
 import { ROUTES } from "../constants/route.tsx";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { CURRENCY, LIST_TURTLES, TURTLES } from "../constants/links.ts";
-import { IAddressWallet, TSwiper } from "../types/ts-common.ts";
+import { CURRENCY, LIST_TURTLES, TURTLES_LINKS } from "../constants/links.ts";
+import { IAddressWallet, TResultBets, TSwiper } from "../types/ts-common.ts";
 import arrowright from "/components/other/arrow-right.svg";
 import arrowleft from "/components/other/arrow-left.svg";
 import styles from "../styles/pages/home.module.scss";
 import "swiper/css";
 import "swiper/css/pagination";
 import "../index.css";
-import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { countTotalTon } from "../utils/usefulFunc.ts";
-import { useLang } from "../hooks/useLang.tsx";
 import { LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
+import { useStoreLang } from "../store/store-lang.ts";
 
 let swiperInstance: TSwiper = null;
+let isBlockTime: null | number = null;
+const TURTLES = Object.values(TURTLES_LINKS);
+const MINI_LIST_TURTLES = LIST_TURTLES.map(el => (
+  <div key={el.id}>
+    <img width={40} height={40} src={el.img} alt="turtle" />
+  </div>
+));
 export const Home: FC<IAddressWallet> = ({ address }) => {
   const navigate = useNavigate();
   const [turtle, setTurtle] = useState<number>(0);
-  const [isBlock, setIsBlock] = useState<boolean>(false);
-  const [bets, setBets] = useState<{ [key: string]: string | bigint }>({});
-  const { requestGetResults, isControllerLoading } = useControlCenter();
-  const { lang } = useLang();
+  const [bets, setBets] = useState<TResultBets>({});
+  const lang = useStoreLang(state => state.lang);
+  const requestGetData = useStoreContact(state => state.requestGetData);
 
   const handlerNextTurtle = async () => {
-    if (isBlock) return;
+    if (isBlockTime) return;
     if (!TURTLES[turtle + 1]) setTurtle(0);
     else setTurtle(turtle + 1);
     swiperInstance?.slideNext();
@@ -35,7 +41,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   };
 
   const handlerPrevTurtle = async () => {
-    if (isBlock) return;
+    if (isBlockTime) return;
     if (!turtle) setTurtle(() => TURTLES.length);
     setTurtle(state => state - 1);
     swiperInstance?.slidePrev();
@@ -46,30 +52,21 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const handlerMakeBet = () => navigate(`${ROUTES.makeBet}/${turtle + 1}`);
 
   const handlerIsBlock = () => {
-    setIsBlock(true);
-    setTimeout(() => {
-      setIsBlock(false);
+    isBlockTime = setTimeout(() => {
+      isBlockTime = null;
     }, 350);
   };
 
-  const memoListTurtles = useMemo(
-    () =>
-      LIST_TURTLES.map(el => (
-        <div key={el.id}>
-          <img src={el.img} alt="turtle" />
-        </div>
-      )),
-    []
-  );
+  const getResults = async () => {
+    const data = await requestGetData();
+    if (data && Object.values(data).length) setBets(data);
+  };
 
   useEffect(() => {
-    if (!isControllerLoading) {
-      (async () => {
-        const data = await requestGetResults(true);
-        if (data) setBets(data);
-      })();
-    }
-  }, [isControllerLoading]);
+    (async () => {
+      await getResults();
+    })();
+  }, []);
 
   const betsPlaced = countTotalTon(bets[`total${turtle + 1}`]);
   const betPlaced = countTotalTon(bets[`me${turtle + 1}`]);
@@ -81,19 +78,22 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
           onSwiper={swiper => {
             swiperInstance = swiper;
           }}
-          onSlideChangeTransitionEnd={async () => {
-            //here write Request
+          onSlideChangeTransitionEnd={async swiper => {
+            if (turtle === swiper.previousIndex) return;
+            setTurtle(swiper.realIndex);
+            await getResults();
           }}
           onSlideChange={async swiper => {
+            if (turtle === swiper.realIndex) return;
             setTurtle(swiper.realIndex);
           }}
           slidesPerView="auto"
           loop={true}
           centeredSlides={true}
           spaceBetween={30}
-          allowTouchMove={!isBlock}
+          allowTouchMove={!isBlockTime}
         >
-          {TURTLES.map(el => (
+          {Object.values(TURTLES).map(el => (
             <SwiperSlide
               key={el.id}
               className={styles.container_turtles_slider}
@@ -113,7 +113,13 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
           <div className={styles.container_turtles_header}>
             <div className={styles.container_turtles_header_ellipse}></div>
             <div className={styles.container_turtles_header_ellipse}></div>
-            <img src={arrowleft} alt="arrow-left" onClick={handlerPrevTurtle} />
+            <img
+              width={6}
+              height={10}
+              src={arrowleft}
+              alt="arrow-left"
+              onClick={handlerPrevTurtle}
+            />
             <p className={styles.container_turtles_header_name}>
               {TURTLES[turtle][lang]}
             </p>
@@ -134,7 +140,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
         </Swiper>
       </div>
       <div className={styles.container_list}>
-        <div className={styles.container_list_hero}>{memoListTurtles}</div>
+        <div className={styles.container_list_hero}>{MINI_LIST_TURTLES}</div>
         <BtnCommon
           handlerClick={handlerNavigateToAllTurtles}
           text={LANGS[lang].listTurtles}

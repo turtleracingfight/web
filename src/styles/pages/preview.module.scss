@@ -36,7 +36,7 @@
   &:nth-child(1) {
     @include wh-ht(116px, 52px);
     background: $ellipse-background-gradient;
-    transform: translate(-95%, -14vh);
+    transform: translate(-95%, -12vh);
 
     & > p {
       &:nth-child(2) {

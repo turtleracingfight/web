@@ -98,7 +98,7 @@
       }
 
       & > p {
-        z-index: 2;
+        z-index: 0;
         margin: 0;
 
         &:nth-child(1) {
@@ -154,56 +154,66 @@
     }
   }
 }
-
-@media (max-height: 800px) {
+//delete
+//@media (max-height: 800px) {
+//  .container {
+//    &_list {
+//      @include wh-ht-r(87%, 38px, 30em);
+//    }
+//
+//    &_turtles {
+//      &_slider {
+//        width: 33% !important;
+//      }
+//
+//      &_ton {
+//        @include wh-ht(110px, 48px);
+//        left: 5%;
+//        top: 23%;
+//      }
+//    }
+//
+//    &_bl {
+//      &_footer {
+//        @include wh-ht(100%, 18vh);
+//        margin-top: 8vh;
+//      }
+//    }
+//  }
+//}
+//
+@media (max-height: 736px) {
   .container {
-    &_list {
-      @include wh-ht-r(87%, 38px, 30em);
-    }
-
     &_turtles {
       &_slider {
-        width: 33% !important;
-      }
-
-      &_ton {
-        @include wh-ht(110px, 48px);
-        left: 5%;
-        top: 23%;
-      }
-    }
-
-    &_bl {
-      &_footer {
-        @include wh-ht(100%, 18vh);
-        margin-top: 8vh;
+        width: 34% !important;
       }
     }
   }
 }
 
-@media (max-height: 720px) {
-  .container {
-    &_turtles {
-      &_slider {
-        width: 30% !important;
-      }
-    }
-  }
-}
+//@media (min-width: 540px) {
+//  .container {
+//    &_turtles {
+//      &_slider {
+//        width: 30% !important;
+//      }
+//    }
+//  }
+//}
 
-@media (min-height: 1025px) {
+@media (min-height: 1024px) {
   .container {
     &_turtles {
       height: 37vh;
       &_slider {
-        width: 50% !important;
+        width: 40% !important;
         &_active {
           @include bl-position-rl(-6vh);
         }
       }
 
-      &_header{
+      &_header {
         @include wh-ht(100%, 6vh);
       }
 
@@ -214,8 +224,7 @@
   }
 }
 
-
-
+//delete
 //
 //@media (min-width: 540px) {
 //  .container {

@@ -1,18 +1,53 @@
 @import "./mixins.module";
 @import "./variables.module";
 
+.expiresContract {
+  @include bl-flex-center(center, center, row, 0);
+  @include wh-ht(100%, 100vh);
+  position: absolute;
+  z-index: 10;
+  max-width: 450px;
+  background: rgba(0, 0, 0, 0.8);
+
+  &_content {
+    @include bl-flex-center(space-around, center, column, 1.5vh);
+    @include wh-ht(75%, auto);
+    box-shadow: 0 0 25px #000000;
+    border-radius: 10px;
+    background: #141414;
+    padding: 25px 15px;
+
+    & > p {
+      margin: 0;
+      color: #a3a3a3;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+}
+
+.index {
+  @include bl-flex-center(flex-start, center, column, 0);
+}
+
 .loading {
   position: absolute;
   @include bl-flex-center(center, center, column, 0);
   @include wh-ht(100%, 100vh);
+  max-width: 450px;
   z-index: 100;
-  background: #000000ab;
 
-  & > img {
+  &_load {
     z-index: 150;
     opacity: 1;
-    width: 120px;
-    height: 120px;
+    @include wh-ht(120px, 120px);
+  }
+
+  &_initTurtle {
+    z-index: 150;
+    opacity: 1;
+    @include wh-ht(100%, 100%);
+    object-fit: cover;
   }
 }
 

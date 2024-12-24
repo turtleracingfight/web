@@ -8,6 +8,7 @@
   width: 100%;
   max-width: 450px;
   overflow: hidden;
+  z-index: 10;
 
   &_content {
     @include bl-flex-center(center, center, row, 0);

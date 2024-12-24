@@ -1,31 +1,85 @@
 import styles from "../styles/pages/bet-won.module.scss";
 import coins from "/pages/coins.png";
 import { BtnCommon } from "../components/buttons.tsx";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { CURRENCY } from "../constants/links.ts";
-import { useParams } from "react-router-dom";
-import { useControlCenter } from "../hooks/useControlCenter.tsx";
+import { useNavigate, useParams } from "react-router-dom";
 import { useLang } from "../hooks/useLang.tsx";
-import { LANGS } from "../constants/langs.ts";
+import { helperTranslate, LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
+import { ROUTES } from "../constants/route.tsx";
+import { ExpiresContract } from "../components/expiresContract.tsx";
+import {
+  ATTENTION_BET_MINUTE,
+  DEFAULT_PNL,
+  LIGHT_GREY
+} from "../constants/constants-fields.ts";
+import { helperAroundPnl } from "../utils/usefulFunc.ts";
 
-const LIGHT_GREY = "#707070";
+let notification = false;
 export const BetWon = () => {
-  const { requestMakeBet } = useControlCenter();
   const { lang } = useLang();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const requestMakeBet = useStoreContact(state => state.requestMakeBet);
+  const requestGetNext = useStoreContact(state => state.requestGetNext);
+  const requestTakeWinningBet = useStoreContact(
+    state => state.requestTakeWinningBet
+  );
+  const idWinning = useStoreContact(state => state.id);
+  const winning = useStoreContact(state => state.winning);
 
   const [value, setValue] = useState<string>("");
+  const [attentionText, setAttentionText] = useState<string>("");
   const [isInput, setIsInput] = useState<boolean>(false);
   const [isWinning] = useState<boolean>(false);
 
-  const { id } = useParams();
+  useEffect(() => {
+    if (String(id).length && id !== undefined) {
+      if (+id < 1 || +id > 10) navigate(ROUTES.home);
+      if (id && isNaN(+id)) navigate(ROUTES.home);
+    } else {
+      if (!winning || !idWinning) navigate(ROUTES.home);
+    }
+  }, [navigate]);
 
-  const handlerClickInput = () => setIsInput(true);
-  const handlerBlurInput = () => setIsInput(false);
+  const handlerClickInput = () => {
+    if (value.length) {
+      const pnlValue = +value - DEFAULT_PNL;
+      if (pnlValue > 0) setValue(helperAroundPnl(value));
+    }
+    setIsInput(true);
+  };
+
+  const handlerBlurInput = () => {
+    if (value.length && +value !== 0) setValue(helperAroundPnl(value, "+"));
+    else setValue("");
+    setIsInput(false);
+  };
   const handlerChangeValue = (e: ChangeEvent<HTMLInputElement>) =>
     setValue(e.target.value);
 
-  const handlerMakeBet = () => {
-    if (id) requestMakeBet(+value, +id);
+  const handlerMakeBet = async () => {
+    if (!value.length) {
+      const prev = window.sessionStorage.getItem("prev-page");
+      navigate(prev === ROUTES.listTurtles ? ROUTES.listTurtles : ROUTES.home);
+    }
+    if (id && value.length) {
+      const time = (await requestGetNext()) || 0;
+      const minutes = Math.floor((time % 3600) / 60);
+      if (minutes <= ATTENTION_BET_MINUTE && !notification) {
+        setAttentionText(helperTranslate(lang, minutes));
+        notification = true;
+        return;
+      }
+      requestMakeBet(+value, +id);
+      notification = false;
+    }
+  };
+
+  const handlerAttentionText = () => setAttentionText("");
+  const handlerTakeWinningBet = () => {
+    if (winning && idWinning) requestTakeWinningBet();
   };
 
   return (
@@ -35,13 +89,19 @@ export const BetWon = () => {
         background: `radial-gradient(23.75% ${isWinning ? "30vh" : "50vh"} at 50% 0%, rgba(136, 138, 53, 0.3) 0%, rgba(1, 1, 1, 0.1) 100%), linear-gradient(179.93deg, #0C0C0C -1.98%, #000000 99.94%)`
       }}
     >
+      {attentionText && (
+        <ExpiresContract
+          attentionText={attentionText}
+          handlerAttentionText={handlerAttentionText}
+        />
+      )}
       {!id && <img src={coins} alt="coins" />}
       <div className={styles.container_content}>
         <div className={styles.container_content_header}>
           {!id ? (
             <>
-              <p>Поздравляем!</p>
-              <p>Ваш выигрыш составил:</p>
+              <p>{LANGS[lang].congratulate}</p>
+              <p>{LANGS[lang].winningAmount}</p>
             </>
           ) : (
             <p style={{ color: LIGHT_GREY }}>{LANGS[lang].makeBet}</p>
@@ -49,7 +109,9 @@ export const BetWon = () => {
         </div>
         {!id ? (
           <div className={styles.container_content_winning}>
-            <p>2.14 {CURRENCY}</p>
+            <p>
+              {winning} {CURRENCY}
+            </p>
           </div>
         ) : (
           <div
@@ -80,7 +142,10 @@ export const BetWon = () => {
         {!id ? (
           <div className={styles.container_content_button}>
             <div className={styles.container_content_button_elipse}></div>
-            <BtnCommon text={"Забрать"} />
+            <BtnCommon
+              handlerClick={handlerTakeWinningBet}
+              text={LANGS[lang].pickup}
+            />
           </div>
         ) : (
           <div className={styles.container_content_button}>
@@ -88,14 +153,13 @@ export const BetWon = () => {
               <div className={styles.container_content_button_elipse}></div>
             ) : null}
             <BtnCommon
-              disabled={!value.length}
-              text={LANGS[lang].confirm}
+              text={value.length ? LANGS[lang].confirm : LANGS[lang].agoMakeBet}
               handlerClick={handlerMakeBet}
             />
           </div>
         )}
       </div>
-      {!id ? <p>*Сумма будет автоматически зачислена на ваш кошелек</p> : null}
+      {!id ? <p>{LANGS[lang].descriptionWinning}</p> : null}
     </div>
   );
 };
