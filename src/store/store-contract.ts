@@ -290,23 +290,6 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         });
         return;
       }
-      if (err.message.includes("Unable to execute get method")) {
-        const history = window.localStorage.getItem("history") || {};
-        const id = currentId || 0;
-        const parsedHistory =
-          typeof history === "string" ? JSON.parse(history) : {};
-        parsedHistory[id] = {};
-        window.localStorage.setItem("history", JSON.stringify(parsedHistory));
-        createErrorStore({
-          text: LANGS[getLang()].beFirst,
-          type: EnumHandlerError.SUCCESS
-        });
-      } else {
-        createErrorStore({
-          text: err.message,
-          type: EnumHandlerError.ERROR
-        });
-      }
     }
   },
   requestGetData: async (): Promise<TResultBets | undefined> => {
