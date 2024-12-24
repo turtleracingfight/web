@@ -66,18 +66,6 @@ export const helperErrorType = (type: EnumHandlerError): THelperError => {
   }
 };
 
-//delete
-// export const helperUnnecessaryHeader = (path: string) => {
-//   return path.includes(ROUTES.makeBet);
-// };
-//
-// export const helperExcessMarginNavigation = (path: string) => {
-//   switch (path) {
-//     case ROUTES.preview:
-//       return true;
-//   }
-// };
-
 export const helperExcessMargin = (path: string) => {
   if (path.includes(ROUTES.makeBet)) return true;
   switch (path) {

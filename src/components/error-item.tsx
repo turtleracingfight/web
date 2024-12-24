@@ -11,7 +11,7 @@ export const ErrorItem: FC<TErrorItem> = ({
   color,
   type
 }) => {
-  const [offset, setOffset] = useState(94.25); // Начальное значение
+  const [offset, setOffset] = useState(94.25);
   const [secondsLeft, setSecondsLeft] = useState(5);
 
   useEffect(() => {

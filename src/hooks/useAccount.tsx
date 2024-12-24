@@ -42,7 +42,7 @@ export const useAccount = () => {
                 payload: args.body?.toBoc().toString("base64")
               }
             ],
-            validUntil: Date.now() + 60 * 1000 // 1 minutes for user to approve
+            validUntil: Date.now() + 60 * 1000
           });
           if (transaction.boc) {
             createErrorStore({
