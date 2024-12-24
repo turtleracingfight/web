@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import { useStoreContact } from "../store/store-contract.ts";
 
 let time = 0;
-const CONTRACT = "EQA28ww30J6zjj1IoU_fCOkqP53A3Cit5LzztpaZmcTcl0t2";
+const CONTRACT = "kQA_rDaDFj2S3B43CH74saTmWx0HTCfP0LntZvUmsyksvGsr";
 export const useControlCenter = () => {
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const { address, sender, client, setOptions } = useAccount();
-  const setContractCenter = useStoreContact().setContractCenter;
+  const setContractCenter = useStoreContact(state => state.setContractCenter);
 
   const controlCenter = useAsyncInitialize(async () => {
     if (!client || !address) return;
@@ -26,10 +26,12 @@ export const useControlCenter = () => {
   };
 
   useEffect(() => {
-    if (address && controlCenter) {
-      setIsLoaded(false);
-      setContractCenter(controlCenter, sender);
-    } else helperLoadedAcc();
+    (async () => {
+      if (address && controlCenter) {
+        setIsLoaded(false);
+        setContractCenter(controlCenter, sender, address, client);
+      } else helperLoadedAcc();
+    })();
   }, [controlCenter, address]);
 
   return {

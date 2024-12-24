@@ -14,7 +14,6 @@ import { useEffect } from "react";
 import styles from "../styles/common.module.scss";
 import { useStoreLang } from "../store/store-lang.ts";
 import { useStoreLoadings } from "../store/store-loadings.ts";
-import { ExpiresContract } from "./expiresContract.tsx";
 
 export const Layout = () => {
   const { pathname } = useLocation();

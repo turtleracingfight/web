@@ -6,11 +6,11 @@ let time = 0;
 export const useGetBalance = () => {
   const wallet = useTonWallet();
   const [tonConnectUI] = useTonConnectUI();
-  const [balance, setBalance] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [balance, setBalance] = useState<string>("0");
+  const [loading, setLoading] = useState<boolean>(true);
 
   tonConnectUI.onStatusChange(state => {
-    if (state === null) setBalance(0);
+    if (state === null) setBalance("0");
   });
 
   useEffect(() => {
@@ -33,10 +33,10 @@ export const useGetBalance = () => {
 
   useEffect(() => {
     if (time) clearTimeout(time);
-    if (!loading) {
+    if (loading) {
       time = setTimeout(() => {
         setLoading(false);
-      }, 1200);
+      }, 1500);
     }
   }, [loading]);
 

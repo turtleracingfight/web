@@ -3,9 +3,9 @@ import { Home } from "../pages/home.tsx";
 import { ConnectWallet } from "../pages/connect-wallet.tsx";
 import { LIST_ROUTES, ROUTES } from "../constants/route.tsx";
 import { IAddressWallet } from "../types/ts-common.ts";
-import { FC } from "react";
+import { FC, memo } from "react";
 
-export const RoutePages: FC<IAddressWallet> = ({ balance, address }) => {
+export const RoutePages: FC<IAddressWallet> = memo(({ balance, address }) => {
   return (
     <Routes>
       <Route
@@ -23,4 +23,4 @@ export const RoutePages: FC<IAddressWallet> = ({ balance, address }) => {
       ))}
     </Routes>
   );
-};
+});

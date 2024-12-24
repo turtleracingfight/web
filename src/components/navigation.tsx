@@ -7,13 +7,14 @@ import { INavigation } from "../types/ts-navigation.ts";
 
 export const Navigation: FC<INavigation> = memo(({ pathname }) => {
   const navigate = useNavigate();
+  const handlerNavigatePath = (path: string) => navigate(path);
 
   return (
     <div className={styles.container}>
       <div
         className={styles.container_content}
         style={{
-          background: helperNavigationStyles(pathname).content,
+          background: helperNavigationStyles(pathname).content
         }}
       >
         <div
@@ -22,7 +23,7 @@ export const Navigation: FC<INavigation> = memo(({ pathname }) => {
         >
           {NAVIGATION_LINKS.map(el => {
             return (
-              <button key={el.id} onClick={() => navigate(el.path)}>
+              <button key={el.id} onClick={() => handlerNavigatePath(el.path)}>
                 <div
                   className={`${el.path === pathname && styles.container_content_links_ellipse}`}
                 ></div>

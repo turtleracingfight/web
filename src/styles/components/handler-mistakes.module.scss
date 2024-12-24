@@ -10,17 +10,33 @@
   position: absolute;
 
   &_mistake {
-    @include bl-flex-center(flex-start, center, row, 3%);
-    @include wh-ht(90%, 5vh);
+    @include bl-flex-center(space-between, center, row, 3%);
+    @include wh-ht(90%, auto);
     padding: 0.5vh 3%;
     cursor: pointer;
     border-radius: 15px;
     background: #101010;
     color: darkgray;
-    box-shadow:  0 0 5px black;
+    box-shadow: 0 0 5px #3d3d3d;
 
     & > img {
-      height: 3vh
+      height: 3vh;
+    }
+    &_content {
+      width: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      & > p {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        font-size: 14px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

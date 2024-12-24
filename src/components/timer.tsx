@@ -1,49 +1,56 @@
 import styles from "../styles/components/timer.module.scss";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { useStoreContact } from "../store/store-contract.ts";
 
-let interval = 0;
+const formatTime = (time: number) => {
+  const hours = Math.floor(time / 3600);
+  const minutes = Math.floor((time % 3600) / 60);
+  const seconds = time % 60;
+
+  return {
+    hours: `${hours}`.padStart(2, "0"),
+    minutes: `${minutes}`.padStart(2, "0"),
+    seconds: `${seconds}`.padStart(2, "0")
+  };
+};
 export const Timer = memo(() => {
-  const [hours, setHours] = useState<number>(0);
-  const [minutes, setMinutes] = useState<number>(0);
-  const [seconds, setSeconds] = useState<number>(0);
-  const requestGetNext = useStoreContact().requestGetNext;
+  const [time, setTime] = useState(0);
+  const requestGetNext = useStoreContact(state => state.requestGetNext);
+  const intervalRef = useRef<number>(0);
 
   useEffect(() => {
     (async () => {
       const data = await requestGetNext();
       if (data) {
-        const { seconds, minutes, hours } = data;
-        setHours(hours);
-        setMinutes(minutes);
-        setSeconds(seconds);
+        setTime(data);
       }
     })();
   }, []);
 
   useEffect(() => {
-    if (hours || minutes || seconds) {
-      interval = setInterval(() => {
-        if (seconds) {
-          const sec = seconds - 1;
-          const minute = !sec && minutes ? minutes - 1 : 0;
-          const hour = !minute && hours ? hours - 1 : 0;
-          setHours(hour);
-          setMinutes(minute);
-          setSeconds(sec);
-        }
+    if (time > 0) {
+      intervalRef.current = setInterval(() => {
+        setTime(time => {
+          if (time <= 1) {
+            clearInterval(intervalRef.current );
+            return 0;
+          }
+          return time - 1;
+        });
       }, 1000);
     }
-    return () => clearInterval(interval);
-  }, [seconds, minutes, hours]);
+    return () => clearInterval(intervalRef.current );
+  }, [time]);
+
+  const { seconds, minutes, hours } = formatTime(time);
 
   return (
     <div className={styles.container}>
-      <p>{String(hours).length > 1 ? hours : `0${hours}`}</p>
+      <p>{hours}</p>
       <p>:</p>
-      <p>{String(minutes).length > 1 ? minutes : `0${minutes}`}</p>
+      <p>{minutes}</p>
       <p>:</p>
-      <p>{String(seconds).length > 1 ? seconds : `0${seconds}`}</p>
+      <p>{seconds}</p>
     </div>
   );
 });

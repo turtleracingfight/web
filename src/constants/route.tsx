@@ -10,8 +10,9 @@ import main from "/components/navigation/home.svg";
 import ac_faq from "/components/navigation/ac-faq.svg";
 import faq from "/components/navigation/faq.svg";
 import { BetWon } from "../pages/bet-won.tsx";
+import { TRouteLinks } from "../types/ts-common.ts";
 
-export const ROUTES = {
+export const ROUTES: TRouteLinks = {
   listTurtles: "/list-turtles",
   home: "/home",
   history: "/history",

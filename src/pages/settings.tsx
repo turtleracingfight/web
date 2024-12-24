@@ -7,7 +7,7 @@ import { Locales } from "@tonconnect/ui";
 import { useStoreLang } from "../store/store-lang.ts";
 
 export const Settings = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const { lang, selectLang } = useStoreLang();
 
   const openModalLang = () => setIsOpen(!isOpen);

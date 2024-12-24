@@ -14,7 +14,7 @@ import { useStoreLang } from "../store/store-lang.ts";
 let localAddress: string | undefined = undefined;
 export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
   const navigate = useNavigate();
-  const { lang } = useStoreLang();
+  const lang = useStoreLang(state => state.lang);
 
   const isSettingsPage = pathname === ROUTES.settings;
   const handlerConnectWallet = () => navigate(ROUTES.connect);
@@ -36,7 +36,7 @@ export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
       </div>
       <div className={styles.container_wallet} onClick={handlerConnectWallet}>
         <p>
-          {balance ? `${balance.toFixed(2)} ${CURRENCY}` : LANGS[lang].connect}
+          {balance ? `${balance} ${CURRENCY}` : LANGS[lang].connect}
         </p>
         <img src={wallet} alt="wallet" />
       </div>

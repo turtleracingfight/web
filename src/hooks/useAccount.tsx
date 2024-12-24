@@ -9,14 +9,15 @@ import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { LANGS } from "../constants/langs.ts";
 import { useStoreContact } from "../store/store-contract.ts";
+import { ETakeWinning } from "../types/ts-store-contract.ts";
 
 export const useAccount = () => {
-  const setWinningBet = useStoreContact(state => state.setWinningBet);
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const wallet = useTonWallet();
-  const { lang } = useLang();
-  let network = wallet?.account.chain;
   const navigate = useNavigate();
+  const { lang } = useLang();
+  const setWinningBet = useStoreContact(state => state.setWinningBet);
+  let network = wallet?.account.chain;
   const { client } = useTonClient(network as CHAIN);
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const useAccount = () => {
   return {
     sender: {
       send: async (args: SenderArguments) => {
+        const prevPage = window.sessionStorage.getItem("prev-page");
         try {
           const transaction = await tonConnectUI.sendTransaction({
             messages: [
@@ -43,32 +45,37 @@ export const useAccount = () => {
             validUntil: Date.now() + 60 * 1000 // 1 minutes for user to approve
           });
           if (transaction.boc) {
-            const betPage = window.localStorage.getItem("bet-page");
             createErrorStore({
-              text: LANGS[lang].placedBet,
+              text:
+                prevPage === ROUTES.history
+                  ? LANGS[lang].takeWinning
+                  : LANGS[lang].placedBet,
               type: EnumHandlerError.SUCCESS
             });
-            if (betPage === ROUTES.history) {
-              setWinningBet(null, "0", "success");
-            }
+            if (prevPage === ROUTES.history)
+              setWinningBet(null, "0", ETakeWinning.takeWinning);
+            window.sessionStorage.removeItem("prev-page");
             navigate(
-              betPage
-                ? betPage === ROUTES.history
+              prevPage
+                ? prevPage === ROUTES.history
                   ? ROUTES.history
-                  : betPage === ROUTES.listTurtles
+                  : prevPage === ROUTES.listTurtles
                     ? ROUTES.listTurtles
                     : ROUTES.home
                 : ROUTES.home
             );
           } else {
-            window.localStorage.setItem("bet-page", "");
+            window.sessionStorage.removeItem("prev-page");
             navigate(ROUTES.home);
           }
         } catch (error) {
-          window.localStorage.setItem("bet-page", "");
+          window.sessionStorage.removeItem("prev-page");
           navigate(ROUTES.home);
           createErrorStore({
-            text: LANGS[lang].cancelledBet,
+            text:
+              prevPage === ROUTES.history
+                ? LANGS[lang].cancelledTakeWinning
+                : LANGS[lang].failPlaceBet,
             type: EnumHandlerError.ERROR
           });
         }

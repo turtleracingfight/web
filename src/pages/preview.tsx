@@ -42,15 +42,21 @@ export const Preview = () => {
           {el.id === 2 ? (
             <>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}: 10.5 {CURRENCY}</p>
+                <p>
+                  {LANGS[lang].allPeopleSet}: 10.5 {CURRENCY}
+                </p>
                 <p>0.4 {CURRENCY}</p>
               </div>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}: 13.5 {CURRENCY}</p>
+                <p>
+                  {LANGS[lang].allPeopleSet}: 13.5 {CURRENCY}
+                </p>
                 <p>1.24 {CURRENCY}</p>
               </div>
               <div className={styles.elem}>
-                <p>{LANGS[lang].allPeopleSet}: 2.5 {CURRENCY}</p>
+                <p>
+                  {LANGS[lang].allPeopleSet}: 2.5 {CURRENCY}
+                </p>
                 <p>0.62 {CURRENCY}</p>
               </div>
             </>

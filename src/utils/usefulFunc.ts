@@ -2,10 +2,11 @@ import { ROUTES } from "../constants/route.tsx";
 import error from "../../public/components/other/error.png";
 import success from "../../public/components/other/success.png";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
-import { THelperError } from "../types/ts-common.ts";
-import { TURTLES_HISTORY } from "../constants/links.ts";
+import { THelperError, THistory, TResultBets } from "../types/ts-common.ts";
+import { TURTLES_LINKS } from "../constants/links.ts";
 import { Locales } from "@tonconnect/ui";
 import { LANGS } from "../constants/langs.ts";
+import { DEFAULT_PNL } from "../constants/constants-fields.ts";
 
 export const helperNavigationStyles = (path: string) => {
   let currentPage = "";
@@ -42,37 +43,6 @@ export const helperUnnecessaryNavigation = (path: string) => {
   }
 };
 
-export const helperUnnecessaryHeader = (path: string) => {
-  return path.includes(ROUTES.makeBet);
-};
-
-export const helperExcessMarginNavigation = (path: string) => {
-  switch (path) {
-    case ROUTES.preview:
-      return true;
-  }
-};
-
-export const helperExcessMargin = (path: string) => {
-  if (path.includes(ROUTES.makeBet)) return true;
-  switch (path) {
-    case ROUTES.listTurtles:
-      return true;
-    case ROUTES.preview:
-      return true;
-    case ROUTES.history:
-      return true;
-    default:
-      return false;
-  }
-};
-
-export const countTotalTon = (value: bigint | string) => {
-  if (!value) return 0;
-  const bet = typeof value === "bigint" ? value.toString() : String(value);
-  return Math.floor((+bet / 10 ** 9) * 100) / 100;
-};
-
 export const helperErrorType = (type: EnumHandlerError): THelperError => {
   switch (type) {
     case EnumHandlerError.ERROR:
@@ -96,31 +66,67 @@ export const helperErrorType = (type: EnumHandlerError): THelperError => {
   }
 };
 
-export const serializeData = (data: { [key: string]: BigInt }) => {
-  const newData = {};
+//delete
+// export const helperUnnecessaryHeader = (path: string) => {
+//   return path.includes(ROUTES.makeBet);
+// };
+//
+// export const helperExcessMarginNavigation = (path: string) => {
+//   switch (path) {
+//     case ROUTES.preview:
+//       return true;
+//   }
+// };
+
+export const helperExcessMargin = (path: string) => {
+  if (path.includes(ROUTES.makeBet)) return true;
+  switch (path) {
+    case ROUTES.listTurtles:
+      return true;
+    case ROUTES.preview:
+      return true;
+    case ROUTES.history:
+      return true;
+    default:
+      return false;
+  }
+};
+
+export const countTotalTon = (value: bigint | string) => {
+  if (!value) return "0";
+  const bet = typeof value === "bigint" ? value.toString() : String(value);
+  return (Math.floor((+bet / 10 ** 9) * 100) / 100).toFixed(2);
+};
+
+export const serializeData = (data: TResultBets): TResultBets => {
+  const result: TResultBets = {};
   if (data) {
     const valuesData = Object.keys(data);
     for (const field of valuesData) {
       if (typeof data[field] === "bigint")
-        newData[field] = data[field].toString();
-      else newData[field] = data[field];
+        result[field] = data[field].toString();
+      else result[field] = data[field];
     }
   }
-  return newData;
+  return result;
 };
 
-const helperCountTotalWon = (total: string, min: string, me: string) => {
-  const all = (total / 100) * 90;
-  const percent = min / me;
-  return countTotalTon((all / 100) * percent);
+const helperCountTotalWon = (
+  total: string | bigint,
+  min: string | bigint,
+  me: string | bigint
+) => {
+  const all = (+String(total) / 100) * 90;
+  const percent = +String(min) / +String(me);
+  return countTotalTon(String((all / 100) * percent));
 };
 
 export const helperHistoryBet = (
-  data: { [key: string]: string },
+  data: TResultBets,
   idTour: string,
   lang: Locales
-) => {
-  const bets = [];
+): THistory[] => {
+  const bets: THistory[] = [];
   const totalBets = {
     min: data[`total${1}`],
     id: 1
@@ -133,21 +139,27 @@ export const helperHistoryBet = (
   }
   for (let i = 0; i < 10; i++) {
     const id = i + 1;
-    if (data[`me${id}`].length && +data[`me${id}`] > 0)
+    if (String(data[`me${id}`]).length && +String(data[`me${id}`]) > 0)
       bets.push({
-        name: TURTLES_HISTORY[`me${id}`][lang],
-        svg: TURTLES_HISTORY[`me${id}`].svg,
+        name: TURTLES_LINKS[`me${id}`][lang],
+        svg: TURTLES_LINKS[`me${id}`].svg,
         bet: countTotalTon(data[`me${id}`]),
         tour: `${LANGS[lang].tournament} ${idTour}`,
         won:
           id === totalBets.id
-            ? +data.pnl > 0
+            ? +String(data.pnl) > 0
               ? countTotalTon(data.pnl)
               : helperCountTotalWon(data.total, totalBets.min, data[`me${id}`])
             : "0",
-        id: idTour,
+        id: +idTour,
         isWinning: !!data["isWinning"]
       });
   }
   return bets;
+};
+
+export const helperAroundPnl = (value: string, operator?: string) => {
+  if (operator === "+")
+    return (Math.round((+value + DEFAULT_PNL) * 100) / 100).toFixed(2);
+  else return (Math.round((+value - DEFAULT_PNL) * 100) / 100).toFixed(2);
 };

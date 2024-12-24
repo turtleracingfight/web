@@ -24,7 +24,7 @@
       @include bl-flex-center(center, center, column, 5px);
 
       & > p {
-        @include width-sz-al-cl(191px, 15px, center, auto);
+        @include width-sz-al-cl(200px, 15px, center, auto);
         margin: 0;
       }
     }
