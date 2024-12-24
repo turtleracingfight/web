@@ -241,7 +241,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       }
       if (err.message.includes("Unable to execute get method")) {
         const history = window.localStorage.getItem("history") || {};
-        const id = currentId || get().id || 0;
+        const id = currentId || 0;
         const parsedHistory =
           typeof history === "string" ? JSON.parse(history) : {};
         parsedHistory[id] = {};
