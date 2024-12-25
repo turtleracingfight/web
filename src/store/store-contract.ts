@@ -257,9 +257,11 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       if (id != await getActiveId()){
           let data = window.localStorage.getItem("data"+id)
           if (data != undefined) {
+              console.log("return data", data)
               return JSON.parse(data)
           }
       }
+      console.log("getting history for", id)
       setLoadingRequest(true);
       const prevAddress = await contractCenter.getTournamentAddress(BigInt(id));
       if (!prevAddress) {
@@ -275,13 +277,31 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       );
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
-      setLoadingRequest(false);
-      window.localStorage.setItem("data"+id, JSON.stringify(result, (key, value) =>
+      console.log("find winner", result.winner.toString())
+      let res = JSON.parse(JSON.stringify(result, (key, value) =>
         typeof value === 'bigint'
           ? value.toString()
           : value // return everything else unchanged
       ))
-      return result;
+      if (res.winner == 0){
+          let min = 99999999999999;
+          let winner = 0
+          for (let i=1;i<11;i++){
+            let current = +String(res["total"+1].toString());
+            if (current < min) {
+              min = current;
+              winner = i;
+              console.log("winner",i)
+            }
+          }
+        let total = res.total /100 * 90
+        let percent = res["me"+winner] / res["total"+winner]
+        res.pnl = total * percent
+        res.winner =  winner
+      }
+      setLoadingRequest(false);
+      window.localStorage.setItem("data"+id, JSON.stringify(res))
+      return res;
     } catch (error) {
       setLoadingRequest(false);
       const err = error as AxiosError;
