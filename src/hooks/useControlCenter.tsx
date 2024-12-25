@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useStoreContact } from "../store/store-contract.ts";
 
 let time = 0;
-const CONTRACT = "kQCvIpTCgXDiUFTpKcVGaXfs79ja7ZFP_H_SvrQFlM9RFUIf";
+const CONTRACT = "kQAc877c83IfHi_4bUHdIsvDK4NvdjCnSyvBZLVG2VVEVo36";
 export const useControlCenter = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const { address, sender, client, setOptions } = useAccount();
