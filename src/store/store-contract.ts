@@ -246,21 +246,21 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
   requestGetHistoryData: async (
     currentId: number
   ): Promise<TResultBets | undefined> => {
+    const { contractCenter, getActiveId, userAddress, client } = get();
+    if (!contractCenter || !userAddress || !client) {
+      notConnectWallet();
+      return;
+    }
+    const id = currentId || (await getActiveId()) || 0;
+    if (id != await getActiveId()){
+      let data = window.localStorage.getItem("data"+id)
+      if (data != undefined) {
+        console.log("return data", data)
+        return JSON.parse(data)
+      }
+    }
     try {
-      const { contractCenter, getActiveId, userAddress, client } = get();
-      if (!contractCenter || !userAddress || !client) {
-        notConnectWallet();
-        return;
-      }
 
-      const id = currentId || (await getActiveId()) || 0;
-      if (id != await getActiveId()){
-          let data = window.localStorage.getItem("data"+id)
-          if (data != undefined) {
-              console.log("return data", data)
-              return JSON.parse(data)
-          }
-      }
       console.log("getting history for", id)
       setLoadingRequest(true);
       const prevAddress = await contractCenter.getTournamentAddress(BigInt(id));
@@ -300,9 +300,18 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         res.winner =  winner
       }
       setLoadingRequest(false);
-      window.localStorage.setItem("data"+id, JSON.stringify(res))
+      window.localStorage.setItem("data"+id, JSON.stringify(res,(key, value) =>
+        typeof value === 'bigint'
+          ? value.toString()
+          : value // return everything else unchanged
+      ));
       return res;
     } catch (error) {
+      if (error.message == "Unable to execute get method. Got exit_code: -13"){
+        window.localStorage.setItem("data"+id, JSON.stringify(helperReturnData()))
+        setLoadingRequest(false);
+        return
+      }
       setLoadingRequest(false);
       const err = error as AxiosError;
       if (err.status === 504) {
