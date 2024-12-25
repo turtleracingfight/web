@@ -166,6 +166,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       setLoadingRequest(false);
       return;
     } catch (error) {
+      console.log(error)
       setLoadingRequest(false);
       createErrorStore({
         text: LANGS[getLang()].activeAddress,
@@ -183,7 +184,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         }
         let id = window.localStorage.getItem("activeId");
         let expiredActiveId = window.localStorage.getItem("expiredActiveId");
-        if (activeId!=null && expiredActiveId!=null) {
+        if (id!=null && expiredActiveId!=null) {
           if (new Date().getTime() < expiredActiveId){
             console.log("getting activeID")
             let activeId = +String(id);
@@ -204,6 +205,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         setLoadingRequest(false);
         return;
       } catch (error) {
+        console.log(error)
         await delay(i*1000)
         setLoadingRequest(false);
         createErrorStore({
