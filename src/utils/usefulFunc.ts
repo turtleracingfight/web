@@ -99,15 +99,6 @@ export const serializeData = (data: TResultBets): TResultBets => {
   return result;
 };
 
-const helperCountTotalWon = (
-  total: string | bigint,
-  min: string | bigint,
-  me: string | bigint
-) => {
-  const all = (+String(total) / 100) * 90;
-  const percent = +String(min) / +String(me);
-  return countTotalTon(String((all / 100) * percent));
-};
 
 export const helperHistoryBet = (
   data: TResultBets,
@@ -115,16 +106,6 @@ export const helperHistoryBet = (
   lang: Locales
 ): THistory[] => {
   const bets: THistory[] = [];
-  const totalBets = {
-    min: data[`total${1}`],
-    id: 1
-  };
-  for (let i = 0; i < 10; i++) {
-    if (data[`total${i + 1}`] && data[`total${i + 1}`] < totalBets.min) {
-      totalBets.min = data[`total${i + 1}`];
-      totalBets.id = i + 1;
-    }
-  }
   for (let i = 0; i < 10; i++) {
     const id = i + 1;
     if (String(data[`me${id}`]).length && +String(data[`me${id}`]) > 0)
@@ -134,10 +115,8 @@ export const helperHistoryBet = (
         bet: countTotalTon(data[`me${id}`]),
         tour: `${LANGS[lang].tournament} ${idTour}`,
         won:
-          id === totalBets.id
-            ? +String(data.pnl) > 0
-              ? countTotalTon(data.pnl)
-              : helperCountTotalWon(data.total, totalBets.min, data[`me${id}`])
+          id == +String(data.winner.toString())
+            ? countTotalTon(data.pnl)
             : "0",
         id: +idTour,
         isWinning: !!data["isWinning"]

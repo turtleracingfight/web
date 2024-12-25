@@ -287,8 +287,8 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
           let min = 99999999999999;
           let winner = 0
           for (let i=1;i<11;i++){
-            let current = +String(res["total"+1].toString());
-            if (current < min) {
+            let current = +String(res["total"+i].toString());
+            if (current!=0 && current < min) {
               min = current;
               winner = i;
               console.log("winner",i)
