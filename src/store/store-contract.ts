@@ -308,7 +308,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
           typeof value === 'bigint'
             ? value.toString()
             : value // return everything else unchanged
-        ))
+        ));
         setLoadingRequest(false);
         return
       }
