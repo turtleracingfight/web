@@ -300,15 +300,15 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         res.winner =  winner
       }
       setLoadingRequest(false);
-      window.localStorage.setItem("data"+id, JSON.stringify(res,(key, value) =>
-        typeof value === 'bigint'
-          ? value.toString()
-          : value // return everything else unchanged
-      ));
+      window.localStorage.setItem("data"+id, JSON.stringify(res));
       return res;
     } catch (error) {
       if (error.message == "Unable to execute get method. Got exit_code: -13"){
-        window.localStorage.setItem("data"+id, JSON.stringify(helperReturnData()))
+        window.localStorage.setItem("data"+id, JSON.stringify(helperReturnData(),(key, value) =>
+          typeof value === 'bigint'
+            ? value.toString()
+            : value // return everything else unchanged
+        ))
         setLoadingRequest(false);
         return
       }
