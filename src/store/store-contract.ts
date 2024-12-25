@@ -51,43 +51,6 @@ const helperReturnData = () => {
     winner: BigInt(""),
     total: BigInt("")
   };
-
-  const random = Math.ceil(Math.random() * 10);
-  if (random <= 2)
-    data.pnl = BigInt(
-      Math.ceil(random * (random * Math.ceil(Math.random() * 100)) * 1000000) +
-        100
-    );
-
-  for (const total in data) {
-    const random = Math.ceil(Math.random() * 100);
-    if (total.includes("total")) {
-      data[total] = BigInt(
-        Math.ceil(random * (random * Math.ceil(Math.random() * 100)) * 1000000)
-      );
-      data.total += data[total];
-    }
-  }
-
-  for (const me in data) {
-    const random = Math.floor(Math.random() * 10);
-    if (
-      me.includes("me") &&
-      data[`total${me[2]}`] &&
-      BigInt(data[`total${me[2]}`]) > 0
-    ) {
-      data[me] =
-        random >= 4
-          ? BigInt(
-              Math.floor(
-                Math.random() *
-                  (random * Math.floor(Math.random() * 10)) *
-                  100000000
-              )
-            )
-          : BigInt("0");
-    }
-  }
   return data;
 };
 const timeToRequest = 500;
