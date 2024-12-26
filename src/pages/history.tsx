@@ -87,47 +87,35 @@ export const History = () => {
           bets.map(el => (
             <div key={el.id + el.name}>
               <div className={styles.container_bl_stats}>
-                {el.noBets ? (
-                  <div className={styles.container_bl_stats_noBet}>
-                    <p>{LANGS[lang].noBets}</p>
-                    <p>#{el.id}</p>
+                <div className={styles.container_bl_stats_bet}>
+                  <div className={styles.container_bl_stats_bet_content}>
+                    <p>{LANGS[lang].bet}</p>
+                    {el.noBets ? null : <img src={el.svg} alt={el.name} />}
                   </div>
-                ) : (
-                  <>
-                    <div className={styles.container_bl_stats_bet}>
-                      <div className={styles.container_bl_stats_bet_content}>
-                        <p>{LANGS[lang].bet}</p>
-                        <img src={el.svg} alt={el.name} />
-                      </div>
-                      <p>
-                        {el.bet} {CURRENCY}
-                      </p>
+                  <p>
+                    {el.noBets ? 0 : el.bet} {CURRENCY}
+                  </p>
+                </div>
+                <div className={styles.container_bl_stats_elipse}></div>
+                <div className={styles.container_bl_stats_win}>
+                  <div className={styles.container_bl_stats_win_name}>
+                    <div className={styles.container_bl_stats_win_name_content}>
+                      <p>{el.tour}</p>
+                      <p>{el.name}</p>
                     </div>
-                    <div className={styles.container_bl_stats_elipse}></div>
-                    <div className={styles.container_bl_stats_win}>
-                      <div className={styles.container_bl_stats_win_name}>
-                        <div
-                          className={styles.container_bl_stats_win_name_content}
-                        >
-                          <p>{el.tour}</p>
-                          <p>{el.name}</p>
-                        </div>
-                        <p>{LANGS[lang].profit}</p>
-                      </div>
-                      <p
-                        style={{
-                          color:
-                            +el.won > 0 && !el.isWinning ? "#79d716" : "white"
-                        }}
-                        onClick={() =>
-                          handlerTakeWinningBet(el.id, el.won, el.isWinning)
-                        }
-                      >
-                        {el.won} {CURRENCY}
-                      </p>
-                    </div>
-                  </>
-                )}
+                    <p>{LANGS[lang].profit}</p>
+                  </div>
+                  <p
+                    style={{
+                      color: +el.won > 0 && !el.isWinning ? "#79d716" : "white"
+                    }}
+                    onClick={() =>
+                      handlerTakeWinningBet(el.id, el.won, el.isWinning)
+                    }
+                  >
+                    {el.noBets ? 0 : el.won} {CURRENCY}
+                  </p>
+                </div>
               </div>
               <div className={styles.container_bl_border}></div>
             </div>

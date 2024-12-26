@@ -124,7 +124,7 @@ export const helperHistoryBet = (
       name: "",
       svg: "",
       bet: "",
-      tour: "",
+      tour: `${LANGS[lang].tournament} ${idTour}`,
       won: "",
       id: +idTour,
       isWinning: false
