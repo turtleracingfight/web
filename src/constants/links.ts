@@ -42,8 +42,8 @@ export const INFO_LIST: TInfoList[] = [
   },
   {
     id: 3,
-    ru: "Забег заканчивается в субботу вечером",
-    en: "The race ends on Saturday evening",
+    ru: "Забег заканчивается в конце дня",
+    en: "The race will finish in the end of the day",
     svg: moon
   },
   {
