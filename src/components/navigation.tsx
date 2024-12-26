@@ -1,6 +1,6 @@
 import styles from "../styles/components/navigation.module.scss";
 import { useNavigate } from "react-router-dom";
-import { NAVIGATION_LINKS } from "../constants/route.tsx";
+import { NAVIGATION_LINKS, ROUTES } from "../constants/route.tsx";
 import { helperNavigationStyles } from "../utils/usefulFunc.ts";
 import { FC, memo } from "react";
 import { INavigation } from "../types/ts-navigation.ts";
