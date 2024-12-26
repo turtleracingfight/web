@@ -20,6 +20,11 @@ export const helperNavigationStyles = (path: string) => {
     case ROUTES.preview:
       currentPage = "80.14%";
       break;
+    default:
+      return {
+        content: "rgb(48 57 29)",
+        link: "black"
+      };
   }
   return {
     content: `linear-gradient(90deg, #010101 0%, #3F4B25 ${currentPage}, #010101 100%)`,
@@ -30,12 +35,6 @@ export const helperNavigationStyles = (path: string) => {
 export const helperUnnecessaryNavigation = (path: string) => {
   if (path.includes(ROUTES.makeBet)) return true;
   switch (path) {
-    case ROUTES.listTurtles:
-      return true;
-    case ROUTES.connect:
-      return true;
-    case ROUTES.settings:
-      return true;
     case ROUTES.makeBet:
       return true;
     default:
@@ -99,7 +98,6 @@ export const serializeData = (data: TResultBets): TResultBets => {
   return result;
 };
 
-
 export const helperHistoryBet = (
   data: TResultBets,
   idTour: string,
@@ -115,13 +113,22 @@ export const helperHistoryBet = (
         bet: countTotalTon(data[`me${id}`]),
         tour: `${LANGS[lang].tournament} ${idTour}`,
         won:
-          id == +String(data.winner.toString())
-            ? countTotalTon(data.pnl)
-            : "0",
+          id == +String(data.winner.toString()) ? countTotalTon(data.pnl) : "0",
         id: +idTour,
         isWinning: !!data["isWinning"]
       });
   }
+  if (!bets.length)
+    bets.push({
+      noBets: true,
+      name: "",
+      svg: "",
+      bet: "",
+      tour: "",
+      won: "",
+      id: +idTour,
+      isWinning: false
+    });
   return bets;
 };
 

@@ -23,6 +23,20 @@
       @include bl-flex-center(center, center, row, 5%);
       width: 100%;
 
+      &_noBet {
+        @include bl-flex-center(center, center, column, 5px);
+        height: 10vh;
+
+        & > p {
+          margin: 3px;
+        }
+        & > p:nth-child(2) {
+          color: darkgrey;
+          font-size: 16px;
+          font-weight: 900;
+        }
+      }
+
       &_elipse {
         @extend .ellipse;
         @include wh-ht(50%, 5vh);

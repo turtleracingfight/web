@@ -111,25 +111,25 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       }
       let activeAddress = window.localStorage.getItem("activeAddress");
       let expiredActiveId = window.localStorage.getItem("expiredActiveId");
-      if (expiredActiveId!=null && activeAddress!=null){
-        let seconds = +expiredActiveId
+      if (expiredActiveId != null && activeAddress != null) {
+        let seconds = +expiredActiveId;
         console.log("expiredActiveId", expiredActiveId);
-        if (new Date().getTime()<seconds){
-          console.log("getting address")
+        if (new Date().getTime() < seconds) {
+          console.log("getting address");
           return activeAddress;
         }
       }
       setLoadingRequest(true);
       const address = await contract.getTournamentActive();
       if (address) {
-        console.log("setting address")
+        console.log("setting address");
         window.localStorage.setItem("activeAddress", address.toString());
         return address;
       }
       setLoadingRequest(false);
       return;
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setLoadingRequest(false);
       createErrorStore({
         text: LANGS[getLang()].activeAddress,
@@ -138,7 +138,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
     }
   },
   getActiveId: async () => {
-    for (let i=1;i<10;i++) {
+    for (let i = 1; i < 10; i++) {
       try {
         const contract = get().contractCenter;
         if (!contract) {
@@ -147,12 +147,12 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         }
         let id = window.localStorage.getItem("activeId");
         let expiredActiveId = window.localStorage.getItem("expiredActiveId");
-        if (id!=null && expiredActiveId!=null) {
-          if (new Date().getTime() < expiredActiveId){
-            console.log("getting activeID")
+        if (id != null && expiredActiveId != null) {
+          if (new Date().getTime() < expiredActiveId) {
+            console.log("getting activeID");
             let activeId = +String(id);
             set({ activeId });
-            return
+            return;
           }
         }
         setLoadingRequest(true);
@@ -160,7 +160,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         if (data) {
           const activeId = +String(data);
           setLoadingRequest(false);
-          console.log("setting activeID")
+          console.log("setting activeID");
           window.localStorage.setItem("activeId", activeId.toString());
           set({ activeId });
           return activeId;
@@ -168,8 +168,8 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         setLoadingRequest(false);
         return;
       } catch (error) {
-        console.log(error)
-        await delay(i*1000)
+        console.log(error);
+        await delay(i * 1000);
         setLoadingRequest(false);
         createErrorStore({
           text: LANGS[getLang()].activeAddress,
@@ -179,31 +179,34 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
     }
   },
   requestGetNext: async () => {
-    for (let i=0;i<10;i++){
-    try {
-      const contract = get().contractCenter;
-      if (!contract) {
-        notConnectWallet();
+    for (let i = 0; i < 10; i++) {
+      try {
+        const contract = get().contractCenter;
+        if (!contract) {
+          notConnectWallet();
+          return 0;
+        }
+        setLoadingRequest(true);
+        const data = await contract.getNext();
+        setLoadingRequest(false);
+        if (data) {
+          console.log("setting expired");
+          let seconds = +data.toString();
+          window.localStorage.setItem(
+            "expiredActiveId",
+            (new Date().getTime() + seconds).toString()
+          );
+          return +data.toString();
+        }
         return 0;
+      } catch (error) {
+        await delay(i * 1000);
+        setLoadingRequest(false);
+        createErrorStore({
+          text: LANGS[getLang()].nextTour,
+          type: EnumHandlerError.ERROR
+        });
       }
-      setLoadingRequest(true);
-      const data = await contract.getNext();
-      setLoadingRequest(false);
-      if (data) {
-        console.log("setting expired")
-        let seconds = +data.toString()
-        window.localStorage.setItem("expiredActiveId", (new Date().getTime()+seconds).toString());
-        return +data.toString();
-      }
-      return 0;
-    } catch (error) {
-      await delay(i*1000)
-      setLoadingRequest(false);
-      createErrorStore({
-        text: LANGS[getLang()].nextTour,
-        type: EnumHandlerError.ERROR
-      });
-    }
     }
   },
   requestGetHistoryData: async (
@@ -215,16 +218,15 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       return;
     }
     const id = currentId || (await getActiveId()) || 0;
-    if (id != await getActiveId()){
-      let data = window.localStorage.getItem("data"+id)
+    if (id != (await getActiveId())) {
+      let data = window.localStorage.getItem("data" + id);
       if (data != undefined) {
-        console.log("return data", data)
-        return JSON.parse(data)
+        console.log("return data", data);
+        return JSON.parse(data);
       }
     }
     try {
-
-      console.log("getting history for", id)
+      console.log("getting history for", id);
       setLoadingRequest(true);
       const prevAddress = await contractCenter.getTournamentAddress(BigInt(id));
       if (!prevAddress) {
@@ -240,40 +242,41 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       );
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
-      console.log("find winner", result.winner.toString())
-      let res = JSON.parse(JSON.stringify(result, (key, value) =>
-        typeof value === 'bigint'
-          ? value.toString()
-          : value // return everything else unchanged
-      ))
-      if (res.winner == 0){
-          let min = 99999999999999;
-          let winner = 0
-          for (let i=1;i<11;i++){
-            let current = +String(res["total"+i].toString());
-            if (current!=0 && current < min) {
-              min = current;
-              winner = i;
-              console.log("winner",i)
-            }
+      console.log("find winner", result.winner.toString());
+      let res = JSON.parse(
+        JSON.stringify(
+          result,
+          (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+        )
+      );
+      if (res.winner == 0) {
+        let min = 99999999999999;
+        let winner = 0;
+        for (let i = 1; i < 11; i++) {
+          let current = +String(res["total" + i].toString());
+          if (current != 0 && current < min) {
+            min = current;
+            winner = i;
+            console.log("winner", i);
           }
-        let total = res.total /100 * 90
-        let percent = res["me"+winner] / res["total"+winner]
-        res.pnl = total * percent
-        res.winner =  winner
+        }
+        let total = (res.total / 100) * 90;
+        let percent = res["me" + winner] / res["total" + winner];
+        res.pnl = total * percent;
+        res.winner = winner;
       }
       setLoadingRequest(false);
-      window.localStorage.setItem("data"+id, JSON.stringify(res));
+      window.localStorage.setItem("data" + id, JSON.stringify(res));
       return res;
     } catch (error) {
-      if (error.message == "Unable to execute get method. Got exit_code: -13"){
-        window.localStorage.setItem("data"+id, JSON.stringify(helperReturnData(),(key, value) =>
-          typeof value === 'bigint'
-            ? value.toString()
-            : value // return everything else unchanged
-        ));
+      if (error.message == "Unable to execute get method. Got exit_code: -13") {
+        const data = JSON.stringify(
+          helperReturnData(),
+          (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+        );
+        window.localStorage.setItem("data" + id, data);
         setLoadingRequest(false);
-        return
+        return JSON.parse(data);
       }
       setLoadingRequest(false);
       const err = error as AxiosError;
@@ -293,12 +296,12 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         notConnectWallet();
         return;
       }
-      let data = window.localStorage.getItem("data")
-      let expirderData = window.localStorage.getItem("expiredData")
-      if (data!=null && expirderData!=null){
-        if (new Date().getTime()<+String(expirderData)){
-          console.log("get data")
-          return JSON.parse(data)
+      let data = window.localStorage.getItem("data");
+      let expirderData = window.localStorage.getItem("expiredData");
+      if (data != null && expirderData != null) {
+        if (new Date().getTime() < +String(expirderData)) {
+          console.log("get data");
+          return JSON.parse(data);
         }
       }
       const activeAddress = await getActiveTour();
@@ -310,13 +313,18 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       const turtle = client.open(contractTurtle) as OpenedContract<Turtle>;
       const result = await turtle?.getData(Address.parse(userAddress));
       setLoadingRequest(false);
-      console.log("set data")
-      window.localStorage.setItem("expiredData", (new Date().getTime()+15000).toString())
-      window.localStorage.setItem("data", JSON.stringify(result, (key, value) =>
-        typeof value === 'bigint'
-          ? value.toString()
-          : value // return everything else unchanged
-      ))
+      console.log("set data");
+      window.localStorage.setItem(
+        "expiredData",
+        (new Date().getTime() + 15000).toString()
+      );
+      window.localStorage.setItem(
+        "data",
+        JSON.stringify(
+          result,
+          (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+        )
+      );
       return result;
     } catch (error) {
       setLoadingRequest(false);
@@ -387,15 +395,16 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
   },
   setWinningBet: (id: number | null, winning: string, type?: string) => {
     if (type === ETakeWinning.takeWinning) {
-      const history = window.localStorage.getItem("history");
-      if (history) {
-        const parseHistory = JSON.parse(history);
-        if (get().id !== null) {
-          parseHistory[get().id as number] = {
-            ...parseHistory[get().id as number],
-            isWinning: true
-          };
-          window.localStorage.setItem("history", JSON.stringify(parseHistory));
+      const dataId = get().id;
+      if (dataId !== null) {
+        const history = window.localStorage.getItem("data" + dataId);
+        if (history) {
+          const parseHistory = JSON.parse(history);
+          parseHistory["isWinning"] = true;
+          window.localStorage.setItem(
+            "data" + dataId,
+            JSON.stringify(parseHistory)
+          );
         }
       }
     }

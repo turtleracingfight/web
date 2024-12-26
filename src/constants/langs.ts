@@ -24,7 +24,7 @@ export const LANGS: TLangs = {
     nextTour: "Error in getting time to the next tournament",
     notConnectedWallet: "The wallet is not connected",
     agoMakeBet: "Ago",
-    winning: "Winning",
+    profit: "profit",
     bet: "Bet",
     tournament: "Tournament",
     congratulate: "Congratulate!",
@@ -37,7 +37,8 @@ export const LANGS: TLangs = {
     takeWinning: "Congratulations! The winnings are taken away",
     endHistory: "The entire betting history has been received",
     cancelledTakeWinning: "Couldn't collect winnings",
-    prevAddress: "Error when receiving the previous address"
+    prevAddress: "Error when receiving the previous address",
+    noBets: "You did not participate in the tournament",
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -61,7 +62,7 @@ export const LANGS: TLangs = {
     nextTour: "Ошибка при получении времени следующего турнира",
     notConnectedWallet: "Кошелек не подключен",
     agoMakeBet: "Назад",
-    winning: "Выигрыш",
+    profit: "Выигрыш",
     bet: "Ставка",
     tournament: "Турнир",
     congratulate: "Поздравляем!",
@@ -72,7 +73,8 @@ export const LANGS: TLangs = {
     takeWinning: "Поздравляю! Выигрыш забран",
     endHistory: "Вся история ставок получена",
     cancelledTakeWinning: "Не удалось забрать выигрыш",
-    prevAddress: "Ошибка при получении прошлого адреса"
+    prevAddress: "Ошибка при получении прошлого адреса",
+    noBets: "Вы не участвовали в турнире",
   }
 };
 

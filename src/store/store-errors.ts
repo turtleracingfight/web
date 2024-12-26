@@ -7,11 +7,16 @@ export const useStoreErrors = create<TStoreError>((set, get) => ({
     const isError = get().errors.find(el => el.text === error.text);
     if (isError) return;
     set(state => ({
-      errors: [...state.errors, { ...error, id: (Math.random() * 100).toString(34) }]
+      errors: [
+        ...state.errors,
+        { ...error, id: (Math.random() * 100).toString(34) }
+      ]
     }));
   },
   removeError: (id: string) => {
-    set(state => ({ errors: state.errors.filter(el => el.id !== id) }))
+    const errors = get().errors.length;
+    if (!errors) return;
+    set(state => ({ errors: state.errors.filter(el => el.id !== id) }));
   }
 }));
 

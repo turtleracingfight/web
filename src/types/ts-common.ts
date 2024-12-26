@@ -26,7 +26,9 @@ export type THistory = {
   won: string;
   id: number;
   isWinning: boolean;
+  noBets?: boolean;
 };
+
 type TLang = {
   makeBet: string;
   listTurtles: string;
@@ -48,7 +50,7 @@ type TLang = {
   nextTour: string;
   notConnectedWallet: string;
   agoMakeBet: string;
-  winning: string;
+  profit: string;
   bet: string;
   tournament: string;
   congratulate: string;
@@ -60,6 +62,7 @@ type TLang = {
   endHistory: string;
   cancelledTakeWinning: string;
   prevAddress: string;
+  noBets: string;
 };
 
 export type TLangs = {
