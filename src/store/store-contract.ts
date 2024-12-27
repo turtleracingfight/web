@@ -373,16 +373,23 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
   },
   requestTakeWinningBet: () => {
     try {
-      const contract = get().contractCenter;
-      if (!contract || !get().sender) {
+      const { contractCenter, sender, id } = get();
+      if (!contractCenter || !sender) {
         notConnectWallet();
         return null;
       }
+      if (!id) {
+        createErrorStore({
+          text: LANGS[getLang()].cancelledTakeWinning,
+          type: EnumHandlerError.ERROR
+        });
+      }
+      console.log(id, "takeWinningBetID");
       const messageCPnl = {
         $$type: "CPnl",
-        id: get().id
+        id: BigInt(id as number)
       };
-      contract?.send(
+      contractCenter?.send(
         get().sender as TSender,
         { value: toNano(DEFAULT_PNL) },
         messageCPnl
