@@ -17,6 +17,7 @@ import { getLang } from "./store-lang.ts";
 import { AxiosError } from "axios";
 import { TResultBets } from "../types/ts-common.ts";
 import { Turtle } from "../../build/Turtle/tact_Turtle.ts";
+import { DEFAULT_PNL } from "../constants/constants-fields.ts";
 
 const messageBet = (turtleId: number): CBet => {
   return {
@@ -383,7 +384,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       };
       contract?.send(
         get().sender as TSender,
-        { value: toNano(get().winning) },
+        { value: toNano(DEFAULT_PNL) },
         messageCPnl
       );
     } catch (error) {
