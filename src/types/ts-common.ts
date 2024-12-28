@@ -49,7 +49,7 @@ type TLang = {
   cancelledTransaction: string;
   nextTour: string;
   notConnectedWallet: string;
-  agoMakeBet: string;
+  backMakeBet: string;
   profit: string;
   bet: string;
   tournament: string;

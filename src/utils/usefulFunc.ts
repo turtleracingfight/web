@@ -32,16 +32,6 @@ export const helperNavigationStyles = (path: string) => {
   };
 };
 
-export const helperUnnecessaryNavigation = (path: string) => {
-  if (path.includes(ROUTES.makeBet)) return true;
-  switch (path) {
-    case ROUTES.makeBet:
-      return true;
-    default:
-      return false;
-  }
-};
-
 export const helperErrorType = (type: EnumHandlerError): THelperError => {
   switch (type) {
     case EnumHandlerError.ERROR:

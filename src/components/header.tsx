@@ -32,7 +32,9 @@ export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
         />
       </div>
       <div className={styles.container_wallet} onClick={handlerConnectWallet}>
-        <p>{balance ? `${balance} ${CURRENCY}` : LANGS[lang].connect}</p>
+        <p>
+          {balance && address ? `${balance} ${CURRENCY}` : LANGS[lang].connect}
+        </p>
         <img src={wallet} alt="wallet" />
       </div>
     </div>

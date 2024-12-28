@@ -52,6 +52,7 @@
       }
 
       & > p {
+        color: white;
         text-wrap: nowrap;
         overflow: hidden;
         padding-top: 4px;
@@ -62,7 +63,7 @@
     &_button {
       @include bl-flex-center(center, center, row, 0);
       width: 100%;
-      margin-top: 10%;
+      margin-top: 5%;
 
       & > button {
         width: 40%;

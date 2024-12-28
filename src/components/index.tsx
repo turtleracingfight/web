@@ -1,10 +1,7 @@
 import { RoutePages } from "./route-pages.tsx";
 import { Header } from "./header.tsx";
 import { Navigation } from "./navigation.tsx";
-import {
-  helperExcessMargin,
-  helperUnnecessaryNavigation
-} from "../utils/usefulFunc.ts";
+import { helperExcessMargin } from "../utils/usefulFunc.ts";
 import { useLocation } from "react-router-dom";
 import { useControlCenter } from "../hooks/useControlCenter.tsx";
 import { useGetBalance } from "../hooks/useGetBalance.tsx";
@@ -51,9 +48,7 @@ export const Layout = () => {
           address={address as string}
         />
         <RoutePages balance={balance} address={address as string} />
-        {helperUnnecessaryNavigation(pathname) ? null : (
-          <Navigation pathname={pathname} />
-        )}
+        <Navigation pathname={pathname} />
       </div>
     </>
   );

@@ -26,7 +26,7 @@ body {
 }
 
 p {
-  font-family: cygre-semibold, Calibri;
+  font-family: cygre-semibold, sans-serif, system-ui, apple-system;
   font-size: 14px;
 }
 

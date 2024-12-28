@@ -31,6 +31,7 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   const [bets, setBets] = useState<TResultBets>({});
   const lang = useStoreLang(state => state.lang);
   const requestGetData = useStoreContact(state => state.requestGetData);
+  const contractCenter = useStoreContact(state => state.contractCenter);
 
   const handlerNextTurtle = async () => {
     if (isBlockTime) return;
@@ -64,9 +65,11 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
 
   useEffect(() => {
     (async () => {
-      await getResults();
+      if (contractCenter) {
+        await getResults();
+      }
     })();
-  }, []);
+  }, [contractCenter]);
 
   const betsPlaced = countTotalTon(bets[`total${turtle + 1}`]);
   const betPlaced = countTotalTon(bets[`me${turtle + 1}`]);

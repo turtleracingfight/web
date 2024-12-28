@@ -1,5 +1,6 @@
 import { TLangs } from "../types/ts-common.ts";
 import { Locales } from "@tonconnect/ui";
+import { DEFAULT_PNL } from "./constants-fields.ts";
 
 export const LANGS: TLangs = {
   en: {
@@ -23,7 +24,7 @@ export const LANGS: TLangs = {
     cancelledTransaction: "The transaction was rejected",
     nextTour: "Error in getting time to the next tournament",
     notConnectedWallet: "The wallet is not connected",
-    agoMakeBet: "Ago",
+    backMakeBet: "Back",
     profit: "profit",
     bet: "Bet",
     tournament: "Tournament",
@@ -38,7 +39,7 @@ export const LANGS: TLangs = {
     endHistory: "The entire betting history has been received",
     cancelledTakeWinning: "Couldn't collect winnings",
     prevAddress: "Error when receiving the previous address",
-    noBets: "You did not participate in the tournament",
+    noBets: "You did not participate in the tournament"
   },
   ru: {
     makeBet: "Сделать ставку",
@@ -61,7 +62,7 @@ export const LANGS: TLangs = {
     cancelledTransaction: "Транзакция была отклонена",
     nextTour: "Ошибка при получении времени следующего турнира",
     notConnectedWallet: "Кошелек не подключен",
-    agoMakeBet: "Назад",
+    backMakeBet: "Назад",
     profit: "Выигрыш",
     bet: "Ставка",
     tournament: "Турнир",
@@ -74,7 +75,7 @@ export const LANGS: TLangs = {
     endHistory: "Вся история ставок получена",
     cancelledTakeWinning: "Не удалось забрать выигрыш",
     prevAddress: "Ошибка при получении прошлого адреса",
-    noBets: "Вы не участвовали в турнире",
+    noBets: "Вы не участвовали в турнире"
   }
 };
 
@@ -82,6 +83,14 @@ export const helperTranslate = (lang: Locales, minute: number) => {
   const text = {
     ru: `Обратите внимание на то что до конца турнира осталось меньше ${minute} минут, ставка может не дойти`,
     en: `Please note that there are less than ${minute}  minutes left until the end of the tournament, the bet may not reach`
+  };
+  return text[lang];
+};
+
+export const helperTranslateCommission = (lang: Locales) => {
+  const text = {
+    ru: `к сумме будет добавлено ${DEFAULT_PNL} за комиссию`,
+    en: `${DEFAULT_PNL} per commission will be added to the amount.`
   };
   return text[lang];
 };
