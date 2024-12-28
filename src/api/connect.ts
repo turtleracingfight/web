@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { createErrorStore } from "../store/store-errors.ts";

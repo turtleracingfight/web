@@ -181,7 +181,9 @@ export const BetWon = () => {
           </div>
         )}
       </div>
-      {!id ? <p style={{marginBottom:'15vh'}}>{LANGS[lang].descriptionWinning}</p> : null}
+      {!id ? (
+        <p style={{ marginBottom: "15vh" }}>{LANGS[lang].descriptionWinning}</p>
+      ) : null}
     </div>
   );
 };
