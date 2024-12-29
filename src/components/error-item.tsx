@@ -66,8 +66,8 @@ export const ErrorItem: FC<TErrorItem> = ({
           </defs>
           <circle
             r="15"
-            cx="17"
-            cy="17"
+            cx="20"
+            cy="20"
             fill="none"
             stroke={`url(#${type === EnumHandlerError.ERROR ? "GradientColorError" : "GradientColor"})`}
             strokeWidth="3"
