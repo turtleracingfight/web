@@ -1,5 +1,5 @@
 import styles from "../styles/pages/bet-won.module.scss";
-import coins from "/pages/coins.png";
+import coins from "/pages/coins.avif";
 import { BtnCommon } from "../components/buttons.tsx";
 import { ChangeEvent, useEffect, useState } from "react";
 import { CURRENCY } from "../constants/links.ts";
@@ -52,16 +52,10 @@ export const BetWon = () => {
   }, [navigate]);
 
   const handlerClickInput = () => {
-    if (value.length) {
-      const pnlValue = +value - DEFAULT_PNL;
-      if (pnlValue > 0) setValue(helperAroundPnl(value));
-    }
     setIsInput(true);
   };
 
   const handlerBlurInput = () => {
-    if (value.length && +value !== 0) setValue(helperAroundPnl(value, "+"));
-    else setValue("");
     setIsInput(false);
   };
   const handlerChangeValue = (e: ChangeEvent<HTMLInputElement>) =>

@@ -43,7 +43,7 @@ export const ErrorItem: FC<TErrorItem> = ({
       className={styles.container_mistake}
       onClick={() => removeError(id as string)}
     >
-      <img src={img} alt={name} />
+      <img src={img} alt={name} height={33} width={33} />
       <p style={{ color }}>{text}</p>
       <div className={styles.container_mistake_content}>
         <p

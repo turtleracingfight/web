@@ -1,6 +1,6 @@
 import styles from "../styles/common.module.scss";
 import loadingGif from "../../public/components/other/dot.svg";
-import initTurtle from "../../public/components/other/initTurtle.png";
+import initTurtle from "../../public/components/other/initTurtle.avif";
 import { FC } from "react";
 import { ILoader } from "../types/ts-loader.ts";
 

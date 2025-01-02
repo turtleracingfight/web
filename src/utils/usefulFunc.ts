@@ -1,6 +1,6 @@
 import { ROUTES } from "../constants/route.tsx";
-import error from "../../public/components/other/error.png";
-import success from "../../public/components/other/success.png";
+import error from "../../public/components/other/error.avif";
+import success from "../../public/components/other/success.avif";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { THelperError, THistory, TResultBets } from "../types/ts-common.ts";
 import { TURTLES_LINKS } from "../constants/links.ts";

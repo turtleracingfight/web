@@ -19,23 +19,19 @@
     color: darkgray;
     box-shadow: 0 0 5px #3d3d3d;
 
-    & > img {
-      height: 3vh;
-    }
     &_content {
-      width: 20%;
+      @include wh-ht(40px, 40px);
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
+
       & > p {
+        text-align: center;
         margin: 0;
         padding: 0;
         position: absolute;
         font-size: 14px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
       }
     }
   }

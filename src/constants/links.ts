@@ -2,17 +2,18 @@ import zoom from "/components/turtles/zoom.avif";
 import gladiator from "/components/turtles/gladiator.avif";
 import formula from "/components/turtles/formula.avif";
 import impulse from "/components/turtles/impulse.avif";
+import impulseInf from "/components/other/impulse.avif";
 import corkscrew from "/components/turtles/corkscrew.avif";
 import ninja from "/components/turtles/ninja.avif";
 import nitro from "/components/turtles/nitro.avif";
 import parapsi from "/components/turtles/parapsi.avif";
 import track from "/components/turtles/track.avif";
 import stronghold from "/components/turtles/stronghold.avif";
-import turtles from "/components/other/turtles.png";
-import moon from "/components/other/moon.png";
-import money from "/components/other/money.png";
-import wallet from "/components/other/wallet.png";
-import percent from "/components/other/percent.png";
+import turtles from "/components/other/turtles.avif";
+import moon from "/components/other/moon.avif";
+import money from "/components/other/money.avif";
+import wallet from "/components/other/wallet.avif";
+import percent from "/components/other/percent.avif";
 import fg_russia from "/components/other/fg-rus.svg";
 import fg_english from "/components/other/fg-english.svg";
 import { TListLanguages } from "../types/ts-links.ts";
@@ -38,7 +39,7 @@ export const INFO_LIST: TInfoList[] = [
     id: 2,
     ru: "Победителем считается черепаха, на которую поставили меньше всего",
     en: "The winner is the turtle that has the least bet on",
-    svg: impulse
+    svg: impulseInf
   },
   {
     id: 3,

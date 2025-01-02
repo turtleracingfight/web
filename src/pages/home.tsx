@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
@@ -58,18 +58,18 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     }, 350);
   };
 
-  const getResults = async () => {
-    const data = await requestGetData();
-    if (data && Object.values(data).length) setBets(data);
-  };
+  // const getResults = async () => {
+  //   const data = await requestGetData();
+  //   if (data && Object.values(data).length) setBets(data);
+  // };
 
-  useEffect(() => {
-    (async () => {
-      if (contractCenter) {
-        await getResults();
-      }
-    })();
-  }, [contractCenter]);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (contractCenter) {
+  //       await getResults();
+  //     }
+  //   })();
+  // }, [contractCenter]);
 
   const betsPlaced = countTotalTon(bets[`total${turtle + 1}`]);
   const betPlaced = countTotalTon(bets[`me${turtle + 1}`]);
@@ -77,70 +77,75 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
   return (
     <div className={styles.container}>
       <div className={styles.container_turtles}>
-        <Swiper
-          onSwiper={swiper => {
-            swiperInstance = swiper;
-          }}
-          onSlideChangeTransitionEnd={async swiper => {
-            if (turtle === swiper.previousIndex) return;
-            setTurtle(swiper.realIndex);
-            await getResults();
-          }}
-          onSlideChange={async swiper => {
-            if (turtle === swiper.realIndex) return;
-            setTurtle(swiper.realIndex);
-          }}
-          slidesPerView="auto"
-          loop={true}
-          centeredSlides={true}
-          spaceBetween={30}
-          allowTouchMove={!isBlockTime}
-        >
-          {Object.values(TURTLES).map(el => (
-            <SwiperSlide
-              key={el.id}
-              className={styles.container_turtles_slider}
-            >
-              {el.id === turtle ? (
-                <img
-                  className={styles.container_turtles_slider_active}
-                  src={el.svg}
-                  alt="turtle"
-                />
-              ) : (
-                <img style={{ width: "90%" }} src={el.svg} alt="turtle" />
-              )}
-            </SwiperSlide>
-          ))}
-          <div className={styles.container_turtles_additional}></div>
-          <div className={styles.container_turtles_header}>
-            <div className={styles.container_turtles_header_ellipse}></div>
-            <div className={styles.container_turtles_header_ellipse}></div>
-            <img
-              width={6}
-              height={10}
-              src={arrowleft}
-              alt="arrow-left"
-              onClick={handlerPrevTurtle}
-            />
-            <p className={styles.container_turtles_header_name}>
-              {TURTLES[turtle][lang]}
-            </p>
-            <img
-              src={arrowright}
-              alt="arrow-right"
-              onClick={handlerNextTurtle}
-            />
-          </div>
-          <div className={styles.container_turtles_ton}>
-            <p>
-              {LANGS[lang].allPeopleSet}: {betsPlaced}
-            </p>
-            <p>
-              {betPlaced} {CURRENCY}
-            </p>
-          </div>
-        </Swiper>
+        <div className={styles.container_turtles_ellipse}></div>
+        <div className={styles.container_turtles_ellipse_shadow}></div>
+        <div className={styles.container_turtles_header}>
+          <img
+            width={13}
+            height={13}
+            src={arrowleft}
+            alt="arrow-left"
+            onClick={handlerPrevTurtle}
+          />
+          <p>{TURTLES[turtle][lang]}</p>
+          <img
+            width={13}
+            height={13}
+            src={arrowright}
+            alt="arrow-right"
+            onClick={handlerNextTurtle}
+          />
+        </div>
+        <div className={styles.container_turtles_ton}>
+          <p>
+            {LANGS[lang].allPeopleSet}: {betsPlaced}
+          </p>
+          <p>
+            {betPlaced} {CURRENCY}
+          </p>
+        </div>
+        <div className={styles.container_turtles_content}></div>
+        <div className={styles.container_turtles_turtle}>
+          <Swiper
+            onSwiper={swiper => {
+              swiperInstance = swiper;
+            }}
+            onSlideChangeTransitionEnd={async swiper => {
+              if (turtle === swiper.previousIndex) return;
+              setTurtle(swiper.realIndex);
+              await getResults();
+            }}
+            onSlideChange={async swiper => {
+              if (turtle === swiper.realIndex) return;
+              setTurtle(swiper.realIndex);
+            }}
+            slidesPerView="auto"
+            loop={true}
+            centeredSlides={true}
+            className={styles.container_turtles_turtle_swiper}
+            spaceBetween={5}
+            allowTouchMove={!isBlockTime}
+          >
+            {Object.values(TURTLES).map(el => (
+              <SwiperSlide
+                key={el.id}
+                className={styles.container_turtles_turtle_swiper_slider}
+              >
+                {el.id === turtle ? (
+                  <img
+                    className={
+                      styles.container_turtles_turtle_swiper_slider_active
+                    }
+                    src={el.svg}
+                    alt="turtle"
+                  />
+                ) : (
+                  <img src={el.svg} alt="turtle" />
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
       <div className={styles.container_list}>
         <div className={styles.container_list_hero}>{MINI_LIST_TURTLES}</div>

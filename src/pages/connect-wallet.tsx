@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { BtnConnectTg } from "../components/buttons.tsx";
 import { CURRENCY } from "../constants/links.ts";
-import connectTurtle from "/pages/ct-ton.png";
+import connectTurtle from "/pages/ct-ton.avif";
 import { IAddressWallet } from "../types/ts-common.ts";
 import styles from "../styles/pages/connect-wallet.module.scss";
 import { TConnectWallet } from "../types/ts-connect-wallet.ts";

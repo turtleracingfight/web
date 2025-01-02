@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { THistory } from "../types/ts-common.ts";
-import push from "../../public/components/other/push.png";
+import push from "../../public/components/other/push.avif";
 
 let currentActiveId: number = 0;
 let countHistory = 5;

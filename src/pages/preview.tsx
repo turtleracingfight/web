@@ -31,44 +31,40 @@ export const Preview = () => {
 
   const slides = INFO_LIST.map(el => {
     return (
-      <SwiperSlide
-        key={el.id}
-        className={styles.container_content}
-        style={{
-          height: "25vh"
-        }}
-      >
-        <div className={styles.container_content_swiperSlide}>
-          {el.id === 2 ? (
-            <>
-              <div className={styles.elem}>
-                <p>
-                  {LANGS[lang].allPeopleSet}: 10.5 {CURRENCY}
-                </p>
-                <p>0.4 {CURRENCY}</p>
-              </div>
-              <div className={styles.elem}>
-                <p>
-                  {LANGS[lang].allPeopleSet}: 13.5 {CURRENCY}
-                </p>
-                <p>1.24 {CURRENCY}</p>
-              </div>
-              <div className={styles.elem}>
-                <p>
-                  {LANGS[lang].allPeopleSet}: 2.5 {CURRENCY}
-                </p>
-                <p>0.62 {CURRENCY}</p>
-              </div>
-            </>
-          ) : null}
-          <img
-            src={el.svg}
-            alt="info-picture"
-            style={{ height: "100%", width: "95%" }}
-          />
+      <SwiperSlide key={el.id} className={styles.container_swiper_slide}>
+        <div className={styles.container_swiper_slide_container}>
+          <div className={styles.container_swiper_slide_container_content}>
+            <div
+              className={styles.container_swiper_slide_container_content_elipse}
+            ></div>
+            {el.id === 2 ? (
+              <>
+                <div className={styles.elem}>
+                  <p>
+                    {LANGS[lang].allPeopleSet}: 10.5 {CURRENCY}
+                  </p>
+                  <p>0.4 {CURRENCY}</p>
+                </div>
+                <div className={styles.elem}>
+                  <p>
+                    {LANGS[lang].allPeopleSet}: 13.5 {CURRENCY}
+                  </p>
+                  <p>1.24 {CURRENCY}</p>
+                </div>
+                <div className={styles.elem}>
+                  <p>
+                    {LANGS[lang].allPeopleSet}: 2.5 {CURRENCY}
+                  </p>
+                  <p>0.62 {CURRENCY}</p>
+                </div>
+              </>
+            ) : null}
+            <img src={el.svg} alt="info-picture" />
+          </div>
+          <div className={styles.container_swiper_slide_container_description}>
+            <p>{el[lang]}</p>
+          </div>
         </div>
-        <div className={styles.container_content_elipse}></div>
-        <p>{el[lang]}</p>
       </SwiperSlide>
     );
   });
@@ -82,12 +78,8 @@ export const Preview = () => {
         onSlideChange={swiper => {
           setCurrent(swiper.realIndex);
         }}
-        effect={"fade"}
-        pagination={{
-          clickable: true
-        }}
-        className="mySwiper"
-        initialSlide={current}
+        slidesPerView="auto"
+        className={styles.container_swiper}
       >
         {slides}
       </Swiper>

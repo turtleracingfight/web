@@ -1,5 +1,5 @@
 import styles from "../styles/common.module.scss";
-import accept from "../../public/components/other/success.png";
+import accept from "../../public/components/other/success.avif";
 import { IExpiresContract } from "../types/ts-expiresContract.ts";
 import { FC } from "react";
 
