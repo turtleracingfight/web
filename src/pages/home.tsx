@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BtnCommon, BtnConnectTg } from "../components/buttons.tsx";
 import { Timer } from "../components/timer.tsx";
@@ -58,18 +58,18 @@ export const Home: FC<IAddressWallet> = ({ address }) => {
     }, 350);
   };
 
-  // const getResults = async () => {
-  //   const data = await requestGetData();
-  //   if (data && Object.values(data).length) setBets(data);
-  // };
+  const getResults = async () => {
+    const data = await requestGetData();
+    if (data && Object.values(data).length) setBets(data);
+  };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (contractCenter) {
-  //       await getResults();
-  //     }
-  //   })();
-  // }, [contractCenter]);
+  useEffect(() => {
+    (async () => {
+      if (contractCenter) {
+        await getResults();
+      }
+    })();
+  }, [contractCenter]);
 
   const betsPlaced = countTotalTon(bets[`total${turtle + 1}`]);
   const betPlaced = countTotalTon(bets[`me${turtle + 1}`]);
