@@ -1,3 +1,3 @@
 export interface ILoader {
-  isLoadingRequest?: boolean
+  isLoadingRequest?: boolean;
 }

@@ -7,7 +7,7 @@ import { countTotalTon } from "../utils/usefulFunc.ts";
 import { LANGS } from "../constants/langs.ts";
 import { getLang } from "../store/store-lang.ts";
 import { setIsLoadingBalance } from "../store/store-loadings.ts";
-import { requestSetBalance } from '../store/store-contract.ts';
+import { requestSetBalance } from "../store/store-contract.ts";
 
 export const instance = axios.create({});
 
