@@ -1,6 +1,6 @@
 import { Locales } from "@tonconnect/ui";
 
 export interface TConnectWallet {
-  ton?: number;
+  ton?: string;
   lang: Locales;
 }

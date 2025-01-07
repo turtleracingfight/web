@@ -9,6 +9,7 @@ import { LANGS } from "../constants/langs.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { setLoadingRequest } from "./store-loadings.ts";
 import {
+  EBalanceType,
   ETakeWinning,
   IStoreContract,
   TSender
@@ -97,6 +98,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
   sender: null,
   userAddress: "",
   client: undefined,
+  balance: "0",
   setContractCenter: (
     contractCenter: OpenedContract<ControlCenter>,
     sender: TSender,
@@ -360,7 +362,7 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
       contract?.send(
         get().sender as TSender,
         {
-          value: toNano(value)
+          value: toNano(value + DEFAULT_PNL)
         },
         messageBet(turtleId)
       );
@@ -419,3 +421,12 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
     set({ id, winning });
   }
 }));
+
+export const requestSetBalance = (balance: string, type?: string) =>
+  useStoreContact.setState(state => ({
+    balance: type
+      ? type === EBalanceType.plus
+        ? (+state.winning + +state.balance).toFixed(2)
+        : (+state.balance - +balance).toFixed(2)
+      : balance
+  }));

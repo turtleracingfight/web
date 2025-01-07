@@ -8,6 +8,7 @@ import { TConnectWallet } from "../types/ts-connect-wallet.ts";
 import { TonConnectButton } from "@tonconnect/ui-react";
 import { useLang } from "../hooks/useLang.tsx";
 import { LANGS } from "../constants/langs.ts";
+import { useStoreContact } from "../store/store-contract.ts";
 
 const ConnectWalletBtn: FC<TConnectWallet> = ({ lang }) => {
   return (
@@ -30,8 +31,9 @@ const ConnectedWallet: FC<TConnectWallet> = ({ ton, lang }) => {
   );
 };
 
-export const ConnectWallet: FC<IAddressWallet> = ({ balance, address = 0 }) => {
+export const ConnectWallet: FC<IAddressWallet> = ({ address = 0 }) => {
   const { lang } = useLang();
+  const balance = useStoreContact(state => state.balance);
   return (
     <div className={styles.container}>
       {address ? (

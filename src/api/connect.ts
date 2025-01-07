@@ -6,30 +6,28 @@ import { REQUEST_TO_BALANCE } from "../constants/env.ts";
 import { countTotalTon } from "../utils/usefulFunc.ts";
 import { LANGS } from "../constants/langs.ts";
 import { getLang } from "../store/store-lang.ts";
+import { setIsLoadingBalance } from "../store/store-loadings.ts";
+import { requestSetBalance } from '../store/store-contract.ts';
 
 export const instance = axios.create({});
 
 export const requestTon = {
-  async getTonBalance(
-    address: string,
-    set: (balance: string) => void,
-    loading: (value: boolean) => void
-  ): Promise<void> {
+  async getTonBalance(address: string): Promise<void> {
     try {
-      loading(true);
+      setIsLoadingBalance(true);
       const { data } = await instance.get(`${REQUEST_TO_BALANCE}${address}`);
       if (data?.result) {
-        set(countTotalTon(data.result));
-        loading(false);
+        requestSetBalance(countTotalTon(data.result));
+        setIsLoadingBalance(false);
       } else {
         createErrorStore({
           text: LANGS[getLang()].failBalance,
           type: EnumHandlerError.ERROR
         });
-        loading(false);
+        setIsLoadingBalance(false);
       }
     } catch (error) {
-      loading(false);
+      setIsLoadingBalance(false);
       createErrorStore({
         text: LANGS[getLang()].failBalance,
         type: EnumHandlerError.ERROR

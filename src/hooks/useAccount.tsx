@@ -8,17 +8,52 @@ import { useEffect } from "react";
 import { createErrorStore } from "../store/store-errors.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
 import { LANGS } from "../constants/langs.ts";
-import { useStoreContact } from "../store/store-contract.ts";
-import { ETakeWinning } from "../types/ts-store-contract.ts";
+import { requestSetBalance, useStoreContact } from "../store/store-contract.ts";
+import { EBalanceType, ETakeWinning } from "../types/ts-store-contract.ts";
+import { requestTon } from "../api/connect.ts";
+import {
+  setIsLoadingBalance,
+  useStoreLoadings
+} from "../store/store-loadings.ts";
+import { countTotalTon } from "../utils/usefulFunc.ts";
 
+let time = 0;
 export const useAccount = () => {
   const [tonConnectUI, setOptions] = useTonConnectUI();
   const wallet = useTonWallet();
   const navigate = useNavigate();
   const { lang } = useLang();
   const setWinningBet = useStoreContact(state => state.setWinningBet);
+  const isLoadingBalance = useStoreLoadings(state => state.isLoadingBalance);
   let network = wallet?.account.chain;
   const { client } = useTonClient(network as CHAIN);
+
+  tonConnectUI.onStatusChange(state => {
+    if (state === null) requestSetBalance("0");
+  });
+
+  useEffect(() => {
+    if (tonConnectUI?.account?.address) setIsLoadingBalance(false);
+  }, [tonConnectUI]);
+
+  useEffect(() => {
+    if (wallet?.account?.address) {
+      (async () => {
+        if (wallet?.account?.address) {
+          await requestTon.getTonBalance(wallet.account.address);
+        }
+      })();
+    }
+  }, [wallet?.account?.address]);
+
+  useEffect(() => {
+    if (time) clearTimeout(time);
+    if (isLoadingBalance) {
+      time = setTimeout(() => {
+        setIsLoadingBalance(false);
+      }, 1500);
+    }
+  }, [isLoadingBalance]);
 
   useEffect(() => {
     if (tonConnectUI && lang)
@@ -52,8 +87,14 @@ export const useAccount = () => {
                   : LANGS[lang].placedBet,
               type: EnumHandlerError.SUCCESS
             });
-            if (prevPage === ROUTES.history)
+            if (prevPage === ROUTES.history) {
+              requestSetBalance("", EBalanceType.plus);
               setWinningBet(null, "0", ETakeWinning.takeWinning);
+            } else
+              requestSetBalance(
+                countTotalTon(args.value.toString()),
+                EBalanceType.minus
+              );
             window.sessionStorage.removeItem("prev-page");
             navigate(
               prevPage

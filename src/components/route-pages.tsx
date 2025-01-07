@@ -5,7 +5,7 @@ import { LIST_ROUTES, ROUTES } from "../constants/route.tsx";
 import { IAddressWallet } from "../types/ts-common.ts";
 import { FC, memo } from "react";
 
-export const RoutePages: FC<IAddressWallet> = memo(({ balance, address }) => {
+export const RoutePages: FC<IAddressWallet> = memo(({ address }) => {
   return (
     <Routes>
       <Route
@@ -16,7 +16,7 @@ export const RoutePages: FC<IAddressWallet> = memo(({ balance, address }) => {
       <Route
         path={ROUTES.connect}
         key={ROUTES.connect}
-        element={<ConnectWallet balance={balance} address={address} />}
+        element={<ConnectWallet address={address} />}
       />
       {LIST_ROUTES.map(el => (
         <Route path={el.path} key={el.path} element={el.component} />

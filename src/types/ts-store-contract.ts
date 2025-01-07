@@ -10,6 +10,7 @@ export type TSender = {
 
 export interface IStoreContract {
   activeId: number | null;
+  balance: string;
   id: number | null;
   expiredActiveId: number | null;
   expiredData: number | null;
@@ -36,4 +37,9 @@ export interface IStoreContract {
 
 export enum ETakeWinning {
   takeWinning = "TAKE_WINNING"
+}
+
+export enum EBalanceType {
+  plus = "PLUS",
+  minus = "MINUS"
 }

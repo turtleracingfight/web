@@ -15,10 +15,8 @@ import { ROUTES } from "../constants/route.tsx";
 import { ExpiresContract } from "../components/expiresContract.tsx";
 import {
   ATTENTION_BET_MINUTE,
-  DEFAULT_PNL,
   LIGHT_GREY
 } from "../constants/constants-fields.ts";
-import { helperAroundPnl } from "../utils/usefulFunc.ts";
 import { createErrorStore } from "../store/store-errors.ts";
 import { getLang } from "../store/store-lang.ts";
 import { EnumHandlerError } from "../types/ts-store-errors.ts";
@@ -75,8 +73,9 @@ export const BetWon = () => {
     }
     if (id && value.length) {
       const time = (await requestGetNext()) || 0;
+      const hour = time / 60 / 60;
       const minutes = Math.floor((time % 3600) / 60);
-      if (minutes <= ATTENTION_BET_MINUTE && !notification) {
+      if (minutes <= ATTENTION_BET_MINUTE && hour < 1 && !notification) {
         setAttentionText(helperTranslate(lang, minutes));
         notification = true;
         return;
@@ -104,7 +103,7 @@ export const BetWon = () => {
           handlerAttentionText={handlerAttentionText}
         />
       )}
-      {!id && <img src={coins} alt="coins" />}
+      {!id && <img src={coins} alt="coins" height={213} width={213} />}
       <div className={styles.container_content}>
         <div className={styles.container_content_header}>
           {!id ? (

@@ -9,11 +9,13 @@ import styles from "../styles/components/header.module.scss";
 import { helperExcessMargin } from "../utils/usefulFunc.ts";
 import { LANGS } from "../constants/langs.ts";
 import { useStoreLang } from "../store/store-lang.ts";
+import { useStoreContact } from "../store/store-contract.ts";
 
 let localAddress: string | undefined = undefined;
-export const Header: FC<IHeader> = memo(({ address, pathname, balance }) => {
+export const Header: FC<IHeader> = memo(({ address, pathname }) => {
   const navigate = useNavigate();
   const lang = useStoreLang(state => state.lang);
+  const balance = useStoreContact(state => state.balance);
 
   const handlerConnectWallet = () => navigate(ROUTES.connect);
   const handlerNavigateToSettings = () => navigate(ROUTES.settings);
