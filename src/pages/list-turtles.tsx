@@ -20,13 +20,11 @@ export const ListTurtles = () => {
     window.sessionStorage.setItem("prev-page", ROUTES.listTurtles);
     navigate(`${ROUTES.makeBet}/${id + 1}`);
   };
-
   const handleScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     const isBottom = scrollTop + clientHeight >= scrollHeight - (scrollHeight * 0.05);
-    setIsZIndex(() => isBottom);
+    setIsZIndex(isBottom);
   }
-
   useEffect(() => {
     (async () => {
       const data = await requestGetData();
