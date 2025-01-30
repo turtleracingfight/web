@@ -2,7 +2,7 @@ import styles from "../styles/pages/statistics.module.scss";
 import { CURRENCY } from "../constants/links.ts";
 import { useEffect, useState } from "react";
 import { helperHistoryBet } from "../utils/usefulFunc.ts";
-import PullToRefresh from "react-pull-to-refresh";
+import PullToRefresh from "react-simple-pull-to-refresh";
 import { useStoreContact } from "../store/store-contract.ts";
 import { useStoreLang } from "../store/store-lang.ts";
 import { LANGS } from "../constants/langs.ts";
@@ -80,51 +80,60 @@ export const History = () => {
   return (
     <div className={styles.container}>
       <PullToRefresh
-        className={styles.container_bl}
         onRefresh={requestPullToRefresh}
+        pullDownThreshold={80}
+        maxPullDownDistance={120}
+        refreshingContent={
+          <div style={{ textAlign: 'center', padding: '10px' }}>
+            <img width={50} height={50} src={push} alt="loading" />
+          </div>
+        }
+        className={styles.container_bl}
       >
-        {bets.length ? (
-          bets.map(el => (
-            <div key={el.id + el.name}>
-              <div className={styles.container_bl_stats}>
-                <div className={styles.container_bl_stats_bet}>
-                  <div className={styles.container_bl_stats_bet_content}>
-                    <p>{LANGS[lang].bet}</p>
-                    {el.noBets ? null : <img src={el.svg} alt={el.name} />}
-                  </div>
-                  <p>
-                    {el.noBets ? 0 : el.bet} {CURRENCY}
-                  </p>
-                </div>
-                <div className={styles.container_bl_stats_elipse}></div>
-                <div className={styles.container_bl_stats_win}>
-                  <div className={styles.container_bl_stats_win_name}>
-                    <div className={styles.container_bl_stats_win_name_content}>
-                      <p>{el.tour}</p>
-                      <p>{el.name}</p>
+        <>
+          {bets.length ? (
+            bets.map(el => (
+              <div key={el.id + el.name}>
+                <div className={styles.container_bl_stats}>
+                  <div className={styles.container_bl_stats_bet}>
+                    <div className={styles.container_bl_stats_bet_content}>
+                      <p>{LANGS[lang].bet}</p>
+                      {el.noBets ? null : <img src={el.svg} alt={el.name} />}
                     </div>
-                    <p>{LANGS[lang].profit}</p>
+                    <p>
+                      {el.noBets ? 0 : el.bet} {CURRENCY}
+                    </p>
                   </div>
-                  <p
-                    style={{
-                      color: +el.won > 0 && !el.isWinning ? "#79d716" : "white"
-                    }}
-                    onClick={() =>
-                      handlerTakeWinningBet(el.id, el.won, el.isWinning)
-                    }
-                  >
-                    {el.noBets ? 0 : el.won} {CURRENCY}
-                  </p>
+                  <div className={styles.container_bl_stats_elipse}></div>
+                  <div className={styles.container_bl_stats_win}>
+                    <div className={styles.container_bl_stats_win_name}>
+                      <div className={styles.container_bl_stats_win_name_content}>
+                        <p>{el.tour}</p>
+                        <p>{el.name}</p>
+                      </div>
+                      <p>{LANGS[lang].profit}</p>
+                    </div>
+                    <p
+                      style={{
+                        color: +el.won > 0 && !el.isWinning ? "#79d716" : "white"
+                      }}
+                      onClick={() =>
+                        handlerTakeWinningBet(el.id, el.won, el.isWinning)
+                      }
+                    >
+                      {el.noBets ? 0 : el.won} {CURRENCY}
+                    </p>
+                  </div>
                 </div>
+                <div className={styles.container_bl_border}></div>
               </div>
-              <div className={styles.container_bl_border}></div>
-            </div>
-          ))
-        ) : (
-          <p style={{ width: "100%", height: "80vh", textAlign: "center" }}>
-            <img width={50} height={50} src={push} alt="push" />
-          </p>
-        )}
+            ))
+          ) : (
+            <p style={{ width: "100%", height: "80vh", textAlign: "center" }}>
+              <img width={50} height={50} src={push} alt="push" />
+            </p>
+          )}
+        </>
       </PullToRefresh>
     </div>
   );

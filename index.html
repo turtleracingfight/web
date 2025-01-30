@@ -1,13 +1,23 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/public/components/turtles/impulse.avif" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Turtle</title>
 </head>
+
 <body>
-<div id="root" style="max-width: 450px; width: 100%"></div>
-<script type="module" src="/src/index.tsx"></script>
+  <script>
+    if (window?.Telegram && window?.Telegram?.WebApp) {
+      window.Telegram.WebApp.expand();
+      window.Telegram.WebApp.setBackgroundColor('#000000');
+      window.Telegram.WebApp.setHeaderColor('#000000');
+    }
+  </script>
+  <div id="root" style="max-width: 450px; width: 100%"></div>
+  <script type="module" src="/src/index.tsx"></script>
 </body>
+
 </html>
