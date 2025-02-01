@@ -150,8 +150,8 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         }
         let id = window.localStorage.getItem("activeId");
         let expiredActiveId = window.localStorage.getItem("expiredActiveId");
-        if (id != null && expiredActiveId != null) {
-          if (new Date().getTime() < expiredActiveId) {
+        if (id !== null && expiredActiveId !== null) {
+          if (new Date().getTime() < +expiredActiveId) {
             console.log("getting activeID");
             let activeId = +String(id);
             set({ activeId });
@@ -193,11 +193,15 @@ export const useStoreContact = create<IStoreContract>((set, get) => ({
         const data = await contract.getNext();
         setLoadingRequest(false);
         if (data) {
-          console.log("setting expired");
           let seconds = +data.toString();
+          const expiredActiveId = window.localStorage.getItem("expiredActiveId");
+          if (!expiredActiveId || +expiredActiveId < Date.now()) {
+            const activeId = await get().getActiveId();
+            if (!activeId) return
+          }
           window.localStorage.setItem(
             "expiredActiveId",
-            (new Date().getTime() + seconds).toString()
+            (Date.now() + (seconds * 1000)).toString()
           );
           return +data.toString();
         }

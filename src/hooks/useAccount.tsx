@@ -29,7 +29,10 @@ export const useAccount = () => {
   const { client } = useTonClient(network as CHAIN);
 
   tonConnectUI.onStatusChange(state => {
-    if (state === null) requestSetBalance("0");
+    if (state === null) {
+      requestSetBalance("0");
+      window.localStorage.clear();
+    }
   });
 
   useEffect(() => {
